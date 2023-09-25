@@ -1,2 +1,3 @@
-# csc207-bermuda
+csc207-bermuda
 
+lorem ipsum
