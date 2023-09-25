@@ -1,3 +1,2 @@
-# csc207-project
-Louis
+# csc207-bermuda
 
