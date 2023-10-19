@@ -60,8 +60,8 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
         buttons.add(logIn);
 
         // test button click
-        signUp.addActionListener(this);
-        logIn.addActionListener(this);
+        // signUp.addActionListener(this);
+        //logIn.addActionListener(this);
 
 
         signUp.addActionListener(
@@ -72,6 +72,7 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
                             SignupState currentState = signupViewModel.getState();
                             // TODO interactor.execute()
                             //
+                            JOptionPane.showMessageDialog(new JFrame(), "sign up clicked");
                         }
                     }
                 }
@@ -84,6 +85,7 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
                         if (e.getSource().equals(logIn)) {
                             // TODO interactor.execute()
                             //
+                            JOptionPane.showMessageDialog(new JFrame(), "log in clicked");
 
                         }
                     }
