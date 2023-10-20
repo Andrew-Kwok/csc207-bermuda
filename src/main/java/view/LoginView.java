@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.loggedin_user.LoggedInState;
+import interface_adapter.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -17,6 +19,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public final String viewName = "log in";
     private final LoginViewModel loginViewModel;
+    private final LoggedInUserViewModel loggedInUserViewModel;
 
     final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
@@ -28,11 +31,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JButton signUp;
     private final LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller,
+                     LoggedInUserViewModel loggedInUserViewModel) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
+        this.loggedInUserViewModel = loggedInUserViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
+        this.loggedInUserViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -66,7 +72,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(e.getSource().equals(signUp)){
+                        if (e.getSource().equals(signUp)) {
                             // TODO show signupView
 
                         }
@@ -127,17 +133,46 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoginState state = (LoginState) evt.getNewValue();
-        setUsernameField(state);
-        clearPasswordField();
+        // log in with error
+        if (evt.getSource().equals(loginViewModel)) {
+            LoginState loginstate = (LoginState) evt.getNewValue();
+            if (loginstate.getUsernameError() != null) {
+                JOptionPane.showMessageDialog(this, loginstate.getUsernameError());
+                clearUserNameField();
+                clearPasswordField();
+                loginstate.setUsernameError(null);
+                return;
+            }
+            if (loginstate.getPasswordError() != null) {
+                JOptionPane.showMessageDialog(this, loginstate.getPasswordError());
+                clearPasswordField();
+                loginstate.setPasswordError(null);
+                return;
+            }
+        }
+
+        // logout from loggedinUserView
+        if (evt.getSource().equals(loggedInUserViewModel)) {
+            LoggedInState loggedInstate = (LoggedInState) evt.getNewValue();
+            LoginState loginState = loginViewModel.getState();
+            if (!loggedInstate.isLoggedIn()) {
+                loginState.setUsername(loggedInstate.getUsername());
+                setUsernameField(loginState);
+                clearPasswordField();
+            }
+        }
     }
 
     private void setUsernameField(LoginState state) {
         usernameInputField.setText(state.getUsername());
     }
 
-    private void clearPasswordField(){
+    private void clearPasswordField() {
         passwordInputField.setText("");
+    }
+
+    private void clearUserNameField() {
+        usernameInputField.setText("");
     }
 
 }
