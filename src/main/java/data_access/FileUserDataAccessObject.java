@@ -12,7 +12,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     private final File csvUserFile;
     private final File csvProjectFile;
 
-    private final Map<String, Integer> userHeaders = new TreeMap<>();
+    private final List<String> userHeaders = new ArrayList<String>();
     private final Map<String, User> userMap = new HashMap<>();
     private final Map<String, Integer> projectHeaders = new HashMap<>();
     private final Map<String, User> projectMap = new HashMap<>();
@@ -23,10 +23,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         this.csvUserFile = new File(csvUserPath);
         this.csvProjectFile = new File(csvProjectPath);
         this.newUserFactory = newUserFactory;
-
-        userHeaders.put("username", 0);
-        userHeaders.put("password", 1);
-        userHeaders.put("level", 2);
+        userHeaders.add("username");
+        userHeaders.add("password");
+        userHeaders.add("level");
+        userHeaders.indexOf("username");
 
         if (csvUserFile.length() == 0) {
             save();
@@ -41,9 +41,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    String username = String.valueOf(col[userHeaders.get("username")]);
-                    String password = String.valueOf(col[userHeaders.get("password")]);
-                    int level = Integer.parseInt(col[userHeaders.get("level")]);
+                    String username = String.valueOf(col[userHeaders.indexOf("username")]);
+                    String password = String.valueOf(col[userHeaders.indexOf("password")]);
+                    int level = Integer.parseInt(col[userHeaders.indexOf("level")]);
                     User user = newUserFactory.create(username, password);
                     user.setUserLevel(level);
                     userMap.put(username, user);
@@ -67,7 +67,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(csvUserFile));
-            writer.write(String.join(",", userHeaders.keySet()));
+            writer.write(String.join(",", userHeaders));
             writer.newLine();
 
             for (User user : userMap.values()) {
@@ -85,7 +85,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     @Override
     public boolean existsByName(String identifier) {
-        return false;
+        return userMap.containsKey(identifier);
     }
 
 

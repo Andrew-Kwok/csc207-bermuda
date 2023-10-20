@@ -8,7 +8,9 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
-import view.StartView;
+import view.LoggedInUserView;
+import view.LoginView;
+import view.SignupView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -32,7 +34,7 @@ public class Bermuda {
         // build the view manager and add views
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInUserViewModel loggedInViewModel = new LoggedInUserViewModel();
+        LoggedInUserViewModel loggedInUserViewModel = new LoggedInUserViewModel();
 
         SignupUserDataAccessInterface signupUserDataAccessInterface;
         LoginUserDataAccessInterface loginUserDataAccessInterface;
@@ -43,11 +45,17 @@ public class Bermuda {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        StartView startView = StartUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, loggedInViewModel,
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, loggedInUserViewModel,
                 signupUserDataAccessInterface, loginUserDataAccessInterface);
-        views.add(startView, startView.viewName);
+        views.add(signupView, signupView.viewName);
 
-        viewManagerModel.setActiveView(startView.viewName);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, loginUserDataAccessInterface);
+        views.add(loginView, loginView.viewName);
+
+        LoggedInUserView loggedInUserView = LogoutUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel);
+        views.add(loggedInUserView, loggedInUserView.viewName);
+
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

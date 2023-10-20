@@ -17,8 +17,8 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class StartView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "sign up";
+public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = "start";
 
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
@@ -30,8 +30,8 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
     private final JButton signUp;
     private final JButton logIn;
 
-    public StartView(SignupController signupController, SignupViewModel signupViewModel,
-                     LoginController loginController, LoginViewModel loginViewModel) {
+    public SignupView(SignupController signupController, SignupViewModel signupViewModel,
+                      LoginController loginController, LoginViewModel loginViewModel) {
 
         this.signupController = signupController;
         this.signupViewModel = signupViewModel;
@@ -40,8 +40,7 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
         this.loginViewModel = loginViewModel;
 
         signupViewModel.addPropertyChangeListener(this);
-        // listening for the clear button
-        loginViewModel.addPropertyChangeListener(this);
+        //loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -54,14 +53,10 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
                 new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
 
         JPanel buttons = new JPanel();
-        signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(signUp);
         logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
         buttons.add(logIn);
-
-        // test button click
-        // signUp.addActionListener(this);
-        //logIn.addActionListener(this);
+        signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        buttons.add(signUp);
 
 
         signUp.addActionListener(
@@ -85,8 +80,11 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(logIn)) {
                             // TODO interactor.execute()
-                            //
-                            JOptionPane.showMessageDialog(new JFrame(), "log in clicked");
+                            LoginState currentState = loginViewModel.getState();
+
+                            loginController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword());
 
                         }
                     }
@@ -102,10 +100,14 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        SignupState currentState = signupViewModel.getState();
+                        SignupState signupState = signupViewModel.getState();
+                        LoginState loginState = loginViewModel.getState();
                         String text = usernameInputField.getText() + e.getKeyChar();
-                        currentState.setUsername(text);
-                        signupViewModel.setState(currentState);
+                        signupState.setUsername(text);
+                        signupViewModel.setState(signupState);
+
+                        loginState.setUsername(text);
+
                     }
 
                     @Override
@@ -178,14 +180,9 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO
-        if (evt.getSource().equals(signUp)) {
-            SignupState state = (SignupState) evt.getNewValue();
-            JOptionPane.showMessageDialog(this,"sig up clicked");
-        } else if (evt.getSource().equals(logIn)) {
-            // TODO
-            LoginState clearState = (LoginState) evt.getNewValue();
-            JOptionPane.showConfirmDialog(this, "log in clicked");
+        SignupState state = (SignupState) evt.getNewValue();
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
     }
 }

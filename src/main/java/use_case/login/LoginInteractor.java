@@ -23,9 +23,7 @@ public class LoginInteractor implements LoginInputBoundary {
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else {
-
                 User user = userDataAccessObject.get(loginInputData.getUsername());
-
                 LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }

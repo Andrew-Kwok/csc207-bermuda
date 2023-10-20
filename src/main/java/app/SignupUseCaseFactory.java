@@ -18,22 +18,22 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupUserDataAccessInterface;
-import view.StartView;
+import view.SignupView;
 
 import javax.swing.*;
 import java.io.IOException;
 
-public class StartUseCaseFactory {
-    private StartUseCaseFactory() {
+public class SignupUseCaseFactory {
+    private SignupUseCaseFactory() {
     }
 
-    public static StartView create(ViewManagerModel viewManagerModel,
-                                   SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoggedInUserViewModel loggedInUserViewModel,
-                                   SignupUserDataAccessInterface signupUserDataAccessInterface, LoginUserDataAccessInterface loginUserDataAccessInterface) {
+    public static SignupView create(ViewManagerModel viewManagerModel,
+                                    SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoggedInUserViewModel loggedInUserViewModel,
+                                    SignupUserDataAccessInterface signupUserDataAccessInterface, LoginUserDataAccessInterface loginUserDataAccessInterface) {
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, signupUserDataAccessInterface);
             LoginController loginController = createUserLoginUseCase(viewManagerModel, loggedInUserViewModel, loginViewModel, loginUserDataAccessInterface);
-            return new StartView(signupController, signupViewModel, loginController, loginViewModel);
+            return new SignupView(signupController, signupViewModel, loginController, loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
