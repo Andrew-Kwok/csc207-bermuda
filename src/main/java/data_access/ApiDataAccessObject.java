@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import static constant.Constant.API_TOKEN;
-import static constant.Constant.URL_GET_PROJECT;
+import static constant.APIConstant.API_TOKEN;
+import static constant.APIConstant.URL_GET_PROJECT;
 
 public class ApiDataAccessObject implements ApiDataAccessInterface {
     public static String getApiToken() {

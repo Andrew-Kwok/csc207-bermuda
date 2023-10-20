@@ -7,6 +7,7 @@ import interface_adapter.signup.SignupController;
 
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.view_model.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,27 +18,33 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "start";
+import static constant.ViewConstant.LOGIN_VIEW_NAME;
+import static constant.ViewConstant.SIGNUP_VIEW_NAME;
 
+public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = SIGNUP_VIEW_NAME;
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
+    private final ViewManagerModel viewManagerModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
     private final LoginController loginController;
     private final JButton signUp;
-    private final JButton logIn;
+    private final JButton cancel;
 
     public SignupView(SignupController signupController, SignupViewModel signupViewModel,
-                      LoginController loginController, LoginViewModel loginViewModel) {
+                      LoginController loginController, LoginViewModel loginViewModel,
+                      ViewManagerModel viewManagerModel) {
 
         this.signupController = signupController;
         this.signupViewModel = signupViewModel;
 
         this.loginController = loginController;
         this.loginViewModel = loginViewModel;
+
+        this.viewManagerModel = viewManagerModel;
 
         signupViewModel.addPropertyChangeListener(this);
         //loginViewModel.addPropertyChangeListener(this);
@@ -53,10 +60,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
 
         JPanel buttons = new JPanel();
-        logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
-        buttons.add(logIn);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
+        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(cancel);
+
 
 
         signUp.addActionListener(
@@ -74,18 +82,17 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        logIn.addActionListener(
+        cancel.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(logIn)) {
-                            // TODO interactor.execute()
-                            LoginState currentState = loginViewModel.getState();
+                        if (e.getSource().equals(cancel)) {
+                            viewManagerModel.setActiveView(LOGIN_VIEW_NAME);
+                            viewManagerModel.firePropertyChanged();
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword());
-
+                            clearUserNameField();
+                            clearPasswordField();
+                            clearRepeatedPasswordField();
                         }
                     }
                 }
@@ -184,5 +191,17 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
+    }
+
+    private void clearUserNameField() {
+        usernameInputField.setText("");
+    }
+
+    private void clearPasswordField() {
+        passwordInputField.setText("");
+    }
+
+    private void clearRepeatedPasswordField() {
+        repeatPasswordInputField.setText("");
     }
 }

@@ -5,6 +5,7 @@ import interface_adapter.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.view_model.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +16,15 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static constant.ViewConstant.LOGIN_VIEW_NAME;
+import static constant.ViewConstant.SIGNUP_VIEW_NAME;
+
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    public final String viewName = "log in";
+    public final String viewName = LOGIN_VIEW_NAME;
     private final LoginViewModel loginViewModel;
     private final LoggedInUserViewModel loggedInUserViewModel;
+    private final ViewManagerModel viewManagerModel;
 
     final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
@@ -32,11 +37,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel, LoginController controller,
-                     LoggedInUserViewModel loggedInUserViewModel) {
+                     LoggedInUserViewModel loggedInUserViewModel, ViewManagerModel viewManagerModel) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
         this.loggedInUserViewModel = loggedInUserViewModel;
+        this.viewManagerModel = viewManagerModel;
+
         this.loginViewModel.addPropertyChangeListener(this);
         this.loggedInUserViewModel.addPropertyChangeListener(this);
 
@@ -74,7 +81,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(signUp)) {
                             // TODO show signupView
-
+                            viewManagerModel.setActiveView(SIGNUP_VIEW_NAME);
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
@@ -167,12 +175,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         usernameInputField.setText(state.getUsername());
     }
 
+    private void clearUserNameField() {
+        usernameInputField.setText("");
+    }
+
     private void clearPasswordField() {
         passwordInputField.setText("");
     }
 
-    private void clearUserNameField() {
-        usernameInputField.setText("");
-    }
+
 
 }

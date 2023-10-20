@@ -11,9 +11,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static constant.ViewConstant.LOGGING_VIEW_NAME;
+
 public class LoggedInUserView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    public final String viewName = "logged in";
+    public final String viewName = LOGGING_VIEW_NAME;
     private final LoggedInUserViewModel loggedInViewModel;
     private final LogoutController logoutController;
     JLabel username;
