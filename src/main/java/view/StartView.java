@@ -70,9 +70,10 @@ public class StartView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
-                            // TODO interactor.execute()
-                            //
-                            JOptionPane.showMessageDialog(new JFrame(), "sign up clicked");
+                            signupController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword(),
+                                    currentState.getRepeatPassword());
                         }
                     }
                 }

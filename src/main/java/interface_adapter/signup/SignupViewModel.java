@@ -1,17 +1,21 @@
 package interface_adapter.signup;
 
+;
+
 import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class SignupViewModel extends ViewModel {
-    public static final String LOGIN_BUTTON_LABEL = "Log in";
-    public static final String SIGNUP_BUTTON_LABEL = "Sign up";
-    public static final String TITLE_LABEL = "Start your TODO NOW!";
-    public static final String USERNAME_LABEL = "Username";
-    public static final String PASSWORD_LABEL = "Password";
-    public static final String REPEAT_PASSWORD_LABEL = "Password again";
 
+    public static final String TITLE_LABEL = "Welcome to Bermuda!";
+    public static final String USERNAME_LABEL = "Choose username";
+    public static final String PASSWORD_LABEL = "Choose password";
+    public static final String REPEAT_PASSWORD_LABEL = "Enter password again";
+
+    public static final String SIGNUP_BUTTON_LABEL = "Sign up";
+    public static final String LOGIN_BUTTON_LABEL = "log in";
 
     private SignupState state = new SignupState();
 
@@ -23,14 +27,16 @@ public class SignupViewModel extends ViewModel {
         this.state = state;
     }
 
-    @Override
-    public void firePropertyChanged() {
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+    // This is what the Signup Presenter will call to let the ViewModel know
+    // to alert the View
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
     }
 
-    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-
+        support.addPropertyChangeListener(listener);
     }
 
     public SignupState getState() {

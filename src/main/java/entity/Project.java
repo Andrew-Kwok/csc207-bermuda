@@ -40,7 +40,6 @@ public class Project {
 
     @Override
     public String toString() {
-        String toPrint = "Proejct ID: %s\nProject name: %s\n".formatted(projectID, projectName);
-        return toPrint;
+        return "Project ID: %s\nProject name: %s\n".formatted(projectID, projectName);
     }
 }

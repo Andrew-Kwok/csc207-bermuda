@@ -1,14 +1,19 @@
 package app;
 
+import data_access.FileUserDataAccessObject;
+import entity.NewUserFactory;
 import interface_adapter.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 import view.StartView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Bermuda {
     public static void main(String[] args) {
@@ -29,7 +34,17 @@ public class Bermuda {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInUserViewModel loggedInViewModel = new LoggedInUserViewModel();
 
-        StartView startView = StartUseCaseFactory.create();
+        SignupUserDataAccessInterface signupUserDataAccessInterface;
+        LoginUserDataAccessInterface loginUserDataAccessInterface;
+
+        try {
+            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
+            loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        StartView startView = StartUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, loggedInViewModel,
+                signupUserDataAccessInterface, loginUserDataAccessInterface);
         views.add(startView, startView.viewName);
 
         viewManagerModel.setActiveView(startView.viewName);
