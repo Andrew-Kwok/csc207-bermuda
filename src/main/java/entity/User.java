@@ -5,7 +5,6 @@ import java.util.List;
 
 public class User {
     private final String username;
-
     private String password;
     private List<String> projects = new ArrayList<String>();
     private int userLevel = 1;

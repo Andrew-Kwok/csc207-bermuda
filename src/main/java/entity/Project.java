@@ -6,6 +6,14 @@ public class Project {
     private final String projectID;
     private final String projectName;
 
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
     public Project(String projectID, String projectName) {
         this.projectID = projectID;
         this.projectName = projectName;
@@ -40,6 +48,6 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project ID: %s\nProject name: %s\n".formatted(projectID, projectName);
+        return "[%s] Project name: %s\n".formatted(projectID, projectName);
     }
 }

@@ -39,3 +39,6 @@ build/
 
 #### csv files
 users.csv
+
+#### trial files
+src/main/java/app/trial/

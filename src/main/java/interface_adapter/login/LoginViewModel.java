@@ -12,7 +12,8 @@ public class LoginViewModel extends ViewModel {
     public final String PASSWORD_LABEL = "Enter password";
 
     public static final String LOGIN_BUTTON_LABEL = "Log in";
-    public static final String SIGNUP_BUTTON_LABEL = "New User?";
+    public static final String SIGNUP_BUTTON_LABEL = "New User ?";
+    public static final String EXIT_BUTTON_LABEL = "Exit";
 
     private LoginState state = new LoginState();
 
