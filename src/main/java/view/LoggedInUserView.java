@@ -18,10 +18,18 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
     public final String viewName = LOGGING_VIEW_NAME;
     private final LoggedInUserViewModel loggedInViewModel;
     private final LogoutController logoutController;
-    JLabel username;
+    JLabel title;
+    JLabel homePageInfo;
+    JLabel taskStats;
 
-    final JButton logOut;
+    final JButton check;
+    final JButton create;
+    final JButton logout;
     final JButton deleteAccount;
+
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    JList<String> jList = new JList<>(listModel);
+    JScrollPane scrollPane = new JScrollPane(jList);
 
     /**
      * A window with a title and a JButton.
@@ -31,27 +39,40 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
         this.logoutController = logoutController;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Logged In Screen");
+        title = new JLabel("Home Page\n");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel();
+        homePageInfo = new JLabel();
+        homePageInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        taskStats = new JLabel();
+        taskStats.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
-        logOut = new JButton(LoggedInUserViewModel.LOGOUT_BUTTON_LABEL);
-        buttons.add(logOut);
+
+        check = new JButton(loggedInUserViewModel.CHECK_BUTTON_LABEL);
+        buttons.add(check);
+
+        create = new JButton(loggedInUserViewModel.CREATE_BUTTON_LABEL);
+        buttons.add(create);
+
+        logout = new JButton(LoggedInUserViewModel.LOGOUT_BUTTON_LABEL);
+        buttons.add(logout);
 
         deleteAccount = new JButton(LoggedInUserViewModel.DELETE_BUTTON_LABEL);
         buttons.add(deleteAccount);
 
-        logOut.addActionListener(
+
+
+        logout.addActionListener(
                 new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        if(evt.getSource().equals(logOut)){
+                        if(evt.getSource().equals(logout)){
                             LoggedInState loggedInState = loggedInUserViewModel.getState();
                             logoutController.execute(loggedInState.getUsername());
+                            listModel.clear();
                         }
                     }
                 }
@@ -70,10 +91,9 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
         );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.add(title);
-        this.add(usernameInfo);
-        this.add(username);
+        this.add(homePageInfo);
+        this.add(scrollPane);
         this.add(buttons);
     }
 
@@ -87,7 +107,18 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInState state = (LoggedInState) evt.getNewValue();
-        username.setText(state.getUsername());
+
+        String homePageMessage = "Welcome! %s \n[Bermuda ID:%s]"
+                .formatted(state.getUsername(), state.getAccount_id());
+        homePageInfo.setText(homePageMessage);
+        taskStats.setText("You have %d tasks.".formatted(state.getTaskIDs().size()));
+
+        listModel.addAll(state.getTaskInfo());
+        // printer debug
+//        for(String s: state.getTaskInfo()){
+//            System.out.println(s);
+//        }
+
         if(!state.isLoggedIn()){
             JOptionPane.showMessageDialog(this, "%s logged out!".formatted(state.getUsername()));
         }

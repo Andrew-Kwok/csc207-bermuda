@@ -4,11 +4,13 @@ import entity.Account;
 
 import entity.Task;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import static constant.APIConstant.*;
@@ -44,7 +46,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
     }
 
     @Override
-    public Account createAccount(String accountName) {
+    public Account createAccount(String accountName, String password) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         RequestBody body = new FormBody.Builder()
@@ -63,6 +65,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
                 return Account.builder()
                         .accountID(responseBody.getString("id"))
                         .accountName(responseBody.getString("name"))
+                        .password(password)
                         .build();
             } else {
                 throw new RuntimeException("error");
@@ -88,11 +91,6 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public List<Task> getTasks(String accountID) {
-        return null;
     }
 
     @Override
@@ -130,5 +128,43 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
         }
     }
 
+    @Override
+    public List<Task> getTasks(String accountID) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(String.format(URL_TASKS, accountID)).newBuilder();
+        urlBuilder.addQueryParameter("project_id", accountID);
+        Request request = new Request.Builder()
+                .url(urlBuilder.build())
+                .addHeader("Authorization", getApiToken())
+                .addHeader("Content-Type", "application/json")
+                .get()
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 200) {
+                List<Task> tasks = new ArrayList<>();
+
+                JSONArray responseArray = new JSONArray(response.body().string());
+                for(int i = 0; i < responseArray.length(); i++) {
+                    JSONObject taskJSON = responseArray.getJSONObject(i);
+                    Task newTask = Task.builder()
+                            .taskID(taskJSON.getString("id"))
+                            .accountID(taskJSON.getString("project_id"))
+                            .content(taskJSON.getString("content"))
+                            .dueDate(taskJSON.getJSONObject("due").getString("date"))
+                            .description(taskJSON.getJSONObject("due").getString("string"))
+                            .build();
+                    tasks.add(newTask);
+                }
+
+                return tasks;
+            } else {
+                throw new RuntimeException("error");
+            }
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 package app;
 
+import data_access.ApiDataAccessInterface;
 import entity.NewUserFactory;
 import entity.UserFactory;
 import interface_adapter.loggedin_user.LoggedInUserViewModel;
@@ -31,10 +32,12 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInUserViewModel loggedInUserViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) {
+            LoginUserDataAccessInterface userDataAccessObject,
+            ApiDataAccessInterface apiDataAccessObject) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInUserViewModel, userDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInUserViewModel,
+                    userDataAccessObject, apiDataAccessObject);
             return new LoginView(loginViewModel, loginController, loggedInUserViewModel, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -47,7 +50,8 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInUserViewModel loggedInViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) throws IOException {
+            LoginUserDataAccessInterface userDataAccessObject,
+            ApiDataAccessInterface apiDataAccessInterface) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
@@ -55,7 +59,7 @@ public class LoginUseCaseFactory {
         UserFactory userFactory = new NewUserFactory();
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
+                userDataAccessObject, apiDataAccessInterface,loginOutputBoundary);
 
         return new LoginController(loginInteractor);
     }

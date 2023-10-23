@@ -1,5 +1,6 @@
 package app;
 
+import data_access.ApiDataAccessInterface;
 import entity.NewUserFactory;
 import entity.UserFactory;
 import interface_adapter.loggedin_user.LoggedInUserViewModel;
@@ -29,10 +30,12 @@ public class SignupUseCaseFactory {
 
     public static SignupView create(ViewManagerModel viewManagerModel,
                                     SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoggedInUserViewModel loggedInUserViewModel,
-                                    SignupUserDataAccessInterface signupUserDataAccessInterface, LoginUserDataAccessInterface loginUserDataAccessInterface) {
+                                    SignupUserDataAccessInterface signupUserDataAccessInterface, LoginUserDataAccessInterface loginUserDataAccessInterface,
+                                    ApiDataAccessInterface apiDataAccessInterface) {
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, signupUserDataAccessInterface);
-            LoginController loginController = createUserLoginUseCase(viewManagerModel, loggedInUserViewModel, loginViewModel, loginUserDataAccessInterface);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel,
+                    signupUserDataAccessInterface, apiDataAccessInterface);
+            LoginController loginController = createUserLoginUseCase(viewManagerModel, loggedInUserViewModel, loginViewModel, loginUserDataAccessInterface, apiDataAccessInterface);
             return new SignupView(signupController, signupViewModel, loginController, loginViewModel, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -42,27 +45,29 @@ public class SignupUseCaseFactory {
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel,
                                                             SignupViewModel signupViewModel, LoginViewModel loginViewModel,
-                                                            SignupUserDataAccessInterface userDataAccessObject) throws IOException {
+                                                            SignupUserDataAccessInterface userDataAccessObject,
+                                                            ApiDataAccessInterface apiDataAccessInterface) throws IOException {
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         UserFactory userFactory = new NewUserFactory();
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
+                userDataAccessObject,apiDataAccessInterface, signupOutputBoundary, userFactory);
 
         return new SignupController(userSignupInteractor);
     }
 
     private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel,
                                                           LoggedInUserViewModel loggedInUserViewModel, LoginViewModel loginViewModel,
-                                                          LoginUserDataAccessInterface loginUserDataAccessInterface) throws IOException {
+                                                          LoginUserDataAccessInterface loginUserDataAccessInterface,
+                                                          ApiDataAccessInterface apiDataAccessInterface) throws IOException {
 
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInUserViewModel,loginViewModel);
 
         UserFactory userFactory = new NewUserFactory();
 
-        LoginInputBoundary loginInputBoundary = new LoginInteractor(loginUserDataAccessInterface, loginOutputBoundary);
+        LoginInputBoundary loginInputBoundary = new LoginInteractor(loginUserDataAccessInterface, apiDataAccessInterface,loginOutputBoundary);
 
         return new LoginController(loginInputBoundary);
     }

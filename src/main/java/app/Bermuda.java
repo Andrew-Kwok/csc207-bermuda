@@ -1,5 +1,7 @@
 package app;
 
+import data_access.ApiDataAccessInterface;
+import data_access.ApiDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import entity.NewUserFactory;
 import interface_adapter.loggedin_user.LoggedInUserViewModel;
@@ -38,18 +40,20 @@ public class Bermuda {
 
         SignupUserDataAccessInterface signupUserDataAccessInterface;
         LoginUserDataAccessInterface loginUserDataAccessInterface;
+        ApiDataAccessInterface apiDataAccessInterface;
 
         try {
-            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
+            apiDataAccessInterface = new ApiDataAccessObject();
+            signupUserDataAccessInterface = new FileUserDataAccessObject("./accounts.csv", "./projects,csv",new NewUserFactory());
             loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, loggedInUserViewModel,
-                signupUserDataAccessInterface, loginUserDataAccessInterface);
+                signupUserDataAccessInterface, loginUserDataAccessInterface, apiDataAccessInterface);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, loginUserDataAccessInterface);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, loginUserDataAccessInterface, apiDataAccessInterface);
         views.add(loginView, loginView.viewName);
 
         LoggedInUserView loggedInUserView = LogoutUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel);

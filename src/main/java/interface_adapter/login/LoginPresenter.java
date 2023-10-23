@@ -25,6 +25,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         // On success, switch to the logged in view.
         LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(response.getUsername());
+        loggedInState.setAccount_id(response.getAccountID());
+        loggedInState.setTaskInfo(response.getTaskInfo());
+        loggedInState.setTaskIDs(response.getTaskIDs());
         loggedInState.setLoggedIn(true);
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
@@ -34,12 +37,12 @@ public class LoginPresenter implements LoginOutputBoundary {
     }
 
     @Override
-    public void prepareFailView(LoginOutputData error) {
+    public void prepareFailView(int errorCode, String message) {
         LoginState loginState = loginViewModel.getState();
-        if(error.getErrorCode() == 1){
-            loginState.setUsernameError(error.getUsername() + ": Account does not exist.");
-        } else if (error.getErrorCode() == 2) {
-            loginState.setPasswordError("Incorrect password for " + error.getUsername() + ".");
+        if(errorCode == 1){
+            loginState.setUsernameError(message);
+        } else if (errorCode == 2) {
+            loginState.setPasswordError(message);
         }
         loginViewModel.firePropertyChanged();
     }

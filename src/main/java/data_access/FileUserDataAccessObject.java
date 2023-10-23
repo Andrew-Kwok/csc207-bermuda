@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.Account;
 import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
@@ -13,9 +14,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     private final File csvProjectFile;
 
     private final List<String> userHeaders = new ArrayList<String>();
-    private final Map<String, User> userMap = new HashMap<>();
-    private final Map<String, Integer> projectHeaders = new HashMap<>();
-    private final Map<String, User> projectMap = new HashMap<>();
+    private final Map<String, Account> userMap = new HashMap<>();
     private UserFactory newUserFactory;
 
     public FileUserDataAccessObject(String csvUserPath, String csvProjectPath,
@@ -23,30 +22,30 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         this.csvUserFile = new File(csvUserPath);
         this.csvProjectFile = new File(csvProjectPath);
         this.newUserFactory = newUserFactory;
-        userHeaders.add("username");
+        userHeaders.add("account_name");
+        userHeaders.add("account_id");
         userHeaders.add("password");
         userHeaders.add("level");
-        userHeaders.indexOf("username");
 
         if (csvUserFile.length() == 0) {
             save();
         } else {
-
             try (BufferedReader reader = new BufferedReader(new FileReader(csvUserFile))) {
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,level");
+                assert header.equals("account_name,account_id,password,level");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    String username = String.valueOf(col[userHeaders.indexOf("username")]);
+                    String accountName = String.valueOf(col[userHeaders.indexOf("account_name")]);
+                    String accountId = String.valueOf(col[userHeaders.indexOf("account_id")]);
                     String password = String.valueOf(col[userHeaders.indexOf("password")]);
-                    int level = Integer.parseInt(col[userHeaders.indexOf("level")]);
-                    User user = newUserFactory.create(username, password);
-                    user.setUserLevel(level);
-                    userMap.put(username, user);
+                    int level = Integer.valueOf(col[userHeaders.indexOf("level")]);
+                    Account currentAccount = new Account(accountId, accountName, password);
+                    currentAccount.setLevel(level);
+                    userMap.put(accountName, currentAccount);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -54,13 +53,13 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
-    public void save(User user) {
-        userMap.put(user.getUsername(), user);
+    public void save(Account newAccount) {
+        userMap.put(newAccount.getAccountName(), newAccount);
         this.save();
     }
 
-    public User get(String username) {
-        return userMap.get(username);
+    public Account get(String accountName) {
+        return userMap.get(accountName);
     }
 
     private void save() {
@@ -70,8 +69,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             writer.write(String.join(",", userHeaders));
             writer.newLine();
 
-            for (User user : userMap.values()) {
-                String line = String.format("%s,%s,%s", user.getUsername(), user.getPassword(), user.getUserLevel());
+            for (Account account : userMap.values()) {
+                String line = String.format("%s,%s,%s,%s", account.getAccountName(),
+                        account.getAccountID(), account.getPassword(), account.getLevel());
                 writer.write(line);
                 writer.newLine();
             }

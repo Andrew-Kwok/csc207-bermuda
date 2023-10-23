@@ -9,7 +9,8 @@ public class LoggedInUserViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 
     private LoggedInState state = new LoggedInState();
-
+    public static final String CREATE_BUTTON_LABEL = "Create new task";
+    public static final String CHECK_BUTTON_LABEL = "Check task details";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     public static final String DELETE_BUTTON_LABEL = "Delete Account";
     private String loggedInUser;

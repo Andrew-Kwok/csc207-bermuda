@@ -1,17 +1,34 @@
 package use_case.login;
 
+import java.util.List;
+
 public class LoginOutputData {
 
     private final String username;
-    private final int errorCode;
+    private final String accountID;
+    private final List<String> taskInfo;
 
-    public int getErrorCode() {
-        return errorCode;
+    public List<String> getTaskInfo() {
+        return taskInfo;
     }
 
-    public LoginOutputData(String username, int errorCode) {
+    public List<String> getTaskIDs() {
+        return taskIDs;
+    }
+
+    private final List<String> taskIDs;
+
+    public String getAccountID() {
+        return accountID;
+    }
+
+
+    public LoginOutputData(String username, String accountID,
+                           List<String> taskInfo, List<String> taskIDs) {
         this.username = username;
-        this.errorCode = errorCode;
+        this.accountID = accountID;
+        this.taskInfo = taskInfo;
+        this.taskIDs = taskIDs;
     }
 
     public String getUsername() {
