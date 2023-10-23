@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+#### csv files
+users.csv
+
+#### trial files
+src/main/java/app/trial/
