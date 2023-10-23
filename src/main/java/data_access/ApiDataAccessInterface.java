@@ -1,8 +1,16 @@
 package data_access;
 
-import entity.Project;
+import entity.Account;
+import entity.Task;
+
+import java.util.List;
 
 public interface ApiDataAccessInterface {
-    public Project getProject(String projectID);
-    public Project createProject(String projectName);
+    // user methods
+    public Account createAccount(String accountName);
+    public Account getAccount(String accountID);
+    public boolean deleteAccount(String accountID);
+    public List<Task> getTasks(String accountID);
+    // tasks methods
+    public Task createTask(String accountID, String content, String description, String dueDate);
 }

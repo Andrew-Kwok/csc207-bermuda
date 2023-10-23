@@ -21,6 +21,7 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
     JLabel username;
 
     final JButton logOut;
+    final JButton deleteAccount;
 
     /**
      * A window with a title and a JButton.
@@ -40,6 +41,9 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
         logOut = new JButton(LoggedInUserViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
 
+        deleteAccount = new JButton(LoggedInUserViewModel.DELETE_BUTTON_LABEL);
+        buttons.add(deleteAccount);
+
         logOut.addActionListener(
                 new ActionListener() {
 
@@ -48,6 +52,18 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
                         if(evt.getSource().equals(logOut)){
                             LoggedInState loggedInState = loggedInUserViewModel.getState();
                             logoutController.execute(loggedInState.getUsername());
+                        }
+                    }
+                }
+        );
+
+        deleteAccount.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(deleteAccount)){
+                            // TODO
+                            System.out.println("to delete the user account");
                         }
                     }
                 }

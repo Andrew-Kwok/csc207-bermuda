@@ -1,53 +1,53 @@
 package entity;
 
-public class Project {
+public class Account {
 
     // Refer to the API documentation for the meaning of these fields.
-    private final String projectID;
-    private final String projectName;
+    private final String accountID;
+    private final String accountName;
 
-    public String getProjectID() {
-        return projectID;
+    public String getAccountID() {
+        return accountID;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public Project(String projectID, String projectName) {
-        this.projectID = projectID;
-        this.projectName = projectName;
+    public Account(String accountID, String accountName) {
+        this.accountID = accountID;
+        this.accountName = accountName;
     }
 
-    public static ProjectBuilder builder() {
-        return new ProjectBuilder();
+    public static AccountBuilder builder() {
+        return new AccountBuilder();
     }
 
-    public static class ProjectBuilder {
-        private String projectID;
-        private String projectName;
+    public static class AccountBuilder {
+        private String accountID;
+        private String accountName;
 
-        ProjectBuilder() {
+        AccountBuilder() {
         }
 
-        public ProjectBuilder projectID(String projectID) {
-            this.projectID = projectID;
+        public AccountBuilder accountID(String acountID) {
+            this.accountID = acountID;
             return this;
         }
 
-        public ProjectBuilder projectName(String projectName) {
-            this.projectName = projectName;
+        public AccountBuilder accountName(String accountName) {
+            this.accountName = accountName;
             return this;
         }
 
 
-        public Project build() {
-            return new Project(projectID, projectName);
+        public Account build() {
+            return new Account(accountID, accountName);
         }
     }
 
     @Override
     public String toString() {
-        return "[%s] Project name: %s\n".formatted(projectID, projectName);
+        return "[%s] Account name: %s\n".formatted(accountID, accountName);
     }
 }
