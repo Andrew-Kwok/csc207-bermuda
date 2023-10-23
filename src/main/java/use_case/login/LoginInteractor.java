@@ -3,7 +3,6 @@ package use_case.login;
 import data_access.ApiDataAccessInterface;
 import entity.Account;
 import entity.Task;
-import entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

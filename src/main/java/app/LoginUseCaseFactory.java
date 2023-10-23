@@ -1,8 +1,6 @@
 package app;
 
 import data_access.ApiDataAccessInterface;
-import entity.NewUserFactory;
-import entity.UserFactory;
 import interface_adapter.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -17,7 +15,6 @@ import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
-import view.LoggedInUserView;
 import view.LoginView;
 
 import javax.swing.*;
@@ -55,8 +52,6 @@ public class LoginUseCaseFactory {
 
         // Notice how we pass this method's parameters to the Presenter.
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
-
-        UserFactory userFactory = new NewUserFactory();
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, apiDataAccessInterface,loginOutputBoundary);

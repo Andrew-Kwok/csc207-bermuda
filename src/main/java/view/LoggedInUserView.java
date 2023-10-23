@@ -62,7 +62,24 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
         deleteAccount = new JButton(LoggedInUserViewModel.DELETE_BUTTON_LABEL);
         buttons.add(deleteAccount);
 
+        check.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO
+                // get_task controller
+                String taskSelected = jList.getSelectedValue();
+                System.out.println("to check task in detail: " + taskSelected);
+            }
+        });
 
+        create.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO
+                // create task controller
+                System.out.println("to create a new task");
+            }
+        });
 
         logout.addActionListener(
                 new ActionListener() {
@@ -84,6 +101,7 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
                     public void actionPerformed(ActionEvent e) {
                         if(e.getSource().equals(deleteAccount)){
                             // TODO
+                            // delete account controller
                             System.out.println("to delete the user account");
                         }
                     }
@@ -93,6 +111,7 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(homePageInfo);
+        this.add(taskStats);
         this.add(scrollPane);
         this.add(buttons);
     }
@@ -114,10 +133,6 @@ public class LoggedInUserView extends JPanel implements ActionListener, Property
         taskStats.setText("You have %d tasks.".formatted(state.getTaskIDs().size()));
 
         listModel.addAll(state.getTaskInfo());
-        // printer debug
-//        for(String s: state.getTaskInfo()){
-//            System.out.println(s);
-//        }
 
         if(!state.isLoggedIn()){
             JOptionPane.showMessageDialog(this, "%s logged out!".formatted(state.getUsername()));

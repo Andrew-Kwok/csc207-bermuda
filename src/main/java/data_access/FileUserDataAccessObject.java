@@ -1,8 +1,6 @@
 package data_access;
 
 import entity.Account;
-import entity.User;
-import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -15,13 +13,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     private final List<String> userHeaders = new ArrayList<String>();
     private final Map<String, Account> userMap = new HashMap<>();
-    private UserFactory newUserFactory;
 
-    public FileUserDataAccessObject(String csvUserPath, String csvProjectPath,
-                                    UserFactory newUserFactory) throws FileNotFoundException {
+    public FileUserDataAccessObject(String csvUserPath, String csvProjectPath) throws FileNotFoundException {
         this.csvUserFile = new File(csvUserPath);
         this.csvProjectFile = new File(csvProjectPath);
-        this.newUserFactory = newUserFactory;
         userHeaders.add("account_name");
         userHeaders.add("account_id");
         userHeaders.add("password");

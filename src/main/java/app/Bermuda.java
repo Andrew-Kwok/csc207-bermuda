@@ -3,7 +3,6 @@ package app;
 import data_access.ApiDataAccessInterface;
 import data_access.ApiDataAccessObject;
 import data_access.FileUserDataAccessObject;
-import entity.NewUserFactory;
 import interface_adapter.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -44,7 +43,7 @@ public class Bermuda {
 
         try {
             apiDataAccessInterface = new ApiDataAccessObject();
-            signupUserDataAccessInterface = new FileUserDataAccessObject("./accounts.csv", "./projects,csv",new NewUserFactory());
+            signupUserDataAccessInterface = new FileUserDataAccessObject("./accounts.csv", "./projects,csv");
             loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
         } catch (IOException e) {
             throw new RuntimeException(e);
