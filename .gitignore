@@ -39,6 +39,7 @@ build/
 
 #### csv files
 users.csv
+accounts.csv
 
 #### trial files
 src/main/java/app/trial/
