@@ -1,30 +1,83 @@
 package entity.task;
 
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
 public class Task {
-    private String taskID;
-    private String todoistTaskID;
+    private final String taskID;
+    private final String projectID;
     private String taskName;
-    private String taskStatus;
-    private String taskDescription;
-    private ZonedDateTime taskDeadline;
+    private String taskStatus = "IPR";
+    private String taskDescription = "";
+    private ZonedDateTime taskDeadline = ZonedDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(LocalTime.MAX.getNano());
 
-    public Task(String taskID, String todoistTaskID, String taskName, String taskStatus, String taskDescription, ZonedDateTime taskDeadline) {
+    public Task(String taskID, String projectID, String taskName) {
         this.taskID = taskID;
-        this.todoistTaskID = todoistTaskID;
+        this.projectID = projectID;
+        this.taskName = taskName;
+    }
+
+    public Task(String taskID, String projectID, String taskName, String taskStatus, String taskDescription, ZonedDateTime taskDeadline) {
+        this.taskID = taskID;
+        this.projectID = projectID;
         this.taskName = taskName;
         this.taskStatus = taskStatus;
         this.taskDescription = taskDescription;
         this.taskDeadline = taskDeadline;
     }
 
-    public String getTaskID() {
-        return taskID;
+    public static taskBuilder builder() {
+        return new taskBuilder();
     }
 
-    public String getTodoistTaskID() {
-        return todoistTaskID;
+    public static class taskBuilder {
+        private String taskID;
+        private String projectID;
+        private String taskName;
+        private String taskStatus = "IPR";
+        private String taskDescription = "";
+        private ZonedDateTime taskDeadline = ZonedDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(LocalTime.MAX.getNano());
+
+        taskBuilder() {
+        }
+
+        public taskBuilder taskID(String taskID) {
+            this.taskID = taskID;
+            return this;
+        }
+
+        public taskBuilder projectID(String projectID) {
+            this.projectID = projectID;
+            return this;
+        }
+
+        public taskBuilder taskName(String taskName) {
+            this.taskName = taskName;
+            return this;
+        }
+
+        public taskBuilder taskStatus(String taskStatus) {
+            this.taskStatus = taskStatus;
+            return this;
+        }
+
+        public taskBuilder taskDescription(String taskDescription) {
+            this.taskDescription = taskDescription;
+            return this;
+        }
+
+        public taskBuilder taskDeadline(ZonedDateTime taskDeadline) {
+            this.taskDeadline = taskDeadline;
+            return this;
+        }
+
+        public Task build() {
+            return new Task(taskID, projectID, taskName, taskStatus, taskDescription, taskDeadline);
+        }
+    }
+
+    public String getTaskID() {
+        return taskID;
     }
 
     public String getTaskName() {
@@ -43,16 +96,32 @@ public class Task {
         return taskDeadline;
     }
 
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public void setTaskDeadline(ZonedDateTime taskDeadline) {
+        this.taskDeadline = taskDeadline;
+    }
+
     @Override
 public String toString() {
         return ("""
                 [Task ID: %s]
-                \t Todoist Task ID: %s
+                \t Project ID: %s
                 \t Task Name: %s
                 \t Task Status: %s
                 \t Task Description: %s
                 \t Task Deadline: %s
                 """).
-                formatted(taskID, todoistTaskID, taskName, taskStatus, taskDescription, taskDeadline);
+                formatted(taskID, projectID, taskName, taskStatus, taskDescription, taskDeadline);
     }
 }

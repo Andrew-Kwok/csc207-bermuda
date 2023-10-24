@@ -1,5 +1,7 @@
 package data_access;
 
+import app.Bermuda;
+import config.Config;
 import entity.project.Project;
 import okhttp3.*;
 import org.json.JSONException;
@@ -7,21 +9,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import static constant.APIConstant.API_TOKEN;
-import static constant.APIConstant.URL_GET_PROJECT;
-
 public class ApiDataAccessObject implements ApiDataAccessInterface {
-    public static String getApiToken() {
-        return "Bearer " + API_TOKEN;
-    }
 
     @Override
     public Project getProject(String projectID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.todoist.com/rest/v2/projects/%s", projectID))
-                .addHeader("Authorization", getApiToken())
+                .url(String.format("%s/projects/%s", Config.getEnv("TODOIST_URL"), projectID))
+                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
@@ -48,8 +44,8 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
                 .add("name", projectName)
                 .build();
         Request request = new Request.Builder()
-                .url(URL_GET_PROJECT)
-                .addHeader("Authorization", getApiToken())
+                .url(String.format("%s/projects", Config.getEnv("TODOIST_URL")))
+                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -68,6 +64,4 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
-
-
 }

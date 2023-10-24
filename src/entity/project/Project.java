@@ -4,23 +4,57 @@ public class Project {
 
     // Refer to the API documentation for the meaning of these fields.
     private final String projectID;
-    private final String todoistProjectID;
-    private final String projectName;
-    private final String projectStatus;
+    private String projectName;
+    private String projectStatus = "IPR";
 
-    public Project(String projectID, String todoistProjectID, String projectName, String projectStatus) {
+    public Project(String projectID, String projectName) {
         this.projectID = projectID;
-        this.todoistProjectID = todoistProjectID;
+        this.projectName = projectName;
+    }
+
+    public Project(String projectID, String projectName, String projectStatus) {
+        this.projectID = projectID;
         this.projectName = projectName;
         this.projectStatus = projectStatus;
     }
 
-    public String getProjectID() {
-        return projectID;
+
+    public static ProjectBuilder builder() {
+        return new ProjectBuilder();
     }
 
-    public String getTodoistProjectID() {
-        return todoistProjectID;
+    public static class ProjectBuilder {
+        private String projectID;
+        private String projectName;
+        private String projectStatus = "IPR";
+
+        ProjectBuilder() {
+        }
+
+        public ProjectBuilder projectID(String projectID) {
+            this.projectID = projectID;
+            return this;
+        }
+
+        public ProjectBuilder projectName(String projectName) {
+            this.projectName = projectName;
+            return this;
+        }
+
+        public ProjectBuilder projectStatus(String projectStatus) {
+            this.projectStatus = projectStatus;
+            return this;
+        }
+
+        public Project build() {
+            return new Project(projectID, projectName, projectStatus);
+        }
+    }
+
+
+
+    public String getProjectID() {
+        return projectID;
     }
 
     public String getProjectName() {
@@ -31,14 +65,22 @@ public class Project {
         return projectStatus;
     }
 
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public void setProjectStatus(String projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
     @Override
     public String toString() {
         return ("""
                 [Project ID: %s]
-                \t Todoist Project ID: %s
                 \t Project Name: %s
                 \t Project Status: %s
                 """).
-                formatted(projectID, todoistProjectID, projectName, projectStatus);
+                formatted(projectID, projectName, projectStatus);
     }
 }

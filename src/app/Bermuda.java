@@ -1,5 +1,6 @@
 package app;
 
+import config.Config;
 import data_access.FileUserDataAccessObject;
 import entity.user.NewUserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;

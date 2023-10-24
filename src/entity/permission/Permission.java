@@ -4,9 +4,9 @@ public class Permission {
     private final String permissionID;
     private final String projectID;
     private final String userID;
-    private final String permissionName;
-    private final String permissionDescription;
-    private final String access;
+    private String permissionName;
+    private String permissionDescription = "";
+    private String access;
 
     public Permission(String permissionID, String projectID, String userID, String permissionName, String permissionDescription, String access) {
         this.permissionID = permissionID;
@@ -14,6 +14,14 @@ public class Permission {
         this.userID = userID;
         this.permissionName = permissionName;
         this.permissionDescription = permissionDescription;
+        this.access = access;
+    }
+
+    public Permission(String permissionID, String projectID, String userID, String permissionName, String access) {
+        this.permissionID = permissionID;
+        this.projectID = projectID;
+        this.userID = userID;
+        this.permissionName = permissionName;
         this.access = access;
     }
 
@@ -39,6 +47,18 @@ public class Permission {
 
     public String getAccess() {
         return access;
+    }
+
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
+
+    public void setPermissionDescription(String permissionDescription) {
+        this.permissionDescription = permissionDescription;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
     }
 
     @Override
