@@ -1,14 +1,13 @@
 package app;
 
-import config.Config;
 import data_access.FileUserDataAccessObject;
-import entity.user.NewUserFactory;
+import domains.user.entity.NewUserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.login.LoginUserDataAccessInterface;
-import use_case.user.upgrade_user.signup.SignupUserDataAccessInterface;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import view.LoggedInUserView;
 import view.LoginView;
 import view.SignupView;

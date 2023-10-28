@@ -1,7 +1,7 @@
 package app;
 
-import entity.user.NewUserFactory;
-import entity.user.UserFactory;
+import domains.user.entity.NewUserFactory;
+import domains.user.entity.UserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
@@ -9,13 +9,13 @@ import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.logout.LogoutController;
 import interface_adapter.user.logout.LogoutPresenter;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.login.LoginInputBoundary;
-import use_case.user.upgrade_user.login.LoginInteractor;
-import use_case.user.upgrade_user.login.LoginOutputBoundary;
-import use_case.user.upgrade_user.login.LoginUserDataAccessInterface;
-import use_case.user.upgrade_user.logout.LogoutInputBoundary;
-import use_case.user.upgrade_user.logout.LogoutInteractor;
-import use_case.user.upgrade_user.logout.LogoutOutputBoundary;
+import domains.user.use_case.login.LoginInputBoundary;
+import domains.user.use_case.login.LoginInteractor;
+import domains.user.use_case.login.LoginOutputBoundary;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.logout.LogoutInputBoundary;
+import domains.user.use_case.logout.LogoutInteractor;
+import domains.user.use_case.logout.LogoutOutputBoundary;
 import view.LoginView;
 
 import javax.swing.*;

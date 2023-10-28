@@ -1,8 +1,7 @@
 package data_access;
 
-import app.Bermuda;
 import config.Config;
-import entity.project.Project;
+import domains.project.entity.Project;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;

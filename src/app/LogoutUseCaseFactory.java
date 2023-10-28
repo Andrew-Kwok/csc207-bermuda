@@ -5,9 +5,9 @@ import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.logout.LogoutController;
 import interface_adapter.user.logout.LogoutPresenter;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.logout.LogoutInputBoundary;
-import use_case.user.upgrade_user.logout.LogoutInteractor;
-import use_case.user.upgrade_user.logout.LogoutOutputBoundary;
+import domains.user.use_case.logout.LogoutInputBoundary;
+import domains.user.use_case.logout.LogoutInteractor;
+import domains.user.use_case.logout.LogoutOutputBoundary;
 import view.LoggedInUserView;
 
 import javax.swing.*;

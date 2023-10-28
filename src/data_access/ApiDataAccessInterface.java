@@ -1,6 +1,6 @@
 package data_access;
 
-import entity.project.Project;
+import domains.project.entity.Project;
 
 public interface ApiDataAccessInterface {
     public Project getProject(String projectID);
