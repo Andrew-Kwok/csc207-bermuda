@@ -3,8 +3,8 @@ package interface_adapter.user.login;
 import interface_adapter.user.loggedin_user.LoggedInState;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.login.LoginOutputBoundary;
-import use_case.user.upgrade_user.login.LoginOutputData;
+import domains.user.use_case.login.LoginOutputBoundary;
+import domains.user.use_case.login.LoginOutputData;
 
 public class LoginPresenter implements LoginOutputBoundary {
 

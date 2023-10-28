@@ -1,7 +1,7 @@
 package app;
 
-import entity.user.NewUserFactory;
-import entity.user.UserFactory;
+import domains.user.entity.NewUserFactory;
+import domains.user.entity.UserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
@@ -10,14 +10,14 @@ import interface_adapter.user.signup.SignupController;
 import interface_adapter.user.signup.SignupPresenter;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.login.LoginInputBoundary;
-import use_case.user.upgrade_user.login.LoginInteractor;
-import use_case.user.upgrade_user.login.LoginOutputBoundary;
-import use_case.user.upgrade_user.login.LoginUserDataAccessInterface;
-import use_case.user.upgrade_user.signup.SignupInputBoundary;
-import use_case.user.upgrade_user.signup.SignupInteractor;
-import use_case.user.upgrade_user.signup.SignupOutputBoundary;
-import use_case.user.upgrade_user.signup.SignupUserDataAccessInterface;
+import domains.user.use_case.login.LoginInputBoundary;
+import domains.user.use_case.login.LoginInteractor;
+import domains.user.use_case.login.LoginOutputBoundary;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.signup.SignupInputBoundary;
+import domains.user.use_case.signup.SignupInteractor;
+import domains.user.use_case.signup.SignupOutputBoundary;
+import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import view.SignupView;
 
 import javax.swing.*;

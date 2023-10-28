@@ -4,8 +4,8 @@ import interface_adapter.user.loggedin_user.LoggedInState;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.logout.LogoutOutputBoundary;
-import use_case.user.upgrade_user.logout.LogoutOutputData;
+import domains.user.use_case.logout.LogoutOutputBoundary;
+import domains.user.use_case.logout.LogoutOutputData;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
 

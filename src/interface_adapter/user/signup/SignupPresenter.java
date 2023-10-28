@@ -3,8 +3,8 @@ package interface_adapter.user.signup;
 import interface_adapter.user.login.LoginState;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import use_case.user.upgrade_user.signup.SignupOutputBoundary;
-import use_case.user.upgrade_user.signup.SignupOutputData;
+import domains.user.use_case.signup.SignupOutputBoundary;
+import domains.user.use_case.signup.SignupOutputData;
 
 public class SignupPresenter implements SignupOutputBoundary {
 

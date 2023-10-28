@@ -1,7 +1,7 @@
 package interface_adapter.user.logout;
 
-import use_case.user.upgrade_user.logout.LogoutInputBoundary;
-import use_case.user.upgrade_user.logout.LogoutInputData;
+import domains.user.use_case.logout.LogoutInputBoundary;
+import domains.user.use_case.logout.LogoutInputData;
 
 public class LogoutController {
     LogoutInputBoundary logoutInteractor;

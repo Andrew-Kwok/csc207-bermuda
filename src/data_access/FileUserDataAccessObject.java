@@ -1,9 +1,9 @@
 package data_access;
 
-import entity.user.User;
-import entity.user.UserFactory;
-import use_case.user.upgrade_user.login.LoginUserDataAccessInterface;
-import use_case.user.upgrade_user.signup.SignupUserDataAccessInterface;
+import domains.user.entity.User;
+import domains.user.entity.UserFactory;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;

@@ -1,7 +1,7 @@
 package interface_adapter.user.signup;
 
-import use_case.user.upgrade_user.signup.SignupInputBoundary;
-import use_case.user.upgrade_user.signup.SignupInputData;
+import domains.user.use_case.signup.SignupInputBoundary;
+import domains.user.use_case.signup.SignupInputData;
 
 public class SignupController {
 
