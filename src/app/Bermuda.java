@@ -1,6 +1,9 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.cloudsql.SqlConfig;
+import data_access.cloudsql.SqlDataAccessObject;
+import domains.permission.entity.Permission;
 import domains.user.entity.NewUserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginViewModel;
@@ -13,9 +16,11 @@ import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
 
+import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 public class Bermuda {
     public static void main(String[] args) {
@@ -38,6 +43,9 @@ public class Bermuda {
 
         SignupUserDataAccessInterface signupUserDataAccessInterface;
         LoginUserDataAccessInterface loginUserDataAccessInterface;
+
+        DataSource sqlDataSource = SqlConfig.NewSQL();
+        SqlDataAccessObject sqlDataAccessObject = new SqlDataAccessObject(sqlDataSource);
 
         try {
             signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
