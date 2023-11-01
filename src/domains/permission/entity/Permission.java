@@ -6,23 +6,20 @@ public class Permission {
     private final String userID;
     private String permissionName;
     private String permissionDescription = "";
-    private String access;
 
-    public Permission(String permissionID, String projectID, String userID, String permissionName, String permissionDescription, String access) {
+    public Permission(String permissionID, String projectID, String userID, String permissionName, String permissionDescription) {
         this.permissionID = permissionID;
         this.projectID = projectID;
         this.userID = userID;
         this.permissionName = permissionName;
         this.permissionDescription = permissionDescription;
-        this.access = access;
     }
 
-    public Permission(String permissionID, String projectID, String userID, String permissionName, String access) {
+    public Permission(String permissionID, String projectID, String userID, String permissionName) {
         this.permissionID = permissionID;
         this.projectID = projectID;
         this.userID = userID;
         this.permissionName = permissionName;
-        this.access = access;
     }
 
     public String getPermissionID() {
@@ -45,20 +42,12 @@ public class Permission {
         return permissionDescription;
     }
 
-    public String getAccess() {
-        return access;
-    }
-
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
     }
 
     public void setPermissionDescription(String permissionDescription) {
         this.permissionDescription = permissionDescription;
-    }
-
-    public void setAccess(String access) {
-        this.access = access;
     }
 
     @Override
@@ -69,8 +58,7 @@ public class Permission {
                 \t User ID: %s
                 \t Permission Name: %s
                 \t Permission Description: %s
-                \t Access: %s
                 """).
-                formatted(permissionID, projectID, userID, permissionName, permissionDescription, access);
+                formatted(permissionID, projectID, userID, permissionName, permissionDescription);
     }
 }
