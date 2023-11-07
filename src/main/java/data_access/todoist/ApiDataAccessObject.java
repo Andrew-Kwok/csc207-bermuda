@@ -1,4 +1,4 @@
-package data_access;
+package data_access.todoist;
 
 import config.Config;
 import domains.project.entity.Project;
