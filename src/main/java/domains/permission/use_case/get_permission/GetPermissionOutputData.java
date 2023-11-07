@@ -4,10 +4,14 @@ import domains.permission.entity.Permission;
 
 import java.util.List;
 
-public class GetPermissionOutput {
+public class GetPermissionOutputData {
     private final List<Permission> permissions;
 
-    public GetPermissionOutput(List<Permission> permissions) {
+    public GetPermissionOutputData(List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
     }
 }
