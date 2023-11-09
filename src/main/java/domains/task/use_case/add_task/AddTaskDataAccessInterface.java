@@ -1,5 +1,7 @@
 package domains.task.use_case.add_task;
 
+import domains.task.entity.Task;
+
 public interface AddTaskDataAccessInterface {
-    String addTask();  // returns ID of task
+    Task addTask();  // returns ID of task
 }

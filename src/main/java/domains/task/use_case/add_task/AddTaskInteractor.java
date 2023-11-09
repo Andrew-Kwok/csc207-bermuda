@@ -1,5 +1,6 @@
 package domains.task.use_case.add_task;
 import app.task.AddTaskUseCaseFactory;
+import domains.task.entity.Task;
 
 public class AddTaskInteractor implements AddTaskInputBoundary{
     final AddTaskDataAccessInterface addTaskDataAccessObject;
@@ -16,8 +17,8 @@ public class AddTaskInteractor implements AddTaskInputBoundary{
 
     @Override
     public void execute(AddTaskInputData addTaskInputData) {
-        String taskID = this.addTaskDataAccessObject.addTask();
-        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(taskID);
+        Task task = this.addTaskDataAccessObject.addTask();
+        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(task);
         this.addTaskPresenter.printTaskID(addTaskOutputData);
     }
 }
