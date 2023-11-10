@@ -8,8 +8,12 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import domains.permission.entity.Permission;
+import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
+import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 
-public class SqlDataAccessObject implements SqlDataAccessInterface {
+public class SqlDataAccessObject implements
+        SqlDataAccessInterface,
+        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
@@ -44,5 +48,53 @@ public class SqlDataAccessObject implements SqlDataAccessInterface {
         }
 
         return permissions;
+    }
+
+    public void createPermission(Permission permission) throws Exception {
+        String sql = "INSERT INTO permission (id, user_id, project_id, permission_name, permission_description) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, permission.getPermissionID());
+            statement.setString(2, permission.getUserID());
+            statement.setString(3, permission.getProjectID());
+            statement.setString(4, permission.getPermissionName());
+            statement.setString(5, permission.getPermissionDescription());
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public void updatePermission(Permission permission) throws Exception {
+        String sql = "UPDATE permission SET permission_name = ?, permission_description = ? WHERE id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, permission.getPermissionName());
+            statement.setString(2, permission.getPermissionDescription());
+            statement.setString(3, permission.getPermissionID());
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public void deletePermission(String permissionID) throws Exception {
+        String sql = "DELETE FROM permission WHERE id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, permissionID);
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
     }
 }
