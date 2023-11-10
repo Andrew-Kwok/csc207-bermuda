@@ -86,7 +86,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
                 JSONObject responseBody = new JSONObject(response.body().string());
                 return Task.builder()
                         .taskID(responseBody.getString("id"))
-                        .projectName(responseBody.getString("name"))
+                        .taskName(responseBody.getString("name"))
                         .build();
             } else {
                 throw new RuntimeException("error");
