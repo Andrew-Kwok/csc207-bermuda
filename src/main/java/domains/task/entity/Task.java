@@ -96,6 +96,8 @@ public class Task {
         return taskDeadline;
     }
 
+    public String getProjectID() { return projectID; }
+
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }

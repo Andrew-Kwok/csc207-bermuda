@@ -21,5 +21,6 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
     @Override
     public void printTaskID(AddTaskOutputData task) {
         String taskID = task.getTaskID();
+        System.out.println(taskID);
     }
 }

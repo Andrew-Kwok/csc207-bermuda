@@ -1,4 +1,4 @@
-package app;
+package app.user;
 
 import domains.user.entity.NewUserFactory;
 import domains.user.entity.UserFactory;

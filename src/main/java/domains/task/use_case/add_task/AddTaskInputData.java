@@ -3,16 +3,19 @@ import java.time.LocalDateTime;
 
 public class AddTaskInputData {
     private String taskName;
-    private String description;
+    private String content;
     private LocalDateTime deadline;
+    private String projectID;
 
-    public AddTaskInputData(String taskName, String description, LocalDateTime deadline){
+    public AddTaskInputData(String taskName, String content, LocalDateTime deadline, String projectID){
         this.taskName = taskName;
-        this.description = description;
+        this.content = content;
         this.deadline = deadline;
+        this.projectID = projectID;
     }
 
     String getTaskName(){return taskName;}
-    String getDescription(){return description;}
+    String getContent(){return content;}
     LocalDateTime getDeadline(){return deadline;}
+    String getProjectID(){return projectID;}
 }
