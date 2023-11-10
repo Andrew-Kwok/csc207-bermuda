@@ -8,13 +8,13 @@ import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 
 public class Test {
     public static void main(String[] args) {
-        ApiDataAccessInterface api = new ApiDataAccessObject();
-        Project project = api.getProject("2320965999");
-
-        System.out.println(project);
+//        ApiDataAccessInterface api = new ApiDataAccessObject();
+//        Project project = api.getProject("2320965999");
+//
+//        System.out.println(project);
 
         AddTaskDataAccessInterface task_api = new ApiDataAccessObject();
-        Task task = new Task("7268199904", "2320965999", "test");
+        Task task = new Task("0000000000", "2320965999", "test");
         task.setTaskDescription("content-1");
         String taskID = task_api.addTask("2320965999", task);
 

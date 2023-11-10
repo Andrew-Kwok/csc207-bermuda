@@ -23,4 +23,9 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
         String taskID = task.getTaskID();
         System.out.println(taskID);
     }
+
+    @Override
+    public void prepareFailView(String errorMsg) {
+        // TODO
+    }
 }

@@ -87,7 +87,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface, AddTaskDataA
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
                 JSONObject responseBody = new JSONObject(response.body().string());
-                return Task.builder().taskID(task.getTaskID()).build().getTaskID();
+                return responseBody.getString("id");
             } else {
                 throw new RuntimeException("error");
             }
