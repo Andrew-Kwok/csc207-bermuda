@@ -47,13 +47,7 @@ public class Bermuda {
 
         DataSource sqlDataSource = SqlConfig.NewSQL();
         SqlDataAccessObject sqlDataAccessObject = new SqlDataAccessObject(sqlDataSource);
-        List<Permission> permissions = null;
-        try {
-            permissions = sqlDataAccessObject.getPermissions("262f04d9-8fd2-4d56-b9c1-fc180da14bc1");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(permissions);
+
 
         try {
             signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
