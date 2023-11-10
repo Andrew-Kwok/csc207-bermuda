@@ -7,10 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import domains.project.use_case.create_project.CreateProjectDataAccessInterface;
+public class ApiDataAccessObject implements CreateProjectDataAccessInterface{
 
-public class ApiDataAccessObject implements ApiDataAccessInterface {
-
-    @Override
     public Project getProject(String projectID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -23,10 +22,10 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
                 JSONObject responseBody = new JSONObject(response.body().string());
-                return Project.builder()
-                        .projectID(responseBody.getString("id"))
-                        .projectName(responseBody.getString("name"))
-                        .build();
+                return new Project(
+                        responseBody.getString("id"),
+                        responseBody.getString("name")
+                );
             } else {
                 throw new RuntimeException("error");
             }
@@ -36,7 +35,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
     }
 
     @Override
-    public Project createProject(String projectName) {
+    public String createProject(String projectName) throws Exception {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         RequestBody body = new FormBody.Builder()
@@ -52,10 +51,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
                 JSONObject responseBody = new JSONObject(response.body().string());
-                return Project.builder()
-                        .projectID(responseBody.getString("id"))
-                        .projectName(responseBody.getString("name"))
-                        .build();
+                return responseBody.getString("id");
             } else {
                 throw new RuntimeException("error");
             }
