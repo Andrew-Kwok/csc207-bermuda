@@ -3,7 +3,7 @@ package domains.project.use_case.create_project;
 import domains.permission.entity.PermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.user.entity.User;
-public class CreateProjectInteractor {
+public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectInputData createProjectInputData;
     CreateProjectDataAccessInterface createProjectDataAccessInterface;
     CreateProjectOutputBoundary createProjectPresenter;
@@ -27,7 +27,7 @@ public class CreateProjectInteractor {
         this.createPermissionDataAccessInterface = createPermissionDataAccessInterface;
         this.permissionFactory = permissionFactory;
     }
-
+    @Override
     public void execute() {
         try {
             String projectID = createProjectDataAccessInterface.createProject(

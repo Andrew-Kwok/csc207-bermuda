@@ -1,9 +1,9 @@
 package domains.project.use_case.create_project;
 
 public class CreateProjectInputData {
-    private String name;
-    public CreateProjectInputData(String name) {
-        this.name = name;
+    private final String projectName;
+    public CreateProjectInputData(String projectName) {
+        this.projectName = projectName;
     }
-    public String getName() { return name; }
+    public String getName() { return projectName; }
 }
