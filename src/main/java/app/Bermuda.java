@@ -1,9 +1,11 @@
 package app;
 
-import data_access.FileUserDataAccessObject;
+import app.user.LoginUseCaseFactory;
+import app.user.LogoutUseCaseFactory;
+import app.user.SignupUseCaseFactory;
+import data_access.fileuser.FileUserDataAccessObject;
 import data_access.cloudsql.SqlConfig;
 import data_access.cloudsql.SqlDataAccessObject;
-import domains.permission.entity.Permission;
 import domains.user.entity.NewUserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginViewModel;
@@ -20,7 +22,6 @@ import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 public class Bermuda {
     public static void main(String[] args) {
