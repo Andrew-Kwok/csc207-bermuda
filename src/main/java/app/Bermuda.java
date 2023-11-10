@@ -47,8 +47,7 @@ public class Bermuda {
 
         DataSource sqlDataSource = SqlConfig.NewSQL();
         SqlDataAccessObject sqlDataAccessObject = new SqlDataAccessObject(sqlDataSource);
-
-
+        
         try {
             signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
             loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
