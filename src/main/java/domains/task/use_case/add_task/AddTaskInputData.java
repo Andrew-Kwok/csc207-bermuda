@@ -14,8 +14,16 @@ public class AddTaskInputData {
         this.projectID = projectID;
     }
 
-    String getTaskName(){return taskName;}
-    String getContent(){return content;}
-    LocalDateTime getDeadline(){return deadline;}
-    String getProjectID(){return projectID;}
+    String getTaskName() {
+        return taskName;
+    }
+    String getContent() {
+        return content;
+    }
+    LocalDateTime getDeadline() {
+        return deadline;
+    }
+    String getProjectID() {
+        return projectID;
+    }
 }
