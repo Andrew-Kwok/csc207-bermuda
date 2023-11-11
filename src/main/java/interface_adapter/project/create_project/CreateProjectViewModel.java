@@ -7,8 +7,6 @@ public class CreateProjectViewModel extends ViewModel{
     public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
     public static final String TITLE_LABEL = "Create Project View";
     public static final String PROJECT_NAME_LABEL = "Enter project name";
-    public static final String DESCRIPTION_LABEL = "Enter description";
-    public static final String DEADLINE_LABEL = "Enter deadline";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private CreateProjectState state = new CreateProjectState();
