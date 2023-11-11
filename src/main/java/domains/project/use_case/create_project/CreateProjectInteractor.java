@@ -28,7 +28,7 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
         this.permissionFactory = permissionFactory;
     }
     @Override
-    public void execute() {
+    public void execute(CreateProjectInputData createProjectInputData) {
         try {
             String projectID = createProjectDataAccessInterface.createProject(
                     createProjectInputData.getName()
@@ -41,10 +41,10 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
                             "owner of project"
                     )
             );
-            createProjectPresenter.prepareSuccessView();
+            createProjectPresenter.prepareSuccessView(createProjectInputData.getName());
             return;
         } catch (Exception e) {
-            createProjectPresenter.prepareFailView();
+            createProjectPresenter.prepareFailView("Could not create project");
             return;
         }
     }
