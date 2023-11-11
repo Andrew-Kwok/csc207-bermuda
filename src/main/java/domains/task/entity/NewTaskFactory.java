@@ -4,8 +4,8 @@ import java.time.ZonedDateTime;
 
 public class NewTaskFactory implements TaskFactory{
     @Override
-    public Task create(String taskID, String projectID, String taskName) {
-        return new Task(taskID, projectID, taskName);
+    public Task create(String taskID, String projectID, String taskName, String content) {
+        return new Task(taskID, projectID, taskName, content);
     }
 
     @Override

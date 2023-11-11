@@ -24,11 +24,11 @@ public class AddTaskInteractor implements AddTaskInputBoundary{
         }
         else{
             try{
-                Task task = new Task(null, projectID, addTaskInputData.getTaskName());
+                Task task = new Task(null, projectID, addTaskInputData.getTaskName(), content);
 
                 String taskID = this.addTaskDataAccessObject.addTask(projectID, task);
                 AddTaskOutputData addTaskOutputData = new AddTaskOutputData(taskID);
-                this.addTaskPresenter.printTaskID(addTaskOutputData);
+                this.addTaskPresenter.prepareSuccessView(addTaskOutputData);
             }
             catch (Exception e){
                 addTaskPresenter.prepareFailView(e.getMessage());

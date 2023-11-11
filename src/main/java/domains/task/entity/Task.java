@@ -7,14 +7,16 @@ public class Task {
     private final String taskID;
     private final String projectID;
     private String taskName;
+    private String content;
     private String taskStatus = "IPR";
     private String taskDescription = "";
     private ZonedDateTime taskDeadline = ZonedDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(LocalTime.MAX.getNano());
 
-    public Task(String taskID, String projectID, String taskName) {
+    public Task(String taskID, String projectID, String taskName, String content) {
         this.taskID = taskID;
         this.projectID = projectID;
         this.taskName = taskName;
+        this.content = content;
     }
 
     public Task(String taskID, String projectID, String taskName, String taskStatus, String taskDescription, ZonedDateTime taskDeadline) {
