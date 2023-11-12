@@ -16,7 +16,11 @@ public class CreatePermissionPresenter implements CreatePermissionOutputBoundary
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void prepareSuccessView() {
+    public void prepareSuccessView(String permissionId) {
+        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+        createPermissionState.setPermissionId(permissionId);
+        createPermissionViewModel.firePropertyChanged();
+
         // On success, switch to the get permission view.
         viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

@@ -1,6 +1,7 @@
 package interface_adapter.permission.create_permission;
 
 public class CreatePermissionState {
+    private String permissionId = "";
     private String userId = "";
     private String projectId = "";
     private String permissionName = "";
@@ -8,6 +9,7 @@ public class CreatePermissionState {
     private String createPermissionError = null;
 
     public CreatePermissionState(CreatePermissionState copy) {
+        this.permissionId = copy.permissionId;
         this.userId = copy.userId;
         this.projectId = copy.projectId;
         this.permissionName = copy.permissionName;
@@ -16,6 +18,10 @@ public class CreatePermissionState {
     }
 
     public CreatePermissionState() {
+    }
+
+    public String getPermissionId() {
+        return permissionId;
     }
 
     public String getUserId() {
@@ -39,6 +45,10 @@ public class CreatePermissionState {
 
     public String getCreatePermissionError() {
         return createPermissionError;
+    }
+
+    public void setPermissionId(String permissionId) {
+        this.permissionId = permissionId;
     }
 
     public void setUserId(String userId) {
@@ -67,7 +77,8 @@ public class CreatePermissionState {
     @Override
     public String toString() {
         return "GetPermissionState{" +
-                "userId='" + userId + '\'' +
+                "permissionId='" + permissionId + '\'' +
+                ", userId='" + userId + '\'' +
                 ", projectId='" + projectId + '\'' +
                 ", permissionName='" + permissionName + '\'' +
                 ", permissionDescription='" + permissionDescription + '\'' +

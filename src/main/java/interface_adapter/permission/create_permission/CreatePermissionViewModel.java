@@ -16,7 +16,7 @@ public class CreatePermissionViewModel extends ViewModel {
     private CreatePermissionState state = new CreatePermissionState();
 
     public CreatePermissionViewModel() {
-        super("create_permission");
+        super("CreatePermissionView");
     }
 
     public void setState(CreatePermissionState state) {

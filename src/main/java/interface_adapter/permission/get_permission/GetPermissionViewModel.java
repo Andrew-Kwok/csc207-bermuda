@@ -10,7 +10,7 @@ public class GetPermissionViewModel extends ViewModel {
     public static final String CREATE_PERMISSION_BUTTON_LABEL = "Create Permission";
 
     public GetPermissionViewModel() {
-        super("get_permission");
+        super("GetPermissionView");
     }
 
     public void setState(GetPermissionState state) {

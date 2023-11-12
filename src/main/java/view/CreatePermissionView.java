@@ -21,11 +21,11 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
     private final CreatePermissionViewModel createPermissionViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final JTextField userIdInputField = new JTextField(36);
-    private final JTextField projectIdInputField = new JTextField(10);
+    private final JTextField userIdInputField = new JTextField(50);
+    private final JTextField projectIdInputField = new JTextField(50);
 
     private final JTextField permissionNameInputField = new JTextField(50);
-    private final JTextField permissionDescriptionInputField = new JTextField(255);
+    private final JTextField permissionDescriptionInputField = new JTextField(50);
     private final CreatePermissionController createPermissionController;
     private final GetPermissionController getPermissionController;
     private final JButton createPermissionButton;
@@ -153,6 +153,15 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                 }
             }
         );
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+        this.add(userIdPanel);
+        this.add(projectIdPanel);
+        this.add(permissionNamePanel);
+        this.add(permissionDescriptionPanel);
+        this.add(buttons);
     };
 
     public void actionPerformed(ActionEvent evt) {
@@ -163,6 +172,10 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
         CreatePermissionState createPermissionState = (CreatePermissionState) evt.getNewValue();
         if (createPermissionState.getCreatePermissionError() != null) {
             JOptionPane.showMessageDialog(this, createPermissionState.getCreatePermissionError());
+        } else if (createPermissionState.getPermissionId() != null) {
+            // On success, switch to the get permission view.
+            JOptionPane.showMessageDialog(this, "Permission created with id " + createPermissionState.getPermissionId() + ".");
+            createPermissionState.setPermissionId(null);
         }
     }
 

@@ -54,6 +54,7 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(createPermission)) {
                             viewManagerModel.setActiveView(createPermissionViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
@@ -72,8 +73,6 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("GetPermissionView.propertyChange");
-
         if (evt.getPropertyName().equals("getPermissionState")) {
             GetPermissionState state = (GetPermissionState) evt.getNewValue();
             if (state.getGetPermissionError() != null) {
