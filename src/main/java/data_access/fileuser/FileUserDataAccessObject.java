@@ -54,12 +54,12 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
-    public void save(User user) {
+    public void createUser(User user) {
         userMap.put(user.getUsername(), user);
         this.save();
     }
 
-    public User get(String username) {
+    public User getUserByUsername(String username) {
         return userMap.get(username);
     }
 
