@@ -1,4 +1,4 @@
-package view;
+package view.permission;
 
 import domains.permission.entity.Permission;
 import interface_adapter.permission.create_permission.CreatePermissionController;

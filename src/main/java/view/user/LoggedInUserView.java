@@ -1,4 +1,4 @@
-package view;
+package view.user;
 
 import interface_adapter.user.loggedin_user.LoggedInState;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;

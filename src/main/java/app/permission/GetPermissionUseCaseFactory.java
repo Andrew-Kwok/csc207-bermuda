@@ -16,7 +16,7 @@ import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionPresenter;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import view.GetPermissionView;
+import view.permission.GetPermissionView;
 
 public class GetPermissionUseCaseFactory {
     private GetPermissionUseCaseFactory() {}

@@ -13,9 +13,9 @@ import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
-import view.LoggedInUserView;
-import view.LoginView;
-import view.SignupView;
+import view.user.LoggedInUserView;
+import view.user.LoginView;
+import view.user.SignupView;
 import view.ViewManager;
 
 import javax.sql.DataSource;

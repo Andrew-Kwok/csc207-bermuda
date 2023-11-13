@@ -1,4 +1,4 @@
-package view;
+package view.permission;
 
 import interface_adapter.permission.create_permission.CreatePermissionController;
 import interface_adapter.permission.create_permission.CreatePermissionState;
@@ -6,6 +6,7 @@ import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
+import view.common.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
