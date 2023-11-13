@@ -22,13 +22,19 @@ public class SqlDataAccessObject implements
     }
 
     public List<Permission> getPermissions(String userID) throws Exception {
-        String sql = "SELECT * FROM permission WHERE user_id = ?";
+        String sql = "SELECT * FROM permission";
+        if (userID != null) {
+            sql += " WHERE user_id = ?";
+        }
+
         List<Permission> permissions = new ArrayList<>();
 
         try (Connection connection = sqlDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-            statement.setString(1, userID);
+            if (userID != null) {
+                statement.setString(1, userID);
+            }
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     String id = resultSet.getString("id");

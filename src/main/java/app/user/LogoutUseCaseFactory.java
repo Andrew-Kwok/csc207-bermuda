@@ -8,7 +8,7 @@ import interface_adapter.view_model.ViewManagerModel;
 import domains.user.use_case.logout.LogoutInputBoundary;
 import domains.user.use_case.logout.LogoutInteractor;
 import domains.user.use_case.logout.LogoutOutputBoundary;
-import view.LoggedInUserView;
+import view.user.LoggedInUserView;
 
 import javax.swing.*;
 import java.io.IOException;

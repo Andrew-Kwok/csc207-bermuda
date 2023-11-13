@@ -1,24 +1,34 @@
 package domains.permission.use_case.create_permission;
 
+import domains.permission.entity.NewPermissionFactory;
 import domains.permission.entity.Permission;
 
 public class CreatePermissionInteractor implements CreatePermissionInputBoundary {
     private final CreatePermissionOutputBoundary presenter;
     private final CreatePermissionDataAccessInterface dataAccess;
+    private final NewPermissionFactory permissionFactory;
 
-    public CreatePermissionInteractor(CreatePermissionOutputBoundary presenter, CreatePermissionDataAccessInterface dataAccess) {
+    public CreatePermissionInteractor(CreatePermissionOutputBoundary presenter, CreatePermissionDataAccessInterface dataAccess, NewPermissionFactory permissionFactory) {
         this.presenter = presenter;
         this.dataAccess = dataAccess;
+        this.permissionFactory = permissionFactory;
     }
 
     @Override
     public void execute(CreatePermissionInputData input) {
-        Permission permission = input.getPermission();
-        if (permission == null) {
-            presenter.prepareFailView("Permission is null");
+        if (input == null) {
+            presenter.prepareFailView("Input is null");
+        } else if (input.getUserId() == null || input.getUserId().isEmpty()) {
+            presenter.prepareFailView("User ID is null or empty");
+        } else if (input.getProjectId() == null || input.getProjectId().isEmpty()) {
+            presenter.prepareFailView("Project ID is null or empty");
+        } else if (input.getPermissionName() == null || input.getPermissionName().isEmpty()) {
+            presenter.prepareFailView("Permission name is null or empty");
         } else {
+            Permission permission = permissionFactory.create(input.getProjectId(), input.getUserId(), input.getPermissionName(), input.getPermissionDescription());
             try {
                 dataAccess.createPermission(permission);
+                presenter.prepareSuccessView(permission.getPermissionID());
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());
             }

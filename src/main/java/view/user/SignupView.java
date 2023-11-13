@@ -1,4 +1,4 @@
-package view;
+package view.user;
 
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginState;
@@ -8,6 +8,7 @@ import interface_adapter.user.signup.SignupController;
 import interface_adapter.user.signup.SignupState;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
+import view.common.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
