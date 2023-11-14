@@ -49,7 +49,7 @@ public class Bermuda {
         SqlDataAccessObject sqlDataAccessObject = new SqlDataAccessObject(sqlDataSource);
 
         try {
-            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
+            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
             loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
 
             signupUserDataAccessInterface = sqlDataAccessObject;
@@ -69,7 +69,7 @@ public class Bermuda {
         LoggedInUserView loggedInUserView = LogoutUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel);
         views.add(loggedInUserView, loggedInUserView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
