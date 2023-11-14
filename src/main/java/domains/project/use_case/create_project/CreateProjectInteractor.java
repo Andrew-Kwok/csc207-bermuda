@@ -5,7 +5,7 @@ import domains.permission.use_case.create_permission.CreatePermissionDataAccessI
 import domains.user.entity.User;
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectInputData createProjectInputData;
-    CreateProjectDataAccessInterface createProjectDataAccessInterface;
+    CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface;
     CreateProjectOutputBoundary createProjectPresenter;
     User user;
     CreatePermissionDataAccessInterface createPermissionDataAccessInterface;
@@ -14,12 +14,12 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
     public CreateProjectInteractor(
             CreateProjectInputData createProjectInputData,
             CreateProjectOutputBoundary createProjectPresenter,
-            CreateProjectDataAccessInterface createProjectDataAccessInterface,
+            CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface,
             User user,
             CreatePermissionDataAccessInterface createPermissionDataAccessInterface
     ) {
         this.createProjectInputData = createProjectInputData;
-        this.createProjectDataAccessInterface = createProjectDataAccessInterface;
+        this.createProjectApiDataAccessInterface = createProjectApiDataAccessInterface;
         this.createProjectPresenter = createProjectPresenter;
         this.user = user;
         this.createPermissionDataAccessInterface = createPermissionDataAccessInterface;
@@ -27,7 +27,7 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
     @Override
     public void execute() {
         try {
-            String projectID = createProjectDataAccessInterface.createProject(
+            String projectID = createProjectApiDataAccessInterface.createProject(
                     createProjectInputData.getName()
             );
             createPermissionDataAccessInterface.createPermission(

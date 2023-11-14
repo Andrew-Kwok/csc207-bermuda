@@ -17,7 +17,7 @@ public class ShareProjectPresenter implements ShareProjectOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView() {
+    public void prepareSuccessView(ShareProjectOutputData shareProjectOutputData) {
 
     }
     @Override
