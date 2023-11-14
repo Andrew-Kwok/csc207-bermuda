@@ -1,7 +1,5 @@
 package app.user;
 
-import domains.user.entity.NewUserFactory;
-import domains.user.entity.UserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
@@ -50,8 +48,6 @@ public class LoginUseCaseFactory {
 
         // Notice how we pass this method's parameters to the Presenter.
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
-
-        UserFactory userFactory = new NewUserFactory();
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);

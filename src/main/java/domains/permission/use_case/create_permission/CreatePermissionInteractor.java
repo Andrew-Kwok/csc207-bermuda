@@ -6,12 +6,10 @@ import domains.permission.entity.Permission;
 public class CreatePermissionInteractor implements CreatePermissionInputBoundary {
     private final CreatePermissionOutputBoundary presenter;
     private final CreatePermissionDataAccessInterface dataAccess;
-    private final NewPermissionFactory permissionFactory;
 
-    public CreatePermissionInteractor(CreatePermissionOutputBoundary presenter, CreatePermissionDataAccessInterface dataAccess, NewPermissionFactory permissionFactory) {
+    public CreatePermissionInteractor(CreatePermissionOutputBoundary presenter, CreatePermissionDataAccessInterface dataAccess) {
         this.presenter = presenter;
         this.dataAccess = dataAccess;
-        this.permissionFactory = permissionFactory;
     }
 
     @Override
@@ -25,7 +23,7 @@ public class CreatePermissionInteractor implements CreatePermissionInputBoundary
         } else if (input.getPermissionName() == null || input.getPermissionName().isEmpty()) {
             presenter.prepareFailView("Permission name is null or empty");
         } else {
-            Permission permission = permissionFactory.create(input.getProjectId(), input.getUserId(), input.getPermissionName(), input.getPermissionDescription());
+            Permission permission = NewPermissionFactory.create(input.getProjectId(), input.getUserId(), input.getPermissionName(), input.getPermissionDescription());
             try {
                 dataAccess.createPermission(permission);
                 presenter.prepareSuccessView(permission.getPermissionID());

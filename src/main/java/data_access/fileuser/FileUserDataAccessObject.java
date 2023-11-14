@@ -1,7 +1,7 @@
 package data_access.fileuser;
 
+import domains.user.entity.NewUserFactory;
 import domains.user.entity.User;
-import domains.user.entity.UserFactory;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
 
@@ -16,13 +16,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     private final Map<String, User> userMap = new HashMap<>();
     private final Map<String, Integer> projectHeaders = new HashMap<>();
     private final Map<String, User> projectMap = new HashMap<>();
-    private UserFactory newUserFactory;
 
-    public FileUserDataAccessObject(String csvUserPath, String csvProjectPath,
-                                    UserFactory newUserFactory) throws FileNotFoundException {
+    public FileUserDataAccessObject(String csvUserPath, String csvProjectPath) throws FileNotFoundException {
         this.csvUserFile = new File(csvUserPath);
         this.csvProjectFile = new File(csvProjectPath);
-        this.newUserFactory = newUserFactory;
+
         userHeaders.add("username");
         userHeaders.add("password");
         userHeaders.add("level");
@@ -44,7 +42,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String username = String.valueOf(col[userHeaders.indexOf("username")]);
                     String password = String.valueOf(col[userHeaders.indexOf("password")]);
                     int level = Integer.parseInt(col[userHeaders.indexOf("level")]);
-                    User user = newUserFactory.create(username, password);
+                    User user = NewUserFactory.create(username, password);
                     user.setUserLevel(level);
                     userMap.put(username, user);
                 }
