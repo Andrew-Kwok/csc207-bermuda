@@ -64,7 +64,7 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface, Ad
     }
 
     @Override
-    public String addTask(String projectId, Task task) {
+    public void addTask(String projectId, Task task) {
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -83,7 +83,6 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface, Ad
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
                 JSONObject responseBody = new JSONObject(response.body().string());
-                return responseBody.getString("id");
             } else {
                 throw new RuntimeException("error");
             }
