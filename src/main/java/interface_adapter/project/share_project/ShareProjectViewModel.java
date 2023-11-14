@@ -6,10 +6,10 @@ import java.beans.PropertyChangeSupport;
 import interface_adapter.view_model.ViewModel;
 
 public class ShareProjectViewModel extends ViewModel {
-    private final String TITLE_LABEL = "Share Project View";
-    private final String OTHER_USERNAME = "Enter other user's username here";
-    private final static String CANCEL_BUTTON_LABEL = "Cancel";
-    private final static String SHARE_BUTTON_LABEL = "Share";
+    public final String TITLE_LABEL = "Share Project View";
+    public final String OTHER_USERNAME = "Enter other user's username here";
+    public final static String CANCEL_BUTTON_LABEL = "Cancel";
+    public final static String SHARE_BUTTON_LABEL = "Share";
     private ShareProjectState shareProjectState = new ShareProjectState();
     public ShareProjectViewModel() {
         super("share_project");
@@ -17,6 +17,10 @@ public class ShareProjectViewModel extends ViewModel {
 
     public void setState(ShareProjectState shareProjectState) {
         this.shareProjectState = shareProjectState;
+    }
+
+    public ShareProjectState getState() {
+        return this.shareProjectState;
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

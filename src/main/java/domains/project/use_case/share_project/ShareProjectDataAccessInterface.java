@@ -1,6 +1,7 @@
 package domains.project.use_case.share_project;
 
+import domains.permission.entity.Permission;
+
 public interface ShareProjectDataAccessInterface {
-    void savePermission() throws Exception;
-    void saveProject() throws Exception;
+    void savePermission(Permission newPermission) throws Exception;
 }
