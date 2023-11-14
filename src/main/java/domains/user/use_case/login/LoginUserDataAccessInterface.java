@@ -3,9 +3,9 @@ package domains.user.use_case.login;
 import domains.user.entity.User;
 
 public interface LoginUserDataAccessInterface {
-    boolean existsByName(String identifier);
+    boolean existsByName(String identifier) throws Exception;
 
-    void save(User user);
+    void createUser(User user) throws Exception;
 
-    User get(String username);
+    User getUserByUsername(String username) throws Exception;
 }

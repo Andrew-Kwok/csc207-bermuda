@@ -1,4 +1,4 @@
-package view;
+package view.project;
 
 public class ProjectView {
 }

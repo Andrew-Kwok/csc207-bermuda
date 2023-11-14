@@ -18,7 +18,7 @@ import domains.user.use_case.signup.SignupInputBoundary;
 import domains.user.use_case.signup.SignupInteractor;
 import domains.user.use_case.signup.SignupOutputBoundary;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
-import view.SignupView;
+import view.user.SignupView;
 
 import javax.swing.*;
 import java.io.IOException;

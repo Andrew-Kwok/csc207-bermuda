@@ -16,7 +16,7 @@ import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.logout.LogoutInputBoundary;
 import domains.user.use_case.logout.LogoutInteractor;
 import domains.user.use_case.logout.LogoutOutputBoundary;
-import view.LoginView;
+import view.user.LoginView;
 
 import javax.swing.*;
 import java.io.IOException;

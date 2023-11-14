@@ -13,9 +13,9 @@ import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
-import view.LoggedInUserView;
-import view.LoginView;
-import view.SignupView;
+import view.user.LoggedInUserView;
+import view.user.LoginView;
+import view.user.SignupView;
 import view.ViewManager;
 
 import javax.sql.DataSource;
@@ -51,9 +51,14 @@ public class Bermuda {
         try {
             signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
             loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
+
+            signupUserDataAccessInterface = sqlDataAccessObject;
+            loginUserDataAccessInterface = sqlDataAccessObject;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, loggedInUserViewModel,
                 signupUserDataAccessInterface, loginUserDataAccessInterface);
         views.add(signupView, signupView.viewName);
@@ -64,7 +69,7 @@ public class Bermuda {
         LoggedInUserView loggedInUserView = LogoutUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel);
         views.add(loggedInUserView, loggedInUserView.viewName);
 
-        viewManagerModel.setActiveView(loginView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

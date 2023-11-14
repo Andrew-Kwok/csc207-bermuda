@@ -1,4 +1,4 @@
-package view;
+package view.user;
 
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginState;
@@ -8,6 +8,7 @@ import interface_adapter.user.signup.SignupController;
 import interface_adapter.user.signup.SignupState;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
+import view.common.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -117,7 +118,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         signupViewModel.setState(signupState);
 
                         loginState.setUsername(text);
-
                     }
 
                     @Override
@@ -193,6 +193,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         SignupState state = (SignupState) evt.getNewValue();
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
+        } else if (state.getUsername() != null) {
+            JOptionPane.showMessageDialog(this, "User created with username " + state.getUsername() + ".");
+            state.setUsername(null);
         }
     }
 
