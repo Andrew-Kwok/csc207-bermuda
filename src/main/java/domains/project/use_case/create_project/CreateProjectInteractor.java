@@ -1,6 +1,6 @@
 package domains.project.use_case.create_project;
 
-import domains.permission.entity.PermissionFactory;
+import domains.permission.entity.NewPermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.user.entity.User;
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
@@ -9,7 +9,6 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectOutputBoundary createProjectPresenter;
     User user;
     CreatePermissionDataAccessInterface createPermissionDataAccessInterface;
-    PermissionFactory permissionFactory;
 
 
     public CreateProjectInteractor(
@@ -17,15 +16,13 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
             CreateProjectOutputBoundary createProjectPresenter,
             CreateProjectDataAccessInterface createProjectDataAccessInterface,
             User user,
-            CreatePermissionDataAccessInterface createPermissionDataAccessInterface,
-            PermissionFactory permissionFactory
+            CreatePermissionDataAccessInterface createPermissionDataAccessInterface
     ) {
         this.createProjectInputData = createProjectInputData;
         this.createProjectDataAccessInterface = createProjectDataAccessInterface;
         this.createProjectPresenter = createProjectPresenter;
         this.user = user;
         this.createPermissionDataAccessInterface = createPermissionDataAccessInterface;
-        this.permissionFactory = permissionFactory;
     }
     @Override
     public void execute(CreateProjectInputData createProjectInputData) {
@@ -34,7 +31,7 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
                     createProjectInputData.getName()
             );
             createPermissionDataAccessInterface.createPermission(
-                    permissionFactory.create(
+                    NewPermissionFactory.create(
                             projectID,
                             user.getUserID(),
                             "owner",

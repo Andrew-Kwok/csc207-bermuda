@@ -49,11 +49,16 @@ public class Bermuda {
         SqlDataAccessObject sqlDataAccessObject = new SqlDataAccessObject(sqlDataSource);
 
         try {
-            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv",new NewUserFactory());
+            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
             loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
+
+            signupUserDataAccessInterface = sqlDataAccessObject;
+            loginUserDataAccessInterface = sqlDataAccessObject;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, loggedInUserViewModel,
                 signupUserDataAccessInterface, loginUserDataAccessInterface);
         views.add(signupView, signupView.viewName);

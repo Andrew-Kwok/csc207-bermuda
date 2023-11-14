@@ -10,10 +10,14 @@ import javax.sql.DataSource;
 import domains.permission.entity.Permission;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
+import domains.user.entity.User;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.signup.SignupUserDataAccessInterface;
 
 public class SqlDataAccessObject implements
         SqlDataAccessInterface,
-        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface {
+        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface,
+        SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
@@ -99,6 +103,126 @@ public class SqlDataAccessObject implements
             statement.setString(1, permissionID);
 
             statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public User getUserByUserId(String userId) throws Exception {
+        String sql = "SELECT * FROM user WHERE id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new User(
+                            resultSet.getString("id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getInt("user_level"));
+                }
+            } catch (Exception e) {
+                throw new Exception("Error getting user");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+
+        throw new Exception("User not found");
+    }
+
+    public User getUserByUsername(String username) throws Exception {
+        String sql = "SELECT * FROM user WHERE username = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, username);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new User(
+                            resultSet.getString("id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getInt("user_level"));
+                }
+            } catch (Exception e) {
+                throw new Exception("Error getting user");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+
+        throw new Exception("User not found");
+    }
+
+    public void createUser(User user) throws Exception {
+        String sql = "INSERT INTO user (id, username, password, user_level) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, user.getUserID());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setInt(4, user.getUserLevel());
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public void updateUser(User user) throws Exception {
+        String sql = "UPDATE user SET username = ?, password = ?, user_level = ? WHERE id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setInt(3, user.getUserLevel());
+            statement.setString(4, user.getUserID());
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public void deleteUser(String userID) throws Exception {
+        String sql = "DELETE FROM user WHERE id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, userID);
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public boolean existsByName(String username) throws Exception {
+        String sql = "SELECT * FROM user WHERE username = ?";
+        try (Connection connection = sqlDataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, username);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception e) {
+                throw new Exception("Error getting user");
+            }
         } catch (Exception e) {
             throw new Exception("Error setting sql connection");
         }

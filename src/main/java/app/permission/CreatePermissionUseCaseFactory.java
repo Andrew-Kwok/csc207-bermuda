@@ -41,8 +41,7 @@ public class CreatePermissionUseCaseFactory {
                                                                       CreatePermissionDataAccessInterface createPermissionDataAccessInterface) {
         CreatePermissionOutputBoundary createPermissionOutputBoundary = new CreatePermissionPresenter(viewManagerModel, createPermissionViewModel, getPermissionViewModel);
 
-        NewPermissionFactory newPermissionFactory = new NewPermissionFactory();
-        CreatePermissionInputBoundary createPermissionInteractor = new CreatePermissionInteractor(createPermissionOutputBoundary, createPermissionDataAccessInterface, newPermissionFactory);
+        CreatePermissionInputBoundary createPermissionInteractor = new CreatePermissionInteractor(createPermissionOutputBoundary, createPermissionDataAccessInterface);
 
         return new CreatePermissionController(createPermissionInteractor);
     }
