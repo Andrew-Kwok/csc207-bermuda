@@ -26,7 +26,7 @@ public class CreatePermissionInteractor implements CreatePermissionInputBoundary
             Permission permission = NewPermissionFactory.create(input.getProjectId(), input.getUserId(), input.getPermissionName(), input.getPermissionDescription());
             try {
                 dataAccess.createPermission(permission);
-                presenter.prepareSuccessView(permission.getPermissionID());
+                presenter.prepareSuccessView(new CreatePermissionOutputData(permission.getPermissionID()));
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());
             }
