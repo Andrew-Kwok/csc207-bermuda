@@ -1,6 +1,7 @@
 package interface_adapter.permission.create_permission;
 
 import domains.permission.use_case.create_permission.CreatePermissionOutputBoundary;
+import domains.permission.use_case.create_permission.CreatePermissionOutputData;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -16,9 +17,9 @@ public class CreatePermissionPresenter implements CreatePermissionOutputBoundary
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void prepareSuccessView(String permissionId) {
+    public void prepareSuccessView(CreatePermissionOutputData createPermissionOutputData) {
         CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-        createPermissionState.setPermissionId(permissionId);
+        createPermissionState.setPermissionId(createPermissionOutputData.getPermissionId());
         createPermissionViewModel.firePropertyChanged();
 
         // On success, switch to the get permission view.
