@@ -5,32 +5,32 @@ import domains.permission.use_case.create_permission.CreatePermissionDataAccessI
 import domains.user.entity.User;
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectInputData createProjectInputData;
-    CreateProjectDataAccessInterface createProjectDataAccessInterface;
+    CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface;
     CreateProjectOutputBoundary createProjectPresenter;
     User user;
-    CreatePermissionDataAccessInterface createPermissionDataAccessInterface;
+    CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface;
 
 
     public CreateProjectInteractor(
             CreateProjectInputData createProjectInputData,
             CreateProjectOutputBoundary createProjectPresenter,
-            CreateProjectDataAccessInterface createProjectDataAccessInterface,
-            User user,
-            CreatePermissionDataAccessInterface createPermissionDataAccessInterface
+            CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface,
+            CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface,
+            User user
     ) {
         this.createProjectInputData = createProjectInputData;
-        this.createProjectDataAccessInterface = createProjectDataAccessInterface;
+        this.createProjectApiDataAccessInterface = createProjectApiDataAccessInterface;
         this.createProjectPresenter = createProjectPresenter;
         this.user = user;
-        this.createPermissionDataAccessInterface = createPermissionDataAccessInterface;
+        this.createProjectSqlDataAccessInterface = createProjectSqlDataAccessInterface;
     }
     @Override
     public void execute() {
         try {
-            String projectID = createProjectDataAccessInterface.createProject(
+            String projectID = createProjectApiDataAccessInterface.createProject(
                     createProjectInputData.getName()
             );
-            createPermissionDataAccessInterface.createPermission(
+            createProjectSqlDataAccessInterface.createPermission(
                     NewPermissionFactory.create(
                             projectID,
                             user.getUserID(),
