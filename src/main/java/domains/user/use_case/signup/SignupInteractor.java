@@ -1,19 +1,16 @@
 package domains.user.use_case.signup;
 
+import domains.user.entity.NewUserFactory;
 import domains.user.entity.User;
-import domains.user.entity.UserFactory;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
-    final UserFactory userFactory;
 
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
-                            SignupOutputBoundary signupOutputBoundary,
-                            UserFactory userFactory) {
+                            SignupOutputBoundary signupOutputBoundary) {
         this.userDataAccessObject = signupDataAccessInterface;
         this.userPresenter = signupOutputBoundary;
-        this.userFactory = userFactory;
     }
 
     @Override
@@ -38,7 +35,7 @@ public class SignupInteractor implements SignupInputBoundary {
                 return;
             }
 
-            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
+            User user = NewUserFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
             try {
                 userDataAccessObject.createUser(user);
             } catch (Exception e) {

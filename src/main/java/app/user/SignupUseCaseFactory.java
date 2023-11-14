@@ -1,7 +1,5 @@
 package app.user;
 
-import domains.user.entity.NewUserFactory;
-import domains.user.entity.UserFactory;
 import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
@@ -46,10 +44,8 @@ public class SignupUseCaseFactory {
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
-        UserFactory userFactory = new NewUserFactory();
-
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
+                userDataAccessObject, signupOutputBoundary);
 
         return new SignupController(userSignupInteractor);
     }
@@ -59,8 +55,6 @@ public class SignupUseCaseFactory {
                                                           LoginUserDataAccessInterface loginUserDataAccessInterface) throws IOException {
 
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInUserViewModel,loginViewModel);
-
-        UserFactory userFactory = new NewUserFactory();
 
         LoginInputBoundary loginInputBoundary = new LoginInteractor(loginUserDataAccessInterface, loginOutputBoundary);
 
