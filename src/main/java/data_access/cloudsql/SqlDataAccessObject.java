@@ -13,11 +13,13 @@ import domains.permission.use_case.get_permission.GetPermissionDataAccessInterfa
 import domains.user.entity.User;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
+import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 
 public class SqlDataAccessObject implements
         SqlDataAccessInterface,
         GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface,
-        SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+        SignupUserDataAccessInterface, LoginUserDataAccessInterface,
+        CreateProjectSqlDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
