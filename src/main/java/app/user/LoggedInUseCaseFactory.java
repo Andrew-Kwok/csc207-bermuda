@@ -1,6 +1,7 @@
 package app.user;
 
-import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
+import interface_adapter.permission.get_permission.GetPermissionViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.logout.LogoutController;
 import interface_adapter.user.logout.LogoutPresenter;
@@ -8,24 +9,25 @@ import interface_adapter.view_model.ViewManagerModel;
 import domains.user.use_case.logout.LogoutInputBoundary;
 import domains.user.use_case.logout.LogoutInteractor;
 import domains.user.use_case.logout.LogoutOutputBoundary;
-import view.user.LoggedInUserView;
+import view.user.LoggedInView;
 
 import javax.swing.*;
 import java.io.IOException;
 
-public class LogoutUseCaseFactory {
+public class LoggedInUseCaseFactory {
 
     /** Prevent instantiation. */
-    private LogoutUseCaseFactory() {}
+    private LoggedInUseCaseFactory() {}
 
-    public static LoggedInUserView create(
+    public static LoggedInView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInUserViewModel loggedInUserViewModel) {
+            LoggedInViewModel loggedInUserViewModel,
+            GetPermissionViewModel getPermissionViewModel) {
 
         try {
             LogoutController logoutController = createLogoutUseCase(viewManagerModel, loginViewModel, loggedInUserViewModel);
-            return new LoggedInUserView(loggedInUserViewModel, logoutController);
+            return new LoggedInView(viewManagerModel, loggedInUserViewModel, getPermissionViewModel, logoutController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "LoggedIn View failed");
         }
@@ -36,7 +38,7 @@ public class LogoutUseCaseFactory {
     private static LogoutController createLogoutUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInUserViewModel loggedInUserViewModel) throws IOException {
+            LoggedInViewModel loggedInUserViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(loggedInUserViewModel, viewManagerModel, loginViewModel);
