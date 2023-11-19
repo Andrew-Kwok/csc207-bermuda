@@ -18,6 +18,8 @@ public class DeletePermissionInteractor implements DeletePermissionInputBoundary
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());
             }
+
+            presenter.prepareSuccessView(new DeletePermissionOutputData(input.getPermissionId()));
         }
     }
 }

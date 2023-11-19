@@ -5,6 +5,7 @@ import interface_adapter.permission.create_permission.CreatePermissionController
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.permission.delete_permission.DeletePermissionController;
 import interface_adapter.permission.delete_permission.DeletePermissionState;
+import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionState;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
@@ -23,7 +24,7 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
     private final GetPermissionViewModel getPermissionViewModel;
     private final GetPermissionController getPermissionController;
     private final CreatePermissionViewModel createPermissionViewModel;
-    private final CreatePermissionController createPermissionController;
+    private final DeletePermissionViewModel deletePermissionViewModel;
     private final DeletePermissionController deletePermissionController;
     private final ViewManagerModel viewManagerModel;
 
@@ -36,15 +37,17 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
     DefaultListModel<Permission> permissionListModel = new DefaultListModel<>();
     JList<Permission> permissionList = new JList<>(permissionListModel);
     public GetPermissionView(ViewManagerModel viewManagerModel, GetPermissionViewModel getPermissionViewModel, GetPermissionController getPermissionController,
-                             CreatePermissionViewModel createPermissionViewModel, CreatePermissionController createPermissionController,
-                             DeletePermissionController deletePermissionController) {
+                             CreatePermissionViewModel createPermissionViewModel,
+                             DeletePermissionViewModel deletePermissionViewModel, DeletePermissionController deletePermissionController) {
         this.viewManagerModel = viewManagerModel;
         this.getPermissionViewModel = getPermissionViewModel;
         this.getPermissionController = getPermissionController;
         this.createPermissionViewModel = createPermissionViewModel;
-        this.createPermissionController = createPermissionController;
+        this.deletePermissionViewModel = deletePermissionViewModel;
         this.deletePermissionController = deletePermissionController;
+
         this.getPermissionViewModel.addPropertyChangeListener(this);
+        this.deletePermissionViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(getPermissionViewModel.TITLE_LABEL);
 
