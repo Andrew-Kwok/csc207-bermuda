@@ -61,9 +61,6 @@ public class Bermuda {
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
 //            loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
-//
-//            signupUserDataAccessInterface = sqlDataAccessObject;
-//            loginUserDataAccessInterface = sqlDataAccessObject;
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
