@@ -1,18 +1,15 @@
-package app.Project;
+package app.project;
 
-import domains.permission.entity.PermissionFactory;
-import domains.user.entity.User;
-import domains.user.entity.UserFactory;
-import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
+import domains.permission.entity.NewPermissionFactory;
+import domains.user.entity.NewUserFactory;
 import domains.project.use_case.create_project.*;
+import domains.user.entity.User;
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectPresenter;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+
 import interface_adapter.view_model.ViewManagerModel;
 import view.project.CreateProjectView;
-
-import javax.swing.*;
-import java.io.IOException;
 
 public class CreateProjectUseCaseFactory {
     private CreateProjectUseCaseFactory(){}
@@ -20,31 +17,34 @@ public class CreateProjectUseCaseFactory {
     public static CreateProjectView create(
             ViewManagerModel viewManagerModel,
             CreateProjectViewModel createProjectViewModel,
-            CreateProjectDataAccessInterface createProjectDAI) {
+            CreateProjectApiDataAccessInterface createProjectApiDAI,
+            CreateProjectSqlDataAccessInterface createProjectSqlDAI) {
 
-        CreateProjectController createProjectController = createProjectUseCase(viewManagerModel, createProjectViewModel, createProjectDAI);
+        CreateProjectController createProjectController = createProjectUseCase(
+                viewManagerModel, createProjectViewModel, createProjectApiDAI, createProjectSqlDAI);
+
+
         return new CreateProjectView(createProjectController, createProjectViewModel, viewManagerModel);
 
     }
 
     private static CreateProjectController createProjectUseCase(ViewManagerModel viewManagerModel,
                                                           CreateProjectViewModel createProjectViewModel,
-                                                          CreateProjectDataAccessInterface createProjectDAI) {
+                                                          CreateProjectApiDataAccessInterface createProjectApiDAI,
+                                                          CreateProjectSqlDataAccessInterface createProjectSqlDAI) {
 
         CreateProjectOutputBoundary createProjectOutputBoundary = new CreateProjectPresenter(viewManagerModel, createProjectViewModel);
 
-        PermissionFactory permissionFactory = new PermissionFactory();
+        String projectName = null;
+        String userId = null;
 
-        UserFactory userFactory = new UserFactory();
-
-        CreateProjectInputData createProjectInputData = new CreateProjectInputData();
+        CreateProjectInputData createProjectInputData = new CreateProjectInputData(projectName, userId);
 
         CreateProjectInputBoundary createProjectInteractor = new CreateProjectInteractor(
                 createProjectInputData,
                 createProjectOutputBoundary,
-                createProjectDAI,
-                userFactory.create(),
-                permissionFactory
+                createProjectApiDAI,
+                createProjectSqlDAI
                 );
 
         return new CreateProjectController(createProjectInteractor);

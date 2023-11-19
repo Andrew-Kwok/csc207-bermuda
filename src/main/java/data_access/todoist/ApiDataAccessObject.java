@@ -2,19 +2,19 @@ package data_access.todoist;
 
 import config.Config;
 import domains.project.entity.Project;
+import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import domains.project.use_case.create_project.CreateProjectDataAccessInterface;
-public class ApiDataAccessObject implements CreateProjectDataAccessInterface{
+public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface {
 
     public Project getProject(String projectID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/projects/%s", Config.getEnv("TODOIST_URL"), projectID))
+                .url(String.format("%s/projects/%s", Config.getEnv("TODOIST_API_URL"), projectID))
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -41,19 +41,21 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface{
         RequestBody body = new FormBody.Builder()
                 .add("name", projectName)
                 .build();
+
         Request request = new Request.Builder()
-                .url(String.format("%s/projects", Config.getEnv("TODOIST_URL")))
+                .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
                 JSONObject responseBody = new JSONObject(response.body().string());
                 return responseBody.getString("id");
             } else {
-                throw new RuntimeException("error");
+                throw new Exception("error connectıng to todoıst");
             }
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);

@@ -2,6 +2,7 @@ package interface_adapter.project.create_project;
 
 import domains.project.use_case.create_project.CreateProjectInputData;
 import domains.project.use_case.create_project.CreateProjectOutputBoundary;
+import domains.project.use_case.create_project.CreateProjectOutputData;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class CreateProjectPresenter implements CreateProjectOutputBoundary {
@@ -19,10 +20,9 @@ public class CreateProjectPresenter implements CreateProjectOutputBoundary {
 
 
     @Override
-    public void prepareSuccessView(String projectName) {
-        CreateProjectInputData createProjectInputdata = new CreateProjectInputData(projectName);
+    public void prepareSuccessView(CreateProjectOutputData createProjectOutputData) {
         CreateProjectState createProjectState = createProjectViewModel.getState();
-        createProjectState.setProjectName(createProjectInputdata.getName());
+        createProjectState.setProjectName(createProjectOutputData.getProjectName());
         this.createProjectViewModel.setState(createProjectState);
         createProjectViewModel.firePropertyChanged();
     }

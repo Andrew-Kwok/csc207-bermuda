@@ -2,12 +2,13 @@ package domains.project.use_case.create_project;
 
 import domains.permission.entity.NewPermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
+import domains.project.entity.NewProjectFactory;
+import domains.project.entity.Project;
 import domains.user.entity.User;
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectInputData createProjectInputData;
     CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface;
     CreateProjectOutputBoundary createProjectPresenter;
-    User user;
     CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface;
 
 
@@ -15,13 +16,10 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
             CreateProjectInputData createProjectInputData,
             CreateProjectOutputBoundary createProjectPresenter,
             CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface,
-            CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface,
-            User user
-    ) {
+            CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface) {
         this.createProjectInputData = createProjectInputData;
         this.createProjectApiDataAccessInterface = createProjectApiDataAccessInterface;
         this.createProjectPresenter = createProjectPresenter;
-        this.user = user;
         this.createProjectSqlDataAccessInterface = createProjectSqlDataAccessInterface;
     }
     @Override
@@ -33,12 +31,14 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
             createProjectSqlDataAccessInterface.createPermission(
                     NewPermissionFactory.create(
                             projectID,
-                            user.getUserID(),
+                            createProjectInputData.getUserId(),
                             "owner",
                             "owner of project"
                     )
             );
-            createProjectPresenter.prepareSuccessView(createProjectInputData.getName());
+            Project project = NewProjectFactory.create(createProjectInputData.getName(), createProjectInputData.getUserId());
+
+            createProjectPresenter.prepareSuccessView(new CreateProjectOutputData(project.getProjectName()));
             return;
         } catch (Exception e) {
             createProjectPresenter.prepareFailView("Could not create project");

@@ -8,8 +8,8 @@ public class CreateProjectController {
         this.createProjectUseCaseInteractor = createProjectUseCaseInteractor;
     }
 
-    public void execute(String projectName){
-        CreateProjectInputData createProjectInputData = new CreateProjectInputData(projectName);
+    public void execute(String projectName, String userId){
+        CreateProjectInputData createProjectInputData = new CreateProjectInputData(projectName, userId);
         createProjectUseCaseInteractor.execute(createProjectInputData);
     }
 }
