@@ -8,7 +8,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
-public class ApiApiDataAccessObject implements CreateProjectApiDataAccessInterface {
+import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
+public class ApiDataAccessObject implements
+        CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface {
 
     public Project getProject(String projectID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
