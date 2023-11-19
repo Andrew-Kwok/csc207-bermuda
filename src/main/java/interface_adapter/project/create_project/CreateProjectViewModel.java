@@ -9,19 +9,19 @@ public class CreateProjectViewModel extends ViewModel{
     public static final String PROJECT_NAME_LABEL = "Enter project name";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
-    private CreateProjectState state = new CreateProjectState();
+    private CreateProjectState createProjectState = new CreateProjectState();
 
     public CreateProjectViewModel() {
         super("create project");
     }
 
-    public void setState(CreateProjectState state){this.state = state;}
+    public void setState(CreateProjectState createProjectState){this.createProjectState = createProjectState;}
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("createProjectState", null, this.createProjectState);
     }
 
     @Override
@@ -29,5 +29,5 @@ public class CreateProjectViewModel extends ViewModel{
         support.addPropertyChangeListener(listener);
     }
 
-    public CreateProjectState getState(){return state;}
+    public CreateProjectState getState(){return createProjectState;}
 }

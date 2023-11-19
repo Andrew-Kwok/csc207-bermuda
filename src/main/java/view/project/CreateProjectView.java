@@ -40,13 +40,11 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
 
         LabelTextPanel projectNamePanel = new LabelTextPanel(new JLabel(CreateProjectViewModel.PROJECT_NAME_LABEL), projectNameInputField);
 
-        JPanel button1 = new JPanel();
+        JPanel buttons = new JPanel();
         createProjectButton = new JButton(CreateProjectViewModel.CREATE_PROJECT_BUTTON_LABEL);
-        button1.add(createProjectButton);
-
-        JPanel button2 = new JPanel();
         cancelButton = new JButton(CreateProjectViewModel.CANCEL_BUTTON_LABEL);
-        button2.add(cancelButton);
+        buttons.add(createProjectButton);
+        buttons.add(cancelButton);
 
         createProjectButton.addActionListener(
                 new ActionListener() {
@@ -98,8 +96,7 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
 
         this.add(title);
         this.add(projectNamePanel);
-        this.add(button1);
-        this.add(button2);
+        this.add(buttons);
     };
 
     public void actionPerformed(ActionEvent evt) {
