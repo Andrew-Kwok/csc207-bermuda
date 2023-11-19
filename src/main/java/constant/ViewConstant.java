@@ -7,7 +7,10 @@ public class ViewConstant {
         public static final String LOGGED_IN_VIEW_NAME = "logged-in";
         public static final String CREATE_PERMISSION_VIEW_NAME = "create-permission";
         public static final String GET_PERMISSION_VIEW_NAME = "get-permission";
+        public static final String UPDATE_PERMISSION_VIEW_NAME = "update-permission";
+        public static final String DELETE_PERMISSION_VIEW_NAME = "delete-permission";
         public static final String CREATE_PROJECT_VIEW_NAME = "create-project";
+
 
 
         // button names

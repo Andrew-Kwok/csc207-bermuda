@@ -8,7 +8,9 @@ import app.user.SignupUseCaseFactory;
 import data_access.cloudsql.SqlConfig;
 import data_access.cloudsql.SqlDataAccessObject;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
+import domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface;
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
+import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
@@ -57,6 +59,8 @@ public class Bermuda {
         LoginUserDataAccessInterface loginUserDataAccessInterface = sqlDataAccessObject;
         GetPermissionDataAccessInterface getPermissionDataAccessInterface = sqlDataAccessObject;
         CreatePermissionDataAccessInterface createPermissionDataAccessInterface = sqlDataAccessObject;
+        UpdatePermissionDataAccessInterface updatePermissionDataAccessInterface = sqlDataAccessObject;
+        DeletePermissionDataAccessInterface deletePermissionDataAccessInterface = sqlDataAccessObject;
 
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
