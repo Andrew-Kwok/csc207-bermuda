@@ -5,16 +5,20 @@ import interface_adapter.view_model.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class LoggedInUserViewModel extends ViewModel {
+import static constant.ViewConstant.LOGGED_IN_VIEW_NAME;
+
+public class LoggedInViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
+    public static final String CHECK_PROJECT_BUTTON_LABEL = "Check Project";
+    public static final String CHECK_PERMISSION_BUTTON_LABEL = "Check Permission";
     private String loggedInUser;
 
-    public LoggedInUserViewModel() {
-        super("logged in");
+    public LoggedInViewModel() {
+        super(LOGGED_IN_VIEW_NAME);
     }
 
     public void setState(LoggedInState state) {

@@ -1,7 +1,7 @@
 package view.user;
 
 import interface_adapter.user.loggedin_user.LoggedInState;
-import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginState;
 import interface_adapter.user.login.LoginViewModel;
@@ -24,7 +24,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public final String viewName = LOGIN_VIEW_NAME;
     private final LoginViewModel loginViewModel;
-    private final LoggedInUserViewModel loggedInUserViewModel;
+    private final LoggedInViewModel loggedInUserViewModel;
     private final ViewManagerModel viewManagerModel;
 
     final JTextField usernameInputField = new JTextField(15);
@@ -39,7 +39,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel, LoginController controller,
-                     LoggedInUserViewModel loggedInUserViewModel, ViewManagerModel viewManagerModel) {
+                     LoggedInViewModel loggedInUserViewModel, ViewManagerModel viewManagerModel) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;

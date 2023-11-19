@@ -7,6 +7,8 @@ import interface_adapter.view_model.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import static constant.ViewConstant.SIGNUP_VIEW_NAME;
+
 public class SignupViewModel extends ViewModel {
 
     public static final String TITLE_LABEL = "Welcome to Bermuda!";
@@ -20,7 +22,7 @@ public class SignupViewModel extends ViewModel {
     private SignupState state = new SignupState();
 
     public SignupViewModel() {
-        super("sign up");
+        super(SIGNUP_VIEW_NAME);
     }
 
     public void setState(SignupState state) {
