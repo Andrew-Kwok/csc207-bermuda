@@ -4,13 +4,15 @@ import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeSupport;
 
+import static constant.ViewConstant.GET_PERMISSION_VIEW_NAME;
+
 public class GetPermissionViewModel extends ViewModel {
     public final String TITLE_LABEL = "Get Permission";
     private GetPermissionState state = new GetPermissionState();
     public static final String CREATE_PERMISSION_BUTTON_LABEL = "Create Permission";
 
     public GetPermissionViewModel() {
-        super("GetPermissionView");
+        super(GET_PERMISSION_VIEW_NAME);
     }
 
     public void setState(GetPermissionState state) {

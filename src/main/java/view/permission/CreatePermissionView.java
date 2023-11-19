@@ -17,8 +17,10 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static constant.ViewConstant.CREATE_PERMISSION_VIEW_NAME;
+
 public class CreatePermissionView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "CreatePermissionView";
+    public final String viewName = CREATE_PERMISSION_VIEW_NAME;
     private final CreatePermissionViewModel createPermissionViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
     private final ViewManagerModel viewManagerModel;

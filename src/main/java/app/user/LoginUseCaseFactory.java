@@ -1,6 +1,6 @@
 package app.user;
 
-import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
 import interface_adapter.user.login.LoginViewModel;
@@ -27,7 +27,7 @@ public class LoginUseCaseFactory {
     public static LoginView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInUserViewModel loggedInUserViewModel,
+            LoggedInViewModel loggedInUserViewModel,
             LoginUserDataAccessInterface userDataAccessObject) {
 
         try {
@@ -43,7 +43,7 @@ public class LoginUseCaseFactory {
     private static LoginController createLoginUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInUserViewModel loggedInViewModel,
+            LoggedInViewModel loggedInViewModel,
             LoginUserDataAccessInterface userDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
@@ -57,7 +57,7 @@ public class LoginUseCaseFactory {
     private static LogoutController createLogoutUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInUserViewModel loggedInUserViewModel) throws IOException {
+            LoggedInViewModel loggedInUserViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(loggedInUserViewModel, viewManagerModel, loginViewModel);
