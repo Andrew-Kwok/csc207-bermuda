@@ -1,7 +1,7 @@
 package interface_adapter.user.logout;
 
 import interface_adapter.user.loggedin_user.LoggedInState;
-import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import domains.user.use_case.logout.LogoutOutputBoundary;
@@ -9,11 +9,11 @@ import domains.user.use_case.logout.LogoutOutputData;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
 
-    private LoggedInUserViewModel loggedInUserViewModel;
+    private LoggedInViewModel loggedInUserViewModel;
     private ViewManagerModel viewManagerModel;
     private LoginViewModel loginViewModel;
 
-    public LogoutPresenter(LoggedInUserViewModel loggedInUserViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+    public LogoutPresenter(LoggedInViewModel loggedInUserViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
         this.loggedInUserViewModel = loggedInUserViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;

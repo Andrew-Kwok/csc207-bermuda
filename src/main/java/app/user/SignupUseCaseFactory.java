@@ -1,6 +1,6 @@
 package app.user;
 
-import interface_adapter.user.loggedin_user.LoggedInUserViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
 import interface_adapter.user.login.LoginViewModel;
@@ -26,7 +26,7 @@ public class SignupUseCaseFactory {
     }
 
     public static SignupView create(ViewManagerModel viewManagerModel,
-                                    SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoggedInUserViewModel loggedInUserViewModel,
+                                    SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoggedInViewModel loggedInUserViewModel,
                                     SignupUserDataAccessInterface signupUserDataAccessInterface, LoginUserDataAccessInterface loginUserDataAccessInterface) {
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, signupUserDataAccessInterface);
@@ -51,7 +51,7 @@ public class SignupUseCaseFactory {
     }
 
     private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel,
-                                                          LoggedInUserViewModel loggedInUserViewModel, LoginViewModel loginViewModel,
+                                                          LoggedInViewModel loggedInUserViewModel, LoginViewModel loginViewModel,
                                                           LoginUserDataAccessInterface loginUserDataAccessInterface) throws IOException {
 
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInUserViewModel,loginViewModel);
