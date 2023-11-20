@@ -23,6 +23,7 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
     public final String viewName = CREATE_PERMISSION_VIEW_NAME;
     private final CreatePermissionViewModel createPermissionViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
+
     private final ViewManagerModel viewManagerModel;
     private final JTextField userIdInputField = new JTextField(50);
     private final JTextField projectIdInputField = new JTextField(50);
@@ -178,7 +179,7 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
         } else if (createPermissionState.getPermissionId() != null) {
             // On success, switch to the get permission view.
             JOptionPane.showMessageDialog(this, "Permission created with id " + createPermissionState.getPermissionId() + ".");
-            createPermissionState.setPermissionId(null);
+            this.getPermissionController.execute(null);
         }
     }
 

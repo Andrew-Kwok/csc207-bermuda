@@ -28,7 +28,7 @@ public class CreatePermissionUseCaseFactory {
                 viewManagerModel, createPermissionViewModel, getPermissionViewModel, createPermissionDataAccessInterface
         );
         GetPermissionController getPermissionController = getPermissionUseCase(
-                viewManagerModel, createPermissionViewModel, getPermissionViewModel, getPermissionDataAccessInterface
+                viewManagerModel, getPermissionViewModel, getPermissionDataAccessInterface
         );
 
         return new CreatePermissionView(
@@ -47,9 +47,9 @@ public class CreatePermissionUseCaseFactory {
     }
 
     private static GetPermissionController getPermissionUseCase(ViewManagerModel viewManagerModel,
-                                                                CreatePermissionViewModel createPermissionViewModel, GetPermissionViewModel getPermissionViewModel,
+                                                                GetPermissionViewModel getPermissionViewModel,
                                                                 GetPermissionDataAccessInterface getPermissionDataAccessInterface) {
-        GetPermissionOutputBoundary getPermissionOutputBoundary = new GetPermissionPresenter(viewManagerModel, createPermissionViewModel, getPermissionViewModel);
+        GetPermissionOutputBoundary getPermissionOutputBoundary = new GetPermissionPresenter(viewManagerModel, getPermissionViewModel);
 
         GetPermissionInputBoundary getPermissionInteractor = new GetPermissionInteractor(getPermissionOutputBoundary, getPermissionDataAccessInterface);
 

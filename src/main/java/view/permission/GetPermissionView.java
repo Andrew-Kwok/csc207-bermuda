@@ -3,6 +3,8 @@ package view.permission;
 import domains.permission.entity.Permission;
 import interface_adapter.permission.create_permission.CreatePermissionController;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
+import interface_adapter.permission.update_permission.UpdatePermissionState;
+import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.permission.delete_permission.DeletePermissionController;
 import interface_adapter.permission.delete_permission.DeletePermissionState;
 import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
@@ -24,6 +26,7 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
     private final GetPermissionViewModel getPermissionViewModel;
     private final GetPermissionController getPermissionController;
     private final CreatePermissionViewModel createPermissionViewModel;
+    private final UpdatePermissionViewModel updatePermissionViewModel;
     private final DeletePermissionViewModel deletePermissionViewModel;
     private final DeletePermissionController deletePermissionController;
     private final ViewManagerModel viewManagerModel;
@@ -37,12 +40,13 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
     DefaultListModel<Permission> permissionListModel = new DefaultListModel<>();
     JList<Permission> permissionList = new JList<>(permissionListModel);
     public GetPermissionView(ViewManagerModel viewManagerModel, GetPermissionViewModel getPermissionViewModel, GetPermissionController getPermissionController,
-                             CreatePermissionViewModel createPermissionViewModel,
+                             CreatePermissionViewModel createPermissionViewModel, UpdatePermissionViewModel updatePermissionViewModel,
                              DeletePermissionViewModel deletePermissionViewModel, DeletePermissionController deletePermissionController) {
         this.viewManagerModel = viewManagerModel;
         this.getPermissionViewModel = getPermissionViewModel;
         this.getPermissionController = getPermissionController;
         this.createPermissionViewModel = createPermissionViewModel;
+        this.updatePermissionViewModel = updatePermissionViewModel;
         this.deletePermissionViewModel = deletePermissionViewModel;
         this.deletePermissionController = deletePermissionController;
 
@@ -83,7 +87,23 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(updatePermission)) {
-                            JOptionPane.showConfirmDialog(GetPermissionView.this, "Not implemented yet.");
+                            Permission selectedPermission = permissionList.getSelectedValue();
+                            if (selectedPermission == null) {
+                                JOptionPane.showMessageDialog(GetPermissionView.this, "Please select a permission to update.");
+                            } else {
+                                UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
+                                updatePermissionState.setPermissionId(selectedPermission.getPermissionID());
+                                updatePermissionState.setUserId(selectedPermission.getUserID());
+                                updatePermissionState.setProjectId(selectedPermission.getProjectID());
+                                updatePermissionState.setPermissionName(selectedPermission.getPermissionName());
+                                updatePermissionState.setPermissionDescription(selectedPermission.getPermissionDescription());
+                                updatePermissionState.setInitial(true);
+                                updatePermissionViewModel.setState(updatePermissionState);
+                                updatePermissionViewModel.firePropertyChanged();
+
+                                viewManagerModel.setActiveView(updatePermissionViewModel.getViewName());
+                                viewManagerModel.firePropertyChanged();
+                            }
                         }
                     }
                 }

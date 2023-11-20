@@ -2,6 +2,7 @@ package app;
 
 import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
+import app.permission.UpdatePermissionUseCaseFactory;
 import app.user.LoginUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.SignupUseCaseFactory;
@@ -23,6 +24,7 @@ import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import view.permission.CreatePermissionView;
 import view.permission.GetPermissionView;
+import view.permission.UpdatePermissionView;
 import view.user.LoggedInView;
 import view.user.LoginView;
 import view.user.SignupView;
@@ -95,6 +97,10 @@ public class Bermuda {
         CreatePermissionView createPermissionView = CreatePermissionUseCaseFactory.create(viewManagerModel, createPermissionViewModel, getPermissionViewModel,
                 createPermissionDataAccessInterface, getPermissionDataAccessInterface);
         views.add(createPermissionView, createPermissionView.viewName);
+
+        UpdatePermissionView updatePermissionView = UpdatePermissionUseCaseFactory.create(viewManagerModel, updatePermissionViewModel, getPermissionViewModel,
+                updatePermissionDataAccessInterface, getPermissionDataAccessInterface);
+        views.add(updatePermissionView, updatePermissionView.viewName);
 
         // set the initial view
         viewManagerModel.setActiveView(getPermissionView.viewName);

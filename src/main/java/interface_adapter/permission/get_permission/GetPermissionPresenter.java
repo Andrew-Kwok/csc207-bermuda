@@ -6,12 +6,10 @@ import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class GetPermissionPresenter implements GetPermissionOutputBoundary {
-    private final CreatePermissionViewModel createPermissionViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public GetPermissionPresenter(ViewManagerModel viewManagerModel, CreatePermissionViewModel createPermissionViewModel, GetPermissionViewModel getPermissionViewModel) {
-        this.createPermissionViewModel = createPermissionViewModel;
+    public GetPermissionPresenter(ViewManagerModel viewManagerModel, GetPermissionViewModel getPermissionViewModel) {
         this.getPermissionViewModel = getPermissionViewModel;
         this.viewManagerModel = viewManagerModel;
     }
