@@ -35,6 +35,7 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
     private final UpdatePermissionController updatePermissionController;
     private final GetPermissionController getPermissionController;
     private final JButton updatePermissionButton;
+    private final JButton cancel;
 
     public UpdatePermissionView(
             UpdatePermissionController updatePermissionController, UpdatePermissionViewModel updatePermissionViewModel,
@@ -61,6 +62,9 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
         JPanel buttons = new JPanel();
         updatePermissionButton = new JButton(UpdatePermissionViewModel.CREATE_PERMISSION_BUTTON_LABEL);
         buttons.add(updatePermissionButton);
+
+        cancel = new JButton(UpdatePermissionViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(cancel);
 
         updatePermissionButton.addActionListener(
                 new ActionListener() {
@@ -157,6 +161,18 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
 
                     @Override
                     public void keyReleased(KeyEvent e) {
+                    }
+                }
+        );
+
+        cancel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(cancel)) {
+                            viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+                        }
                     }
                 }
         );

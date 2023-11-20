@@ -87,7 +87,7 @@ public class Bermuda {
         LoggedInView loggedInUserView = LoggedInUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, getPermissionViewModel);
         views.add(loggedInUserView, loggedInUserView.viewName);
 
-        GetPermissionView getPermissionView = GetPermissionUseCaseFactory.create(viewManagerModel,
+        GetPermissionView getPermissionView = GetPermissionUseCaseFactory.create(viewManagerModel, loggedInUserViewModel,
                 createPermissionViewModel, createPermissionDataAccessInterface,
                 getPermissionViewModel, getPermissionDataAccessInterface,
                 updatePermissionViewModel, updatePermissionDataAccessInterface,
@@ -103,7 +103,7 @@ public class Bermuda {
         views.add(updatePermissionView, updatePermissionView.viewName);
 
         // set the initial view
-        viewManagerModel.setActiveView(getPermissionView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

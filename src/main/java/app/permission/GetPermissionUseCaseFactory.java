@@ -25,13 +25,14 @@ import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionPresenter;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.permission.GetPermissionView;
 
 public class GetPermissionUseCaseFactory {
     private GetPermissionUseCaseFactory() {}
 
-    public static GetPermissionView create(ViewManagerModel viewManagerModel,
+    public static GetPermissionView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
                                            CreatePermissionViewModel createPermissionViewModel, CreatePermissionDataAccessInterface createPermissionDataAccessInterface,
                                            GetPermissionViewModel getPermissionViewModel, GetPermissionDataAccessInterface getPermissionDataAccessInterface,
                                            UpdatePermissionViewModel updatePermissionViewModel, UpdatePermissionDataAccessInterface updatePermissionDataAccessInterface,
@@ -47,7 +48,7 @@ public class GetPermissionUseCaseFactory {
         );
 
         return new GetPermissionView(
-                viewManagerModel,
+                viewManagerModel, loggedInViewModel,
                 getPermissionViewModel, getPermissionController,
                 createPermissionViewModel, updatePermissionViewModel,
                 deletePermissionViewModel, deletePermissionController

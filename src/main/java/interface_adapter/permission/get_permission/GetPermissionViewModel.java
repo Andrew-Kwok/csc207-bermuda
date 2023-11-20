@@ -12,6 +12,7 @@ public class GetPermissionViewModel extends ViewModel {
     public static final String CREATE_PERMISSION_BUTTON_LABEL = "Create Permission";
     public static final String UPDATE_PERMISSION_BUTTON_LABEL = "Update Permission";
     public static final String DELETE_PERMISSION_BUTTON_LABEL = "Delete Permission";
+    public static final String GO_BACK_BUTTON_LABEL = "Go Back";
 
     public GetPermissionViewModel() {
         super(GET_PERMISSION_VIEW_NAME);

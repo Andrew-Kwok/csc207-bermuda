@@ -33,6 +33,7 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
     private final CreatePermissionController createPermissionController;
     private final GetPermissionController getPermissionController;
     private final JButton createPermissionButton;
+    private final JButton cancel;
 
     public CreatePermissionView(
             CreatePermissionController createPermissionController, CreatePermissionViewModel createPermissionViewModel,
@@ -59,6 +60,9 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
         JPanel buttons = new JPanel();
         createPermissionButton = new JButton(CreatePermissionViewModel.CREATE_PERMISSION_BUTTON_LABEL);
         buttons.add(createPermissionButton);
+
+        cancel = new JButton(CreatePermissionViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(cancel);
 
         createPermissionButton.addActionListener(
             new ActionListener() {
@@ -154,6 +158,18 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
 
                 @Override
                 public void keyReleased(KeyEvent e) {
+                }
+            }
+        );
+
+        cancel.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource().equals(cancel)) {
+                        viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
                 }
             }
         );

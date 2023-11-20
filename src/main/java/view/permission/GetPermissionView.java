@@ -11,7 +11,9 @@ import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionState;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
+import view.user.LoggedInView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,7 @@ import static constant.ViewConstant.GET_PERMISSION_VIEW_NAME;
 
 public class GetPermissionView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_PERMISSION_VIEW_NAME;
+    private final LoggedInViewModel loggedInUserViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
     private final GetPermissionController getPermissionController;
     private final CreatePermissionViewModel createPermissionViewModel;
@@ -33,16 +36,19 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
 
     JLabel title;
 
-    final JButton createPermission;
-    final JButton updatePermission;
-    final JButton deletePermission;
+    private final JButton createPermission;
+    private final JButton updatePermission;
+    private final JButton deletePermission;
+    private final JButton goBack;
 
     DefaultListModel<Permission> permissionListModel = new DefaultListModel<>();
     JList<Permission> permissionList = new JList<>(permissionListModel);
-    public GetPermissionView(ViewManagerModel viewManagerModel, GetPermissionViewModel getPermissionViewModel, GetPermissionController getPermissionController,
+    public GetPermissionView(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInUserViewModel,
+                             GetPermissionViewModel getPermissionViewModel, GetPermissionController getPermissionController,
                              CreatePermissionViewModel createPermissionViewModel, UpdatePermissionViewModel updatePermissionViewModel,
                              DeletePermissionViewModel deletePermissionViewModel, DeletePermissionController deletePermissionController) {
         this.viewManagerModel = viewManagerModel;
+        this.loggedInUserViewModel = loggedInUserViewModel;
         this.getPermissionViewModel = getPermissionViewModel;
         this.getPermissionController = getPermissionController;
         this.createPermissionViewModel = createPermissionViewModel;
@@ -68,6 +74,9 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
 
         deletePermission = new JButton(GetPermissionViewModel.DELETE_PERMISSION_BUTTON_LABEL);
         buttons.add(deletePermission);
+
+        goBack = new JButton(GetPermissionViewModel.GO_BACK_BUTTON_LABEL);
+        buttons.add(goBack);
 
         createPermission.addActionListener(
                 new ActionListener() {
@@ -123,6 +132,18 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
                                     deletePermissionController.execute(selectedPermission.getPermissionID());
                                 }
                             }
+                        }
+                    }
+                }
+        );
+
+        goBack.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        if (evt.getSource().equals(goBack)) {
+                            viewManagerModel.setActiveView(loggedInUserViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
