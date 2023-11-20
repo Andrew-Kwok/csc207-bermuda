@@ -1,8 +1,6 @@
 package domains.project.use_case.create_project;
 
 import domains.permission.entity.NewPermissionFactory;
-import domains.project.entity.NewProjectFactory;
-import domains.project.entity.Project;
 
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectInputData createProjectInputData;
