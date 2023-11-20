@@ -119,7 +119,7 @@ public class Bermuda {
         views.add(createProjectView, createProjectView.viewName);
 
         // set the initial view
-        viewManagerModel.setActiveView(createProjectView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
