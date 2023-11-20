@@ -1,6 +1,8 @@
 package domains.project.use_case.create_project;
 
 public interface CreateProjectOutputBoundary {
-    void prepareSuccessView();
-    void prepareFailView();
+
+    void prepareSuccessView(CreateProjectOutputData createProjectOutputData);
+
+    void prepareFailView(String error);
 }

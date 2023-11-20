@@ -1,6 +1,6 @@
 package domains.user.use_case.logout;
 
-public class LogoutInteractor implements LogoutInputBoundary{
+public class LogoutInteractor implements LogoutInputBoundary {
     LogoutOutputBoundary logoutPresenter;
 
     public LogoutInteractor(LogoutOutputBoundary logoutPresenter) {

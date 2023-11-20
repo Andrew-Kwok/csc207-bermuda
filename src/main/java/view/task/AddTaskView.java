@@ -1,20 +1,14 @@
 package view.task;
 
-import interface_adapter.permission.create_permission.CreatePermissionController;
-import interface_adapter.permission.create_permission.CreatePermissionState;
-import interface_adapter.permission.create_permission.CreatePermissionViewModel;
-import interface_adapter.permission.get_permission.GetPermissionController;
-import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
-//import interface_adapter.task.get_task.GetTaskViewModel;
+import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.common.LabelTextPanel;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,33 +16,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
 
 import static constant.ViewConstant.ADD_TASK_VIEW_NAME;
 
 public class AddTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = ADD_TASK_VIEW_NAME;
     private final AddTaskViewModel addTaskViewModel;
-    //private final GetTaskViewModel getTaskViewModel;
+    private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField taskNameInputField = new JTextField(50);
     private final JTextField taskContentInputField = new JTextField(50);
-    private final JTextField deadlineInputField = new JTextField(50);
     private final AddTaskController addTaskController;
-    //private final GetTaskController getTaskController;
+    private final GetTaskController getTaskController;
     private final JButton addTaskButton;
     private final JButton cancelButton;
     private JFormattedTextField formatText;
-    public AddTaskView(AddTaskViewModel addTaskViewModel, AddTaskController addTaskController, ViewManagerModel viewManagerModel){
+
+    public AddTaskView(
+            AddTaskViewModel addTaskViewModel, AddTaskController addTaskController,
+            GetTaskViewModel getTaskViewModel, GetTaskController getTaskController,
+            ViewManagerModel viewManagerModel) {
         this.addTaskViewModel = addTaskViewModel;
         this.addTaskController = addTaskController;
-        //this.getTaskViewModel = getTaskViewModel;
-        //this.getTaskController = getTaskController;
+        this.getTaskViewModel = getTaskViewModel;
+        this.getTaskController = getTaskController;
         this.viewManagerModel = viewManagerModel;
 
         addTaskViewModel.addPropertyChangeListener(this);
@@ -58,41 +49,41 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
 
         LabelTextPanel taskNamePanel = new LabelTextPanel(new JLabel(AddTaskViewModel.TASK_NAME_LABEL), taskNameInputField);
         LabelTextPanel taskContentPanel = new LabelTextPanel(new JLabel(AddTaskViewModel.TASK_CONTENT_LABEL), taskContentInputField);
-        LabelTextPanel taskDeadlinePanel = new LabelTextPanel(new JLabel(AddTaskViewModel.DEADLINE_LABEL), deadlineInputField);
 
         JPanel buttons = new JPanel();
         addTaskButton = new JButton(addTaskViewModel.ADD_TASK_BUTTON_LABEL);
-        cancelButton = new JButton(addTaskViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(addTaskButton);
+
+        cancelButton = new JButton(addTaskViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancelButton);
 
         addTaskButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(addTaskButton)){
-                       AddTaskState addTaskState = addTaskViewModel.getState();
-                       addTaskController.execute(
-                           addTaskState.getTaskName(),
-                           addTaskState.getTaskContent(),
-                           addTaskState.getDeadline(),
-                           addTaskState.getProjectID()
-                       );
-                       clearInputFields();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addTaskButton)) {
+                            AddTaskState addTaskState = addTaskViewModel.getState();
+                            addTaskController.execute(
+                                    addTaskState.getProjectID(),
+                                    addTaskState.getTaskName(),
+                                    addTaskState.getTaskContent()
+                            );
+                            clearInputFields();
+                        }
                     }
                 }
-            }
         );
 
         cancelButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(cancelButton)){
-                        clearInputFields();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(cancelButton)) {
+                            clearInputFields();
+//                            TODO: Fix when GetTaskViewModel is implemented.
+                        }
                     }
                 }
-            }
         );
 
         taskNameInputField.addKeyListener(
@@ -139,52 +130,13 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                 }
         );
 
-        deadlineInputField.addKeyListener(
-                new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        AddTaskState addTaskState = addTaskViewModel.getState();
-                        //String text = deadlineInputField.getText() + e.getKeyChar();
-
-                        /*Date date = new Date();
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        String dateString = formatter.format(date);
-                        formatText = new JFormattedTextField(createFormatter("####-##-## ##:##:##"));
-                        formatText.setColumns(20);
-                        formatText.setText(dateString);
-
-                        setLayout(new BorderLayout());
-                        add(new JLabel("Enter Date and Time in YYYY-MM-DD HH:MM:SS format"), BorderLayout.NORTH);
-                        add(formatText, BorderLayout.CENTER);
-
-                        LocalDateTime localDate = convertToLocalDateTimeViaInstant(date);*/
-                        String date = deadlineInputField.getText() + e.getKeyChar();
-                        //LocalDateTime date = LocalDateTime.parse("2019-03-27T10:15:30");
-                        addTaskState.setDeadline(date);
-                        addTaskViewModel.setState(addTaskState);
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-
-                    }
-                }
-        );
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
         this.add(taskNamePanel);
         this.add(taskContentPanel);
-        this.add(taskDeadlinePanel);
         this.add(buttons);
     }
-
 
 
     @Override
@@ -198,33 +150,12 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
         if (addTaskState.getAddTaskError() != null) {
             JOptionPane.showMessageDialog(this, addTaskState.getAddTaskError());
         } else if (addTaskState.getTaskID() != null) {
-            // On success, switch to the get permission view.
-            JOptionPane.showMessageDialog(this, "Task created with id " + addTaskState.getTaskID() + ".");
-            addTaskState.setTaskID(null);
+            JOptionPane.showMessageDialog(this, String.format("Task \"%s\" is successfully created.", addTaskState.getTaskName()));
         }
     }
 
     private void clearInputFields() {
         taskNameInputField.setText("");
         taskContentInputField.setText("");
-        deadlineInputField.setText("");
-        taskNameInputField.setText("");
-    }
-
-    public LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-    }
-
-    private MaskFormatter createFormatter(String s) {
-        MaskFormatter formatter = null;
-        try {
-            formatter = new MaskFormatter(s);
-        } catch (java.text.ParseException exc) {
-            System.err.println("formatter is bad: " + exc.getMessage());
-            System.exit(-1);
-        }
-        return formatter;
     }
 }

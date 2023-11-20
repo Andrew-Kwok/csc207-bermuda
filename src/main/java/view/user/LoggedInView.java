@@ -55,28 +55,28 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(logOut);
 
         checkProject.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    if(evt.getSource().equals(checkProject)){
-                        System.out.println("Clicked check project");
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(checkProject)) {
+                            System.out.println("Clicked check project");
 //                        viewManagerModel.setActiveView(checkProjectViewModel.getViewName());
 //                        viewManagerModel.firePropertyChanged();
+                        }
                     }
                 }
-            }
         );
 
         checkPermission.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(checkPermission)) {
-                        viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
-                        viewManagerModel.firePropertyChanged();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(checkPermission)) {
+                            viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+                        }
                     }
                 }
-            }
         );
 
         logOut.addActionListener(
@@ -84,7 +84,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        if(evt.getSource().equals(logOut)){
+                        if (evt.getSource().equals(logOut)) {
                             LoggedInState loggedInState = loggedInUserViewModel.getState();
                             logoutController.execute(loggedInState.getUsername());
                         }
@@ -111,7 +111,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInState state = (LoggedInState) evt.getNewValue();
         username.setText(state.getUsername());
-        if(!state.isLoggedIn()){
+        if (!state.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "%s logged out!".formatted(state.getUsername()));
         }
     }

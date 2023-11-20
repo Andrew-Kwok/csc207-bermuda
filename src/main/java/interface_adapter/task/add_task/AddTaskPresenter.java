@@ -1,41 +1,35 @@
 package interface_adapter.task.add_task;
 
-import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskOutputBoundary;
 import domains.task.use_case.add_task.AddTaskOutputData;
-import interface_adapter.permission.create_permission.CreatePermissionState;
-//import interface_adapter.task.get_task.GetTaskViewModel;
+import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import interface_adapter.view_model.ViewModel;
 
 public class AddTaskPresenter implements AddTaskOutputBoundary {
 
     private final AddTaskViewModel addTaskViewModel;
-    //private final GetTaskViewModel getTaskViewModel;
+    private final GetTaskViewModel getTaskViewModel;
     private ViewManagerModel viewManagerModel;
 
-    /*public AddTaskPresenter(ViewManagerModel viewManagerModel,
-                            AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
-                            AddTaskDataAccessInterface addTaskDAO){
-
-        this.viewManagerModel = viewManagerModel;
-        //this.getTaskViewModel = getTaskViewModel;
-        this.addTaskViewModel = addTaskViewModel;
-    }*/
-
-    public AddTaskPresenter (ViewManagerModel viewManagerModel,
-                            AddTaskViewModel addTaskViewModel,
-                            AddTaskDataAccessInterface addTaskDAO){
+    public AddTaskPresenter(
+            ViewManagerModel viewManagerModel,
+            AddTaskViewModel addTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.addTaskViewModel = addTaskViewModel;
+        this.getTaskViewModel = null; // TODO: Fix when GetTaskViewModel is implemented.
     }
 
     @Override
     public void prepareSuccessView(AddTaskOutputData task) {
+        AddTaskState addTaskState = addTaskViewModel.getState();
+        addTaskState.setTaskName(task.getTaskName());
+        this.addTaskViewModel.setState(addTaskState);
+        addTaskViewModel.firePropertyChanged();
 
         // On success, switch to the get task view.
-        //viewManagerModel.setActiveView(getTaskViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+//        TODO: Fix when GetTaskViewModel is implemented.
+//        viewManagerModel.setActiveView(getTaskViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
     }
 
     @Override
