@@ -1,7 +1,5 @@
 package interface_adapter.task.add_task;
 
-import java.time.LocalDateTime;
-
 public class AddTaskState {
 
     private String projectID = "2320965999"; // TODO: Remove this default value when integrating Project & Task.

@@ -1,6 +1,5 @@
 package interface_adapter.task.add_task;
 
-import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskOutputBoundary;
 import domains.task.use_case.add_task.AddTaskOutputData;
 import interface_adapter.task.get_task.GetTaskViewModel;
