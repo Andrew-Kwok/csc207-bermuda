@@ -23,4 +23,16 @@ public class ShareProjectState {
     public String getOtherUserName() {
         return otherUserName;
     }
+
+    public void setOtherUserName(String newUsername) {
+        this.otherUserName = newUsername;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
