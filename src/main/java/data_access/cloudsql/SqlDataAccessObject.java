@@ -6,6 +6,7 @@ import domains.permission.use_case.delete_permission.DeletePermissionDataAccessI
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.user.entity.User;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
@@ -21,7 +22,7 @@ public class SqlDataAccessObject implements
         SqlDataAccessInterface,
         GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface, UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
         SignupUserDataAccessInterface, LoginUserDataAccessInterface,
-        CreateProjectSqlDataAccessInterface {
+        CreateProjectSqlDataAccessInterface, GetProjectSqlDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
@@ -51,7 +52,7 @@ public class SqlDataAccessObject implements
                     String permissionName = resultSet.getString("permission_name");
                     String permissionDescription = resultSet.getString("permission_description");
 
-                    Permission permission = new Permission(id, userId, projectId, permissionName, permissionDescription);
+                    Permission permission = new Permission(id, projectId, userId, permissionName, permissionDescription);
                     permissions.add(permission);
                 }
             } catch (Exception e) {
