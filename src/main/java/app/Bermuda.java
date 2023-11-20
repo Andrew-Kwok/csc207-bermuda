@@ -2,27 +2,33 @@ package app;
 
 import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
-import app.user.LoginUseCaseFactory;
+import app.permission.UpdatePermissionUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
+import app.user.LoginUseCaseFactory;
 import app.user.SignupUseCaseFactory;
 import data_access.cloudsql.SqlConfig;
 import data_access.cloudsql.SqlDataAccessObject;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
+import domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface;
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
+import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
+import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
+import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import domains.user.use_case.login.LoginUserDataAccessInterface;
-import domains.user.use_case.signup.SignupUserDataAccessInterface;
+import view.ViewManager;
 import view.permission.CreatePermissionView;
 import view.permission.GetPermissionView;
+import view.permission.UpdatePermissionView;
 import view.user.LoggedInView;
 import view.user.LoginView;
 import view.user.SignupView;
-import view.ViewManager;
 
 import javax.sql.DataSource;
 import javax.swing.*;
@@ -48,6 +54,8 @@ public class Bermuda {
         LoggedInViewModel loggedInUserViewModel = new LoggedInViewModel();
         GetPermissionViewModel getPermissionViewModel = new GetPermissionViewModel();
         CreatePermissionViewModel createPermissionViewModel = new CreatePermissionViewModel();
+        UpdatePermissionViewModel updatePermissionViewModel = new UpdatePermissionViewModel();
+        DeletePermissionViewModel deletePermissionViewModel = new DeletePermissionViewModel();
 
         // data access object
         DataSource sqlDataSource = SqlConfig.NewSQL();
@@ -57,6 +65,8 @@ public class Bermuda {
         LoginUserDataAccessInterface loginUserDataAccessInterface = sqlDataAccessObject;
         GetPermissionDataAccessInterface getPermissionDataAccessInterface = sqlDataAccessObject;
         CreatePermissionDataAccessInterface createPermissionDataAccessInterface = sqlDataAccessObject;
+        UpdatePermissionDataAccessInterface updatePermissionDataAccessInterface = sqlDataAccessObject;
+        DeletePermissionDataAccessInterface deletePermissionDataAccessInterface = sqlDataAccessObject;
 
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
@@ -77,13 +87,20 @@ public class Bermuda {
         LoggedInView loggedInUserView = LoggedInUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, getPermissionViewModel);
         views.add(loggedInUserView, loggedInUserView.viewName);
 
-        GetPermissionView getPermissionView = GetPermissionUseCaseFactory.create(viewManagerModel, createPermissionViewModel, getPermissionViewModel,
-                createPermissionDataAccessInterface, getPermissionDataAccessInterface);
+        GetPermissionView getPermissionView = GetPermissionUseCaseFactory.create(viewManagerModel, loggedInUserViewModel,
+                createPermissionViewModel, createPermissionDataAccessInterface,
+                getPermissionViewModel, getPermissionDataAccessInterface,
+                updatePermissionViewModel, updatePermissionDataAccessInterface,
+                deletePermissionViewModel, deletePermissionDataAccessInterface);
         views.add(getPermissionView, getPermissionView.viewName);
 
         CreatePermissionView createPermissionView = CreatePermissionUseCaseFactory.create(viewManagerModel, createPermissionViewModel, getPermissionViewModel,
                 createPermissionDataAccessInterface, getPermissionDataAccessInterface);
         views.add(createPermissionView, createPermissionView.viewName);
+
+        UpdatePermissionView updatePermissionView = UpdatePermissionUseCaseFactory.create(viewManagerModel, updatePermissionViewModel, getPermissionViewModel,
+                updatePermissionDataAccessInterface, getPermissionDataAccessInterface);
+        views.add(updatePermissionView, updatePermissionView.viewName);
 
         // set the initial view
         viewManagerModel.setActiveView(loginView.viewName);

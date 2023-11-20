@@ -1,6 +1,5 @@
 package interface_adapter.project.create_project;
 
-import domains.project.use_case.create_project.CreateProjectInputData;
 import domains.project.use_case.create_project.CreateProjectOutputBoundary;
 import domains.project.use_case.create_project.CreateProjectOutputData;
 import interface_adapter.view_model.ViewManagerModel;
@@ -12,7 +11,7 @@ public class CreateProjectPresenter implements CreateProjectOutputBoundary {
     private ViewManagerModel viewManagerModel;
 
     public CreateProjectPresenter(ViewManagerModel viewManagerModel,
-                            CreateProjectViewModel createProjectViewModel){
+                                  CreateProjectViewModel createProjectViewModel) {
 
         this.viewManagerModel = viewManagerModel;
         this.createProjectViewModel = createProjectViewModel;

@@ -1,13 +1,13 @@
 package interface_adapter.user.signup;
 
-;
-
 import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import static constant.ViewConstant.SIGNUP_VIEW_NAME;
+
+;
 
 public class SignupViewModel extends ViewModel {
 

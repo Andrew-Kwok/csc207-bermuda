@@ -113,7 +113,7 @@ public class Task {
     }
 
     @Override
-public String toString() {
+    public String toString() {
         return ("""
                 [Task ID: %s]
                 \t Project ID: %s

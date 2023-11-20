@@ -7,26 +7,35 @@ public class CreateProjectState {
     private String projectError = null;
 
 
-    public CreateProjectState(){}
+    public CreateProjectState() {
+    }
 
-    public String getProjectName(){
+    public String getProjectName() {
         return projectName;
     }
-    public String getUserId(){ return userId; }
-    public String getProjectError(){
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getProjectError() {
         return projectError;
     }
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
-    public void setUserId(String userId) { this.userId = userId; }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public void setProjectError(String projectError) {
         this.projectError = projectError;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "CreateProjectState{" +
                 "projectName='" + projectName + ", userId='" + userId + "}";
     }

@@ -1,11 +1,10 @@
 package data_access.cloudsql;
 
-import javax.sql.DataSource;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import config.Config;
+
+import javax.sql.DataSource;
 
 public class SqlConfig {
     public static DataSource NewSQL() {

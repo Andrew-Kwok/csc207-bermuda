@@ -1,12 +1,11 @@
 package interface_adapter.permission.create_permission;
 
-import domains.permission.entity.NewPermissionFactory;
-import domains.permission.entity.Permission;
 import domains.permission.use_case.create_permission.CreatePermissionInputBoundary;
 import domains.permission.use_case.create_permission.CreatePermissionInputData;
 
 public class CreatePermissionController {
     final CreatePermissionInputBoundary createPermissionInteractor;
+
     public CreatePermissionController(CreatePermissionInputBoundary createPermissionInteractor) {
         this.createPermissionInteractor = createPermissionInteractor;
     }

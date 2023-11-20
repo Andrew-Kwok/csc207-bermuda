@@ -1,6 +1,5 @@
 package app.permission;
 
-import domains.permission.entity.NewPermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.permission.use_case.create_permission.CreatePermissionInputBoundary;
 import domains.permission.use_case.create_permission.CreatePermissionInteractor;
@@ -19,7 +18,8 @@ import interface_adapter.view_model.ViewManagerModel;
 import view.permission.CreatePermissionView;
 
 public class CreatePermissionUseCaseFactory {
-    private CreatePermissionUseCaseFactory() {}
+    private CreatePermissionUseCaseFactory() {
+    }
 
     public static CreatePermissionView create(ViewManagerModel viewManagerModel,
                                               CreatePermissionViewModel createPermissionViewModel, GetPermissionViewModel getPermissionViewModel,
@@ -28,7 +28,7 @@ public class CreatePermissionUseCaseFactory {
                 viewManagerModel, createPermissionViewModel, getPermissionViewModel, createPermissionDataAccessInterface
         );
         GetPermissionController getPermissionController = getPermissionUseCase(
-                viewManagerModel, createPermissionViewModel, getPermissionViewModel, getPermissionDataAccessInterface
+                viewManagerModel, getPermissionViewModel, getPermissionDataAccessInterface
         );
 
         return new CreatePermissionView(
@@ -47,9 +47,9 @@ public class CreatePermissionUseCaseFactory {
     }
 
     private static GetPermissionController getPermissionUseCase(ViewManagerModel viewManagerModel,
-                                                                CreatePermissionViewModel createPermissionViewModel, GetPermissionViewModel getPermissionViewModel,
+                                                                GetPermissionViewModel getPermissionViewModel,
                                                                 GetPermissionDataAccessInterface getPermissionDataAccessInterface) {
-        GetPermissionOutputBoundary getPermissionOutputBoundary = new GetPermissionPresenter(viewManagerModel, createPermissionViewModel, getPermissionViewModel);
+        GetPermissionOutputBoundary getPermissionOutputBoundary = new GetPermissionPresenter(viewManagerModel, getPermissionViewModel);
 
         GetPermissionInputBoundary getPermissionInteractor = new GetPermissionInteractor(getPermissionOutputBoundary, getPermissionDataAccessInterface);
 

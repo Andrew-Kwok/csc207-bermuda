@@ -1,12 +1,10 @@
 package view.project;
-import view.common.LabelTextPanel;
 
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
-import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.view_model.ViewManagerModel;
-import org.checkerframework.checker.units.qual.C;
+import view.common.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,11 +95,14 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
         this.add(title);
         this.add(projectNamePanel);
         this.add(buttons);
-    };
+    }
+
+    ;
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Not implemented yet.");
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CreateProjectState createProjectState = (CreateProjectState) evt.getNewValue();
