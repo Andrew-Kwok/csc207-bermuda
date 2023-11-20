@@ -1,2 +1,4 @@
-package view.task;public class GetTaskView {
+package view.task;
+
+public class GetTaskView {
 }

@@ -1,14 +1,13 @@
 package domains.task.use_case.add_task;
-import app.task.AddTaskUseCaseFactory;
-import domains.permission.entity.Permission;
+
 import domains.task.entity.Task;
 
-public class AddTaskInteractor implements AddTaskInputBoundary{
+public class AddTaskInteractor implements AddTaskInputBoundary {
     private final AddTaskDataAccessInterface addTaskDataAccessObject;
     private final AddTaskOutputBoundary addTaskPresenter;
 
     public AddTaskInteractor(AddTaskDataAccessInterface addTaskDataAccessObject,
-                                AddTaskOutputBoundary addTaskOutputBoundary) {
+                             AddTaskOutputBoundary addTaskOutputBoundary) {
         this.addTaskDataAccessObject = addTaskDataAccessObject;
         this.addTaskPresenter = addTaskOutputBoundary;
     }
@@ -19,17 +18,15 @@ public class AddTaskInteractor implements AddTaskInputBoundary{
         String projectID = addTaskInputData.getProjectID();
         String content = addTaskInputData.getContent();
 
-        if (projectID == null || content == null){
+        if (projectID == null || content == null) {
             addTaskPresenter.prepareFailView("must have projectID and content");
-        }
-        else{
-            try{
+        } else {
+            try {
                 Task task = new Task(null, projectID, addTaskInputData.getTaskName(), content);
 
                 AddTaskOutputData addTaskOutputData = new AddTaskOutputData();
                 this.addTaskPresenter.prepareSuccessView(addTaskOutputData);
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 addTaskPresenter.prepareFailView(e.getMessage());
             }
         }

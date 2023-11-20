@@ -18,7 +18,8 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class AddTaskUseCaseFactory {
-    private AddTaskUseCaseFactory(){}
+    private AddTaskUseCaseFactory() {
+    }
 
     public static AddTaskView create(
             ViewManagerModel viewManagerModel, AddTaskViewModel addTaskViewModel,
@@ -48,6 +49,7 @@ public class AddTaskUseCaseFactory {
 
         return new AddTaskController(addTaskInteractor);
     }
+
     private static GetTaskController createGetTaskUseCase(ViewManagerModel viewManagerModel,
                                                           AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
                                                           GetTaskDataAccessInterface getTaskDAO) throws IOException {

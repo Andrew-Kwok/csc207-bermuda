@@ -2,18 +2,16 @@ package data_access.todoist;
 
 import config.Config;
 import domains.project.entity.Project;
-import domains.project.use_case.create_project.CreateProjectDataAccessInterface;
+import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import domains.task.entity.Task;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import okhttp3.*;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.time.ZonedDateTime;
-
-public class ApiDataAccessObject implements CreateProjectDataAccessInterface, AddTaskDataAccessInterface {
-    public Project getProject(String projectID) {
+public class ApiDataAccessObject implements
+        CreateProjectApiDataAccessInterface,
+        AddTaskDataAccessInterface {
+    public Project getProject(String projectID) throws Exception {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -21,6 +19,7 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface, Ad
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
@@ -30,10 +29,10 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface, Ad
                         responseBody.getString("name")
                 );
             } else {
-                throw new RuntimeException("error");
+                throw new Exception("error retrieving projects: " + response.code());
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
 
@@ -50,21 +49,22 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface, Ad
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
                 JSONObject responseBody = new JSONObject(response.body().string());
                 return responseBody.getString("id");
             } else {
-                throw new RuntimeException("error");
+                throw new Exception("error creating projects: " + response.code());
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
 
     @Override
-    public void addTask(String projectId, Task task) {
+    public void addTask(String projectId, Task task) throws Exception {
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -79,15 +79,16 @@ public class ApiDataAccessObject implements CreateProjectDataAccessInterface, Ad
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
-                JSONObject responseBody = new JSONObject(response.body().string());
+
             } else {
-                throw new RuntimeException("error");
+                throw new Exception("error creating tasks: " + response.code());
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
 }

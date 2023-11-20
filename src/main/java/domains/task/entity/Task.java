@@ -98,7 +98,9 @@ public class Task {
         return taskDeadline;
     }
 
-    public String getProjectID() { return projectID; }
+    public String getProjectID() {
+        return projectID;
+    }
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
@@ -117,7 +119,7 @@ public class Task {
     }
 
     @Override
-public String toString() {
+    public String toString() {
         return ("""
                 [Task ID: %s]
                 \t Project ID: %s

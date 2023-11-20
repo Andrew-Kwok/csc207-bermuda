@@ -21,7 +21,9 @@ public class AddTaskViewModel extends ViewModel {
         super("add task");
     }
 
-    public void setState(AddTaskState state){this.state = state;}
+    public void setState(AddTaskState state) {
+        this.state = state;
+    }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -35,5 +37,7 @@ public class AddTaskViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public AddTaskState getState(){return state;}
+    public AddTaskState getState() {
+        return state;
+    }
 }

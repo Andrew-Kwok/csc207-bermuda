@@ -11,28 +11,30 @@ public class AddTaskState {
     private String taskID = "";
     private String addTaskError;
 
-    public AddTaskState(){}
+    public AddTaskState() {
+    }
 
-    public String getTaskName(){
+    public String getTaskName() {
         return taskName;
     }
 
-    public String getTaskContent(){
+    public String getTaskContent() {
         return taskContent;
     }
 
-    public LocalDateTime getDeadline(){
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public String getProjectID(){
+    public String getProjectID() {
         return projectID;
     }
-    public String getTaskID(){
+
+    public String getTaskID() {
         return taskID;
     }
 
-    public String getAddTaskError(){
+    public String getAddTaskError() {
         return addTaskError;
     }
 
@@ -40,18 +42,19 @@ public class AddTaskState {
         this.taskName = taskName;
     }
 
-    public void setTaskContent(String TaskContent){
+    public void setTaskContent(String TaskContent) {
         this.taskContent = taskContent;
     }
 
-    public void setDeadline(LocalDateTime deadline){
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
 
-    public void setProjectID(String projectID){
+    public void setProjectID(String projectID) {
         this.projectID = projectID;
     }
-    public void setTaskID(String taskID){
+
+    public void setTaskID(String taskID) {
         this.taskID = taskID;
     }
 
@@ -60,7 +63,7 @@ public class AddTaskState {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "AddTaskState{" +
                 "taskName='" + taskName + "\'" +
                 "content='" + taskContent + "\'" +

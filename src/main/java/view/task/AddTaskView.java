@@ -1,10 +1,5 @@
 package view.task;
 
-import interface_adapter.permission.create_permission.CreatePermissionController;
-import interface_adapter.permission.create_permission.CreatePermissionState;
-import interface_adapter.permission.create_permission.CreatePermissionViewModel;
-import interface_adapter.permission.get_permission.GetPermissionController;
-import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
 import interface_adapter.task.add_task.AddTaskViewModel;
@@ -26,8 +21,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class AddTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "AddTaskView";
@@ -42,8 +35,9 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
     private final JButton addTaskButton;
     private final JButton cancelButton;
     private JFormattedTextField formatText;
+
     public AddTaskView(AddTaskViewModel addTaskViewModel, AddTaskController addTaskController,
-                       GetTaskViewModel getTaskViewModel, GetTaskController getTaskController, ViewManagerModel viewManagerModel){
+                       GetTaskViewModel getTaskViewModel, GetTaskController getTaskController, ViewManagerModel viewManagerModel) {
         this.addTaskViewModel = addTaskViewModel;
         this.addTaskController = addTaskController;
         this.getTaskViewModel = getTaskViewModel;
@@ -66,32 +60,32 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
         buttons.add(cancelButton);
 
         addTaskButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(addTaskButton)){
-                       AddTaskState addTaskState = addTaskViewModel.getState();
-                       addTaskController.execute(
-                           addTaskState.getTaskName(),
-                           addTaskState.getTaskContent(),
-                           addTaskState.getDeadline(),
-                           addTaskState.getProjectID()
-                       );
-                       clearInputFields();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addTaskButton)) {
+                            AddTaskState addTaskState = addTaskViewModel.getState();
+                            addTaskController.execute(
+                                    addTaskState.getTaskName(),
+                                    addTaskState.getTaskContent(),
+                                    addTaskState.getDeadline(),
+                                    addTaskState.getProjectID()
+                            );
+                            clearInputFields();
+                        }
                     }
                 }
-            }
         );
 
         cancelButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(cancelButton)){
-                        clearInputFields();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(cancelButton)) {
+                            clearInputFields();
+                        }
                     }
                 }
-            }
         );
 
         taskNameInputField.addKeyListener(
@@ -181,7 +175,6 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
         this.add(taskDeadlinePanel);
         this.add(buttons);
     }
-
 
 
     @Override
