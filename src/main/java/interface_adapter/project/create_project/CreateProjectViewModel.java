@@ -3,6 +3,9 @@ import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import static constant.ViewConstant.CREATE_PROJECT_VIEW_NAME;
+
 public class CreateProjectViewModel extends ViewModel{
     public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
     public static final String TITLE_LABEL = "Create Project";
@@ -12,7 +15,7 @@ public class CreateProjectViewModel extends ViewModel{
     private CreateProjectState createProjectState = new CreateProjectState();
 
     public CreateProjectViewModel() {
-        super("create project");
+        super(CREATE_PROJECT_VIEW_NAME);
     }
 
     public void setState(CreateProjectState createProjectState){this.createProjectState = createProjectState;}

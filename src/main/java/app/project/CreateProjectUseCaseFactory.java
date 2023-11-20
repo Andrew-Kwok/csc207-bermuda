@@ -1,12 +1,9 @@
 package app.project;
 
-import domains.permission.entity.NewPermissionFactory;
-import domains.user.entity.NewUserFactory;
 import domains.project.use_case.create_project.*;
-import domains.user.entity.User;
-import interface_adapter.project.create_project.CreateProjectController;
-import interface_adapter.project.create_project.CreateProjectPresenter;
-import interface_adapter.project.create_project.CreateProjectViewModel;
+import domains.project.use_case.get_project.*;
+import interface_adapter.project.create_project.*;
+import interface_adapter.project.get_project.*;
 
 import interface_adapter.view_model.ViewManagerModel;
 import view.project.CreateProjectView;
@@ -17,12 +14,17 @@ public class CreateProjectUseCaseFactory {
     public static CreateProjectView create(
             ViewManagerModel viewManagerModel,
             CreateProjectViewModel createProjectViewModel,
+            GetProjectViewModel getProjectViewModel,
             CreateProjectApiDataAccessInterface createProjectApiDAI,
-            CreateProjectSqlDataAccessInterface createProjectSqlDAI) {
+            CreateProjectSqlDataAccessInterface createProjectSqlDAI,
+            GetProjectApiDataAccessInterface getProjectApiDAI,
+            GetProjectSqlDataAccessInterface getProjectSqlDAI) {
 
         CreateProjectController createProjectController = createProjectUseCase(
-                viewManagerModel, createProjectViewModel, createProjectApiDAI, createProjectSqlDAI);
+                viewManagerModel, createProjectViewModel, getProjectViewModel, createProjectApiDAI, createProjectSqlDAI);
 
+        GetProjectController getProjectController = getProjectUseCase(
+                viewManagerModel, createProjectViewModel, getProjectViewModel, getProjectApiDAI, getProjectSqlDAI);
 
         return new CreateProjectView(createProjectController, createProjectViewModel, viewManagerModel);
 
@@ -30,15 +32,13 @@ public class CreateProjectUseCaseFactory {
 
     private static CreateProjectController createProjectUseCase(ViewManagerModel viewManagerModel,
                                                           CreateProjectViewModel createProjectViewModel,
+                                                          GetProjectViewModel getProjectViewModel,
                                                           CreateProjectApiDataAccessInterface createProjectApiDAI,
                                                           CreateProjectSqlDataAccessInterface createProjectSqlDAI) {
 
-        CreateProjectOutputBoundary createProjectOutputBoundary = new CreateProjectPresenter(viewManagerModel, createProjectViewModel);
+        CreateProjectOutputBoundary createProjectOutputBoundary = new CreateProjectPresenter(viewManagerModel, createProjectViewModel, getProjectViewModel);
 
-        String projectName = null;
-        String userId = null;
-
-        CreateProjectInputData createProjectInputData = new CreateProjectInputData(projectName, userId);
+        CreateProjectInputData createProjectInputData = new CreateProjectInputData(null, null);
 
         CreateProjectInputBoundary createProjectInteractor = new CreateProjectInteractor(
                 createProjectInputData,
@@ -49,4 +49,23 @@ public class CreateProjectUseCaseFactory {
 
         return new CreateProjectController(createProjectInteractor);
     }
+
+    private static GetProjectController getProjectUseCase(ViewManagerModel viewManagerModel,
+                                                                CreateProjectViewModel createProjectViewModel,
+                                                                GetProjectViewModel getProjectViewModel,
+                                                                GetProjectApiDataAccessInterface getProjectApiDAI,
+                                                                GetProjectSqlDataAccessInterface getProjectSqlDAI) {
+
+        GetProjectOutputBoundary getProjectOutputBoundary = new GetProjectPresenter(viewManagerModel, createProjectViewModel, getProjectViewModel);
+
+
+        GetProjectInputBoundary getProjectInteractor = new GetProjectInteractor(
+                getProjectOutputBoundary,
+                getProjectApiDAI,
+                getProjectSqlDAI
+        );
+
+        return new GetProjectController(getProjectInteractor);
+    }
+
 }
