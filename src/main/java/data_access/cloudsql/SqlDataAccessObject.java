@@ -1,23 +1,25 @@
 package data_access.cloudsql;
 
+import domains.permission.entity.Permission;
+import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
+import domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface;
+import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
+import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
+import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.user.entity.User;
+import domains.user.use_case.login.LoginUserDataAccessInterface;
+import domains.user.use_case.signup.SignupUserDataAccessInterface;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
-
-import domains.permission.entity.Permission;
-import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
-import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
-import domains.user.entity.User;
-import domains.user.use_case.login.LoginUserDataAccessInterface;
-import domains.user.use_case.signup.SignupUserDataAccessInterface;
-import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 
 public class SqlDataAccessObject implements
         SqlDataAccessInterface,
-        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface,
+        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface, UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
         SignupUserDataAccessInterface, LoginUserDataAccessInterface,
         CreateProjectSqlDataAccessInterface {
 
@@ -213,7 +215,7 @@ public class SqlDataAccessObject implements
     public boolean existsByName(String username) throws Exception {
         String sql = "SELECT * FROM user WHERE username = ?";
         try (Connection connection = sqlDataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
+             PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             statement.setString(1, username);
             try (ResultSet resultSet = statement.executeQuery()) {

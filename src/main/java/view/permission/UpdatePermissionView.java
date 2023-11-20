@@ -1,10 +1,10 @@
 package view.permission;
 
-import interface_adapter.permission.create_permission.CreatePermissionController;
-import interface_adapter.permission.create_permission.CreatePermissionState;
-import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
+import interface_adapter.permission.update_permission.UpdatePermissionController;
+import interface_adapter.permission.update_permission.UpdatePermissionState;
+import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.common.LabelTextPanel;
 
@@ -17,64 +17,64 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import static constant.ViewConstant.CREATE_PERMISSION_VIEW_NAME;
+import static constant.ViewConstant.UPDATE_PERMISSION_VIEW_NAME;
 
-public class CreatePermissionView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = CREATE_PERMISSION_VIEW_NAME;
-    private final CreatePermissionViewModel createPermissionViewModel;
+public class UpdatePermissionView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = UPDATE_PERMISSION_VIEW_NAME;
+    private final UpdatePermissionViewModel updatePermissionViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
-
     private final ViewManagerModel viewManagerModel;
     private final JTextField userIdInputField = new JTextField(50);
     private final JTextField projectIdInputField = new JTextField(50);
 
     private final JTextField permissionNameInputField = new JTextField(50);
     private final JTextField permissionDescriptionInputField = new JTextField(50);
-    private final CreatePermissionController createPermissionController;
+    private final UpdatePermissionController updatePermissionController;
     private final GetPermissionController getPermissionController;
-    private final JButton createPermissionButton;
+    private final JButton updatePermissionButton;
     private final JButton cancel;
 
-    public CreatePermissionView(
-            CreatePermissionController createPermissionController, CreatePermissionViewModel createPermissionViewModel,
+    public UpdatePermissionView(
+            UpdatePermissionController updatePermissionController, UpdatePermissionViewModel updatePermissionViewModel,
             GetPermissionController getPermissionController, GetPermissionViewModel getPermissionViewModel,
             ViewManagerModel viewManagerModel) {
-        this.createPermissionController = createPermissionController;
-        this.createPermissionViewModel = createPermissionViewModel;
+        this.updatePermissionController = updatePermissionController;
+        this.updatePermissionViewModel = updatePermissionViewModel;
 
         this.getPermissionController = getPermissionController;
         this.getPermissionViewModel = getPermissionViewModel;
 
         this.viewManagerModel = viewManagerModel;
 
-        createPermissionViewModel.addPropertyChangeListener(this);
+        updatePermissionViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(CreatePermissionViewModel.TITLE_LABEL);
+        JLabel title = new JLabel(UpdatePermissionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel(CreatePermissionViewModel.USER_ID_LABEL), userIdInputField);
-        LabelTextPanel projectIdPanel = new LabelTextPanel(new JLabel(CreatePermissionViewModel.PROJECT_ID_LABEL), projectIdInputField);
-        LabelTextPanel permissionNamePanel = new LabelTextPanel(new JLabel(CreatePermissionViewModel.PERMISSION_NAME_LABEL), permissionNameInputField);
-        LabelTextPanel permissionDescriptionPanel = new LabelTextPanel(new JLabel(CreatePermissionViewModel.PERMISSION_DESCRIPTION_LABEL), permissionDescriptionInputField);
+        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel(UpdatePermissionViewModel.USER_ID_LABEL), userIdInputField);
+        LabelTextPanel projectIdPanel = new LabelTextPanel(new JLabel(UpdatePermissionViewModel.PROJECT_ID_LABEL), projectIdInputField);
+        LabelTextPanel permissionNamePanel = new LabelTextPanel(new JLabel(UpdatePermissionViewModel.PERMISSION_NAME_LABEL), permissionNameInputField);
+        LabelTextPanel permissionDescriptionPanel = new LabelTextPanel(new JLabel(UpdatePermissionViewModel.PERMISSION_DESCRIPTION_LABEL), permissionDescriptionInputField);
 
         JPanel buttons = new JPanel();
-        createPermissionButton = new JButton(CreatePermissionViewModel.CREATE_PERMISSION_BUTTON_LABEL);
-        buttons.add(createPermissionButton);
+        updatePermissionButton = new JButton(UpdatePermissionViewModel.CREATE_PERMISSION_BUTTON_LABEL);
+        buttons.add(updatePermissionButton);
 
-        cancel = new JButton(CreatePermissionViewModel.CANCEL_BUTTON_LABEL);
+        cancel = new JButton(UpdatePermissionViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
-        createPermissionButton.addActionListener(
+        updatePermissionButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        if (evt.getSource().equals(createPermissionButton)) {
-                            CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-                            createPermissionController.execute(
-                                    createPermissionState.getUserId(),
-                                    createPermissionState.getProjectId(),
-                                    createPermissionState.getPermissionName(),
-                                    createPermissionState.getPermissionDescription()
+                        if (evt.getSource().equals(updatePermissionButton)) {
+                            UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
+                            updatePermissionController.execute(
+                                    updatePermissionState.getPermissionId(),
+                                    updatePermissionState.getUserId(),
+                                    updatePermissionState.getProjectId(),
+                                    updatePermissionState.getPermissionName(),
+                                    updatePermissionState.getPermissionDescription()
                             );
                             clearInputFields();
                         }
@@ -86,10 +86,10 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
                         String text = userIdInputField.getText() + e.getKeyChar();
-                        createPermissionState.setUserId(text);
-                        createPermissionViewModel.setState(createPermissionState);
+                        updatePermissionState.setUserId(text);
+                        updatePermissionViewModel.setState(updatePermissionState);
                     }
 
                     @Override
@@ -106,10 +106,10 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
                         String text = projectIdInputField.getText() + e.getKeyChar();
-                        createPermissionState.setProjectId(text);
-                        createPermissionViewModel.setState(createPermissionState);
+                        updatePermissionState.setProjectId(text);
+                        updatePermissionViewModel.setState(updatePermissionState);
                     }
 
                     @Override
@@ -126,10 +126,10 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
                         String text = permissionNameInputField.getText() + e.getKeyChar();
-                        createPermissionState.setPermissionName(text);
-                        createPermissionViewModel.setState(createPermissionState);
+                        updatePermissionState.setPermissionName(text);
+                        updatePermissionViewModel.setState(updatePermissionState);
                     }
 
                     @Override
@@ -146,10 +146,10 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
                         String text = permissionDescriptionInputField.getText() + e.getKeyChar();
-                        createPermissionState.setPermissionDescription(text);
-                        createPermissionViewModel.setState(createPermissionState);
+                        updatePermissionState.setPermissionDescription(text);
+                        updatePermissionViewModel.setState(updatePermissionState);
                     }
 
                     @Override
@@ -192,14 +192,24 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        CreatePermissionState createPermissionState = (CreatePermissionState) evt.getNewValue();
-        if (createPermissionState.getCreatePermissionError() != null) {
-            JOptionPane.showMessageDialog(this, createPermissionState.getCreatePermissionError());
-        } else if (createPermissionState.getPermissionId() != null) {
-            // On success, switch to the get permission view.
-            JOptionPane.showMessageDialog(this, "Permission created with id " + createPermissionState.getPermissionId() + ".");
+        UpdatePermissionState updatePermissionState = (UpdatePermissionState) evt.getNewValue();
+        if (updatePermissionState.isInitial()) {
+            setInitialInputFields();
+            updatePermissionState.setInitial(false);
+        } else if (updatePermissionState.getUpdatePermissionError() != null) {
+            JOptionPane.showMessageDialog(this, updatePermissionState.getUpdatePermissionError());
+        } else if (updatePermissionState.getPermissionId() != null) {
+            JOptionPane.showMessageDialog(this, "Permission updated with id " + updatePermissionState.getPermissionId() + ".");
             this.getPermissionController.execute(null);
         }
+    }
+
+    public void setInitialInputFields() {
+        UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
+        userIdInputField.setText(updatePermissionState.getUserId());
+        projectIdInputField.setText(updatePermissionState.getProjectId());
+        permissionNameInputField.setText(updatePermissionState.getPermissionName());
+        permissionDescriptionInputField.setText(updatePermissionState.getPermissionDescription());
     }
 
     private void clearInputFields() {

@@ -1,8 +1,5 @@
 package domains.user.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
     private final String userID;
     private final String username;

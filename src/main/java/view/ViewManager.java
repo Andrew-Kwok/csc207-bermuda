@@ -1,5 +1,7 @@
 package view;
+
 import interface_adapter.view_model.ViewManagerModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;

@@ -10,7 +10,7 @@ public class LogoutController {
         this.logoutInteractor = logoutInteractor;
     }
 
-    public void execute(String username){
+    public void execute(String username) {
         LogoutInputData logoutInputData = new LogoutInputData(username);
         logoutInteractor.execute(logoutInputData);
     }
