@@ -4,6 +4,7 @@ import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
 import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
+import app.task.AddTaskUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.LoginUseCaseFactory;
 import app.user.SignupUseCaseFactory;
@@ -16,6 +17,7 @@ import domains.permission.use_case.get_permission.GetPermissionDataAccessInterfa
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
@@ -23,6 +25,8 @@ import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupViewModel;
@@ -32,6 +36,7 @@ import view.permission.CreatePermissionView;
 import view.permission.GetPermissionView;
 import view.permission.UpdatePermissionView;
 import view.project.CreateProjectView;
+import view.task.AddTaskView;
 import view.user.LoggedInView;
 import view.user.LoginView;
 import view.user.SignupView;
@@ -63,6 +68,8 @@ public class Bermuda {
         UpdatePermissionViewModel updatePermissionViewModel = new UpdatePermissionViewModel();
         DeletePermissionViewModel deletePermissionViewModel = new DeletePermissionViewModel();
         CreateProjectViewModel createProjectViewModel = new CreateProjectViewModel();
+        AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
+        GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
 
         // data access object
         DataSource sqlDataSource = SqlConfig.NewSQL();
@@ -79,6 +86,8 @@ public class Bermuda {
 
         CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface = sqlDataAccessObject;
         CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface = apiDataAccessObject;
+
+        AddTaskDataAccessInterface addTaskDataAccessInterface = apiDataAccessObject;
 
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
@@ -117,6 +126,10 @@ public class Bermuda {
         CreateProjectView createProjectView = CreateProjectUseCaseFactory.create(viewManagerModel, createProjectViewModel,
                 createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface);
         views.add(createProjectView, createProjectView.viewName);
+
+        AddTaskView addTaskView = AddTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel,
+                addTaskDataAccessInterface);
+        views.add(addTaskView, addTaskView.viewName);
 
         // set the initial view
         viewManagerModel.setActiveView(loginView.viewName);

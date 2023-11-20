@@ -64,14 +64,14 @@ public class ApiDataAccessObject implements
     }
 
     @Override
-    public void addTask(String projectId, Task task) throws Exception {
+    public void addTask(Task task) throws Exception {
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         RequestBody body = new FormBody.Builder()
-                .add("name", task.getTaskName())
-                .add("content", task.getTaskDescription())
                 .add("project_id", task.getProjectID())
+                .add("name", task.getTaskName())
+                .add("content", task.getTaskContent())
                 .build();
         Request request = new Request.Builder()
                 .url(String.format("%s/tasks", Config.getEnv("TODOIST_API_URL")))

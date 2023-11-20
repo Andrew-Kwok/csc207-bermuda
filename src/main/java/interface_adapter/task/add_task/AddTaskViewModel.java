@@ -5,6 +5,8 @@ import interface_adapter.view_model.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import static constant.ViewConstant.ADD_TASK_VIEW_NAME;
+
 public class AddTaskViewModel extends ViewModel {
 
     public static final String ADD_TASK_BUTTON_LABEL = "Add task";
@@ -12,13 +14,12 @@ public class AddTaskViewModel extends ViewModel {
     public static final String TASK_NAME_LABEL = "Enter task name";
     public static final String TASK_CONTENT_LABEL = "Enter contents of task";
     public static final String DESCRIPTION_LABEL = "Enter description";
-    public static final String DEADLINE_LABEL = "Enter deadline";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private AddTaskState state = new AddTaskState();
 
     public AddTaskViewModel() {
-        super("add task");
+        super(ADD_TASK_VIEW_NAME);
     }
 
     public void setState(AddTaskState state) {
@@ -29,7 +30,7 @@ public class AddTaskViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("addTaskState", null, this.state);
     }
 
     @Override

@@ -12,23 +12,25 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
     private final GetTaskViewModel getTaskViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public AddTaskPresenter(ViewManagerModel viewManagerModel,
-                            AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
-                            AddTaskDataAccessInterface addTaskDAO) {
-
+    public AddTaskPresenter(
+            ViewManagerModel viewManagerModel,
+            AddTaskViewModel addTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.getTaskViewModel = getTaskViewModel;
         this.addTaskViewModel = addTaskViewModel;
+        this.getTaskViewModel = null; // TODO: Fix when GetTaskViewModel is implemented.
     }
 
     @Override
     public void prepareSuccessView(AddTaskOutputData task) {
-//        String taskID = task.getTaskID();
-//        System.out.println(taskID);
+        AddTaskState addTaskState = addTaskViewModel.getState();
+        addTaskState.setTaskName(task.getTaskName());
+        this.addTaskViewModel.setState(addTaskState);
+        addTaskViewModel.firePropertyChanged();
 
         // On success, switch to the get task view.
-        viewManagerModel.setActiveView(getTaskViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+//        TODO: Fix when GetTaskViewModel is implemented.
+//        viewManagerModel.setActiveView(getTaskViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
     }
 
     @Override

@@ -1,33 +1,30 @@
 package domains.task.use_case.add_task;
 
+import jnr.constants.platform.Local;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AddTaskInputData {
-    private String taskName;
-    private String content;
-    private LocalDateTime deadline;
     private String projectID;
+    private String taskName;
+    private String taskContent;
 
-    public AddTaskInputData(String taskName, String content, LocalDateTime deadline, String projectID) {
-        this.taskName = taskName;
-        this.content = content;
-        this.deadline = deadline;
+    public AddTaskInputData(String projectID, String taskName, String taskContent) {
         this.projectID = projectID;
+        this.taskName = taskName;
+        this.taskContent = taskContent;
+    }
+
+    String getProjectID() {
+        return projectID;
     }
 
     String getTaskName() {
         return taskName;
     }
 
-    String getContent() {
-        return content;
-    }
-
-    LocalDateTime getDeadline() {
-        return deadline;
-    }
-
-    String getProjectID() {
-        return projectID;
+    String getTaskContent() {
+        return taskContent;
     }
 }

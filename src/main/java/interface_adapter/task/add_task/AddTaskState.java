@@ -4,26 +4,13 @@ import java.time.LocalDateTime;
 
 public class AddTaskState {
 
+    private String projectID = "2320965999"; // TODO: Remove this default value when integrating Project & Task.
+    private String taskID = "";
     private String taskName = "";
     private String taskContent = "";
-    private LocalDateTime deadline = null;
-    private String projectID = "";
-    private String taskID = "";
-    private String addTaskError;
+    private String addTaskError = null;
 
     public AddTaskState() {
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public String getTaskContent() {
-        return taskContent;
-    }
-
-    public LocalDateTime getDeadline() {
-        return deadline;
     }
 
     public String getProjectID() {
@@ -34,20 +21,16 @@ public class AddTaskState {
         return taskID;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public String getTaskContent() {
+        return taskContent;
+    }
+
     public String getAddTaskError() {
         return addTaskError;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public void setTaskContent(String TaskContent) {
-        this.taskContent = taskContent;
-    }
-
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
     }
 
     public void setProjectID(String projectID) {
@@ -58,6 +41,14 @@ public class AddTaskState {
         this.taskID = taskID;
     }
 
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public void setTaskContent(String taskContent) {
+        this.taskContent = taskContent;
+    }
+
     public void setAddTaskError(String addTaskError) {
         this.addTaskError = addTaskError;
     }
@@ -65,9 +56,11 @@ public class AddTaskState {
     @Override
     public String toString() {
         return "AddTaskState{" +
-                "taskName='" + taskName + "\'" +
-                "content='" + taskContent + "\'" +
-                "deadline='" + deadline.toString() + "\'" +
-                "}";
+                "projectID='" + projectID + '\'' +
+                ", taskID='" + taskID + '\'' +
+                ", taskName='" + taskName + '\'' +
+                ", taskContent='" + taskContent + '\'' +
+                ", addTaskError='" + addTaskError + '\'' +
+                '}';
     }
 }
