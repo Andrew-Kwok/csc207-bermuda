@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 public class AddTaskInputData {
     private String taskName;
     private String content;
-    private LocalDateTime deadline;
+    private String deadline;
     private String projectID;
 
-    public AddTaskInputData(String taskName, String content, LocalDateTime deadline, String projectID){
+    public AddTaskInputData(String taskName, String content, String deadline, String projectID){
         this.taskName = taskName;
         this.content = content;
         this.deadline = deadline;
@@ -20,7 +20,7 @@ public class AddTaskInputData {
     String getContent() {
         return content;
     }
-    LocalDateTime getDeadline() {
+    String getDeadline() {
         return deadline;
     }
     String getProjectID() {

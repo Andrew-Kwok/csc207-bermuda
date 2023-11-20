@@ -6,7 +6,7 @@ public class AddTaskState {
 
     private String taskName = "";
     private String taskContent = "";
-    private LocalDateTime deadline = null;
+    private String deadline = "";
     private String projectID = "";
     private String taskID = "";
     private String addTaskError;
@@ -21,7 +21,7 @@ public class AddTaskState {
         return taskContent;
     }
 
-    public LocalDateTime getDeadline(){
+    public String getDeadline(){
         return deadline;
     }
 
@@ -40,11 +40,11 @@ public class AddTaskState {
         this.taskName = taskName;
     }
 
-    public void setTaskContent(String TaskContent){
+    public void setTaskContent(String taskContent){
         this.taskContent = taskContent;
     }
 
-    public void setDeadline(LocalDateTime deadline){
+    public void setDeadline(String deadline){
         this.deadline = deadline;
     }
 

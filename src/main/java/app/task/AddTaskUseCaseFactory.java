@@ -4,6 +4,7 @@ import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskInputBoundary;
 import domains.task.use_case.add_task.AddTaskInteractor;
 import domains.task.use_case.add_task.AddTaskOutputBoundary;
+import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskOutputBoundary;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskPresenter;
@@ -20,28 +21,19 @@ import java.io.IOException;
 public class AddTaskUseCaseFactory {
     private AddTaskUseCaseFactory(){}
 
-    public static AddTaskView create(
-            ViewManagerModel viewManagerModel, AddTaskViewModel addTaskViewModel,
-            GetTaskViewModel getTaskViewModel,
+    public static AddTaskView create(ViewManagerModel viewManagerModel, AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
+                                     AddTaskDataAccessInterface addTaskDAO, GetTaskDataAccessInterface getTaskDataAccessInterface) {
 
-            AddTaskDataAccessInterface addTaskDAO) {
-
-        try {
-            AddTaskController addTaskController = createAddTaskUseCase(viewManagerModel, addTaskViewModel, addTaskDAO);
-            GetTaskController getTaskController = createGetTaskUseCase(viewManagerModel, )
-            return new AddTaskView(addTaskViewModel, addTaskController, getTaskViewModel, getTaskController, viewManagerModel);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "AddTask View failed");
-        }
-
-        return null;
+        AddTaskController addTaskController = createAddTaskUseCase(viewManagerModel, addTaskViewModel, getTaskViewModel, addTaskDAO);
+        GetTaskController getTaskController = createGetTaskUseCase(viewManagerModel, addTaskViewModel, getTaskViewModel, getTaskDataAccessInterface);
+        return new AddTaskView(addTaskViewModel, addTaskController, viewManagerModel);
     }
 
     private static AddTaskController createAddTaskUseCase(ViewManagerModel viewManagerModel,
                                                           AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
-                                                          AddTaskDataAccessInterface addTaskDAO) throws IOException {
+                                                          AddTaskDataAccessInterface addTaskDAO) {
 
-        AddTaskOutputBoundary addTaskOutputBoundary = new AddTaskPresenter(viewManagerModel, addTaskViewModel, getTaskViewModel, addTaskDAO);
+        AddTaskOutputBoundary addTaskOutputBoundary = new AddTaskPresenter(viewManagerModel, addTaskViewModel, addTaskDAO);
 
         AddTaskInputBoundary addTaskInteractor = new AddTaskInteractor(
                 addTaskDAO, addTaskOutputBoundary);
@@ -50,7 +42,7 @@ public class AddTaskUseCaseFactory {
     }
     private static GetTaskController createGetTaskUseCase(ViewManagerModel viewManagerModel,
                                                           AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
-                                                          GetTaskDataAccessInterface getTaskDAO) throws IOException {
+                                                          GetTaskDataAccessInterface getTaskDAO) {
 
         GetTaskOutputBoundary getTaskOutputBoundary = new GetTaskPresenter(viewManagerModel, addTaskViewModel, getTaskViewModel, getTaskDAO);
 

@@ -9,7 +9,7 @@ import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
-import interface_adapter.task.get_task.GetTaskViewModel;
+//import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.common.LabelTextPanel;
 
@@ -29,25 +29,26 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static constant.ViewConstant.ADD_TASK_VIEW_NAME;
+
 public class AddTaskView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "AddTaskView";
+    public final String viewName = ADD_TASK_VIEW_NAME;
     private final AddTaskViewModel addTaskViewModel;
-    private final GetTaskViewModel getTaskViewModel;
+    //private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField taskNameInputField = new JTextField(50);
     private final JTextField taskContentInputField = new JTextField(50);
     private final JTextField deadlineInputField = new JTextField(50);
     private final AddTaskController addTaskController;
-    private final GetTaskController getTaskController;
+    //private final GetTaskController getTaskController;
     private final JButton addTaskButton;
     private final JButton cancelButton;
     private JFormattedTextField formatText;
-    public AddTaskView(AddTaskViewModel addTaskViewModel, AddTaskController addTaskController,
-                       GetTaskViewModel getTaskViewModel, GetTaskController getTaskController, ViewManagerModel viewManagerModel){
+    public AddTaskView(AddTaskViewModel addTaskViewModel, AddTaskController addTaskController, ViewManagerModel viewManagerModel){
         this.addTaskViewModel = addTaskViewModel;
         this.addTaskController = addTaskController;
-        this.getTaskViewModel = getTaskViewModel;
-        this.getTaskController = getTaskController;
+        //this.getTaskViewModel = getTaskViewModel;
+        //this.getTaskController = getTaskController;
         this.viewManagerModel = viewManagerModel;
 
         addTaskViewModel.addPropertyChangeListener(this);
@@ -145,7 +146,7 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                         AddTaskState addTaskState = addTaskViewModel.getState();
                         //String text = deadlineInputField.getText() + e.getKeyChar();
 
-                        Date date = new Date();
+                        /*Date date = new Date();
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         String dateString = formatter.format(date);
                         formatText = new JFormattedTextField(createFormatter("####-##-## ##:##:##"));
@@ -156,8 +157,10 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                         add(new JLabel("Enter Date and Time in YYYY-MM-DD HH:MM:SS format"), BorderLayout.NORTH);
                         add(formatText, BorderLayout.CENTER);
 
-                        LocalDateTime localDate = convertToLocalDateTimeViaInstant(date);
-                        addTaskState.setDeadline(localDate);
+                        LocalDateTime localDate = convertToLocalDateTimeViaInstant(date);*/
+                        String date = deadlineInputField.getText() + e.getKeyChar();
+                        //LocalDateTime date = LocalDateTime.parse("2019-03-27T10:15:30");
+                        addTaskState.setDeadline(date);
                         addTaskViewModel.setState(addTaskState);
                     }
 

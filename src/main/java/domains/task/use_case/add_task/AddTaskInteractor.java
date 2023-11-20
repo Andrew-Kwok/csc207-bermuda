@@ -1,5 +1,5 @@
 package domains.task.use_case.add_task;
-import app.task.AddTaskUseCaseFactory;
+//import app.task.AddTaskUseCaseFactory;
 import domains.permission.entity.Permission;
 import domains.task.entity.Task;
 
@@ -20,11 +20,12 @@ public class AddTaskInteractor implements AddTaskInputBoundary{
         String content = addTaskInputData.getContent();
 
         if (projectID == null || content == null){
-            addTaskPresenter.prepareFailView("must have projectID and content");
+            addTaskPresenter.prepareFailView("projectID and/or content is missing");
         }
         else{
             try{
                 Task task = new Task(null, projectID, addTaskInputData.getTaskName(), content);
+                addTaskDataAccessObject.addTask(projectID, task);
 
                 AddTaskOutputData addTaskOutputData = new AddTaskOutputData();
                 this.addTaskPresenter.prepareSuccessView(addTaskOutputData);
