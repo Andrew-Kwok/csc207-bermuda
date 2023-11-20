@@ -2,7 +2,6 @@ package interface_adapter.permission.get_permission;
 
 import domains.permission.use_case.get_permission.GetPermissionOutputBoundary;
 import domains.permission.use_case.get_permission.GetPermissionOutputData;
-import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class GetPermissionPresenter implements GetPermissionOutputBoundary {

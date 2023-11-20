@@ -1,15 +1,11 @@
 package interface_adapter.permission.update_permission;
 
-import domains.permission.entity.NewPermissionFactory;
-import domains.permission.entity.Permission;
-import domains.permission.use_case.create_permission.CreatePermissionInputBoundary;
-import domains.permission.use_case.create_permission.CreatePermissionInputData;
 import domains.permission.use_case.update_permission.UpdatePermissionInputBoundary;
 import domains.permission.use_case.update_permission.UpdatePermissionInputData;
-import domains.permission.use_case.update_permission.UpdatePermissionInteractor;
 
 public class UpdatePermissionController {
     final UpdatePermissionInputBoundary updatePermissionInteractor;
+
     public UpdatePermissionController(UpdatePermissionInputBoundary updatePermissionInteractor) {
         this.updatePermissionInteractor = updatePermissionInteractor;
     }

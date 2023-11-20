@@ -1,6 +1,5 @@
 package app.permission;
 
-import domains.permission.entity.NewPermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.permission.use_case.create_permission.CreatePermissionInputBoundary;
 import domains.permission.use_case.create_permission.CreatePermissionInteractor;
@@ -19,7 +18,8 @@ import interface_adapter.view_model.ViewManagerModel;
 import view.permission.CreatePermissionView;
 
 public class CreatePermissionUseCaseFactory {
-    private CreatePermissionUseCaseFactory() {}
+    private CreatePermissionUseCaseFactory() {
+    }
 
     public static CreatePermissionView create(ViewManagerModel viewManagerModel,
                                               CreatePermissionViewModel createPermissionViewModel, GetPermissionViewModel getPermissionViewModel,

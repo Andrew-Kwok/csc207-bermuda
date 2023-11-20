@@ -1,7 +1,5 @@
 package app.permission;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
-import domains.permission.entity.NewPermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.permission.use_case.create_permission.CreatePermissionInputBoundary;
 import domains.permission.use_case.create_permission.CreatePermissionInteractor;
@@ -30,7 +28,8 @@ import interface_adapter.view_model.ViewManagerModel;
 import view.permission.GetPermissionView;
 
 public class GetPermissionUseCaseFactory {
-    private GetPermissionUseCaseFactory() {}
+    private GetPermissionUseCaseFactory() {
+    }
 
     public static GetPermissionView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
                                            CreatePermissionViewModel createPermissionViewModel, CreatePermissionDataAccessInterface createPermissionDataAccessInterface,

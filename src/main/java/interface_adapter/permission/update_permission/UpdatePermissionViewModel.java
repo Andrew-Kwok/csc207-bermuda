@@ -4,7 +4,6 @@ import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeSupport;
 
-import static constant.ViewConstant.CREATE_PERMISSION_VIEW_NAME;
 import static constant.ViewConstant.UPDATE_PERMISSION_VIEW_NAME;
 
 public class UpdatePermissionViewModel extends ViewModel {
@@ -27,6 +26,7 @@ public class UpdatePermissionViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     public void firePropertyChanged() {
         support.firePropertyChange("updatePermissionState", null, this.state);
     }

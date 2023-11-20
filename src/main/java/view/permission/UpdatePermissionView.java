@@ -1,12 +1,9 @@
 package view.permission;
 
-import interface_adapter.permission.get_permission.GetPermissionState;
-import interface_adapter.permission.update_permission.UpdatePermissionController;
-import interface_adapter.permission.update_permission.UpdatePermissionState;
-import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionController;
+import interface_adapter.permission.update_permission.UpdatePermissionState;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.common.LabelTextPanel;
@@ -185,11 +182,14 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
         this.add(permissionNamePanel);
         this.add(permissionDescriptionPanel);
         this.add(buttons);
-    };
+    }
+
+    ;
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Not implemented yet.");
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         UpdatePermissionState updatePermissionState = (UpdatePermissionState) evt.getNewValue();

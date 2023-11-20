@@ -1,19 +1,17 @@
 package view.permission;
 
 import domains.permission.entity.Permission;
-import interface_adapter.permission.create_permission.CreatePermissionController;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
-import interface_adapter.permission.update_permission.UpdatePermissionState;
-import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.permission.delete_permission.DeletePermissionController;
 import interface_adapter.permission.delete_permission.DeletePermissionState;
 import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionController;
 import interface_adapter.permission.get_permission.GetPermissionState;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
+import interface_adapter.permission.update_permission.UpdatePermissionState;
+import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import view.user.LoggedInView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -43,6 +41,7 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
 
     DefaultListModel<Permission> permissionListModel = new DefaultListModel<>();
     JList<Permission> permissionList = new JList<>(permissionListModel);
+
     public GetPermissionView(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInUserViewModel,
                              GetPermissionViewModel getPermissionViewModel, GetPermissionController getPermissionController,
                              CreatePermissionViewModel createPermissionViewModel, UpdatePermissionViewModel updatePermissionViewModel,

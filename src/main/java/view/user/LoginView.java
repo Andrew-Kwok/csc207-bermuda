@@ -91,9 +91,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
-        exit.addActionListener(e->{
-            System.exit(0);
-        }
+        exit.addActionListener(e -> {
+                    System.exit(0);
+                }
         );
         usernameInputField.addKeyListener(new KeyListener() {
             @Override
@@ -164,7 +164,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 loginstate.setPasswordError(null);
                 return;
             }
-            if(!loginstate.getUsername().equals("")){
+            if (!loginstate.getUsername().equals("")) {
                 setUsernameField(loginstate);
             }
         }
@@ -192,7 +192,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private void clearPasswordField() {
         passwordInputField.setText("");
     }
-
 
 
 }

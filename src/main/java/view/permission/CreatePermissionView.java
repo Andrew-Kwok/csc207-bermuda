@@ -65,113 +65,113 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
         buttons.add(cancel);
 
         createPermissionButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    if (evt.getSource().equals(createPermissionButton)) {
-                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-                        createPermissionController.execute(
-                            createPermissionState.getUserId(),
-                            createPermissionState.getProjectId(),
-                            createPermissionState.getPermissionName(),
-                            createPermissionState.getPermissionDescription()
-                        );
-                        clearInputFields();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        if (evt.getSource().equals(createPermissionButton)) {
+                            CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                            createPermissionController.execute(
+                                    createPermissionState.getUserId(),
+                                    createPermissionState.getProjectId(),
+                                    createPermissionState.getPermissionName(),
+                                    createPermissionState.getPermissionDescription()
+                            );
+                            clearInputFields();
+                        }
                     }
                 }
-            }
         );
 
         userIdInputField.addKeyListener(
-            new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-                    String text = userIdInputField.getText() + e.getKeyChar();
-                    createPermissionState.setUserId(text);
-                    createPermissionViewModel.setState(createPermissionState);
-                }
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        String text = userIdInputField.getText() + e.getKeyChar();
+                        createPermissionState.setUserId(text);
+                        createPermissionViewModel.setState(createPermissionState);
+                    }
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                }
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
 
-                @Override
-                public void keyReleased(KeyEvent e) {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
                 }
-            }
         );
 
         projectIdInputField.addKeyListener(
-            new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-                    String text = projectIdInputField.getText() + e.getKeyChar();
-                    createPermissionState.setProjectId(text);
-                    createPermissionViewModel.setState(createPermissionState);
-                }
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        String text = projectIdInputField.getText() + e.getKeyChar();
+                        createPermissionState.setProjectId(text);
+                        createPermissionViewModel.setState(createPermissionState);
+                    }
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                }
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
 
-                @Override
-                public void keyReleased(KeyEvent e) {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
                 }
-            }
         );
 
         permissionNameInputField.addKeyListener(
-            new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-                    String text = permissionNameInputField.getText() + e.getKeyChar();
-                    createPermissionState.setPermissionName(text);
-                    createPermissionViewModel.setState(createPermissionState);
-                }
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        String text = permissionNameInputField.getText() + e.getKeyChar();
+                        createPermissionState.setPermissionName(text);
+                        createPermissionViewModel.setState(createPermissionState);
+                    }
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                }
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
 
-                @Override
-                public void keyReleased(KeyEvent e) {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
                 }
-            }
         );
 
         permissionDescriptionInputField.addKeyListener(
-            new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    CreatePermissionState createPermissionState = createPermissionViewModel.getState();
-                    String text = permissionDescriptionInputField.getText() + e.getKeyChar();
-                    createPermissionState.setPermissionDescription(text);
-                    createPermissionViewModel.setState(createPermissionState);
-                }
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                        String text = permissionDescriptionInputField.getText() + e.getKeyChar();
+                        createPermissionState.setPermissionDescription(text);
+                        createPermissionViewModel.setState(createPermissionState);
+                    }
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                }
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
 
-                @Override
-                public void keyReleased(KeyEvent e) {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
                 }
-            }
         );
 
         cancel.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getSource().equals(cancel)) {
-                        viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
-                        viewManagerModel.firePropertyChanged();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(cancel)) {
+                            viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+                        }
                     }
                 }
-            }
         );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -182,11 +182,14 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
         this.add(permissionNamePanel);
         this.add(permissionDescriptionPanel);
         this.add(buttons);
-    };
+    }
+
+    ;
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Not implemented yet.");
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CreatePermissionState createPermissionState = (CreatePermissionState) evt.getNewValue();

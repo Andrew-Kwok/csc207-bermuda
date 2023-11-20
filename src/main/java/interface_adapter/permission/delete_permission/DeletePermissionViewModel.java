@@ -19,6 +19,7 @@ public class DeletePermissionViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     public void firePropertyChanged() {
         support.firePropertyChange("deletePermissionState", null, this.state);
     }

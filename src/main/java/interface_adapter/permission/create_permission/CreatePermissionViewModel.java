@@ -26,6 +26,7 @@ public class CreatePermissionViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     public void firePropertyChanged() {
         support.firePropertyChange("createPermissionState", null, this.state);
     }
