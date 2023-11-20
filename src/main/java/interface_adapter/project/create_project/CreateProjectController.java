@@ -11,6 +11,9 @@ public class CreateProjectController {
     }
 
     public void execute(String projectName, String userId) {
+        projectName = projectName.trim();
+        userId = userId.trim();
+
         CreateProjectInputData createProjectInputData = new CreateProjectInputData(projectName, userId);
         createProjectUseCaseInteractor.execute(createProjectInputData);
     }

@@ -24,6 +24,8 @@ public class CreateProjectPresenter implements CreateProjectOutputBoundary {
         createProjectState.setProjectName(createProjectOutputData.getProjectName());
         this.createProjectViewModel.setState(createProjectState);
         createProjectViewModel.firePropertyChanged();
+
+        // TODO: On success, switch to the get project view.
     }
 
     @Override
@@ -32,6 +34,5 @@ public class CreateProjectPresenter implements CreateProjectOutputBoundary {
         createProjectState.setProjectError(error);
         createProjectViewModel.firePropertyChanged();
     }
-
 }
 

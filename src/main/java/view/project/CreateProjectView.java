@@ -15,8 +15,10 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static constant.ViewConstant.CREATE_PROJECT_VIEW_NAME;
+
 public class CreateProjectView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "CreateProjectView";
+    public final String viewName = CREATE_PROJECT_VIEW_NAME;
     private final CreateProjectViewModel createProjectViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField projectNameInputField = new JTextField(50);
@@ -40,8 +42,9 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
 
         JPanel buttons = new JPanel();
         createProjectButton = new JButton(CreateProjectViewModel.CREATE_PROJECT_BUTTON_LABEL);
-        cancelButton = new JButton(CreateProjectViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(createProjectButton);
+
+        cancelButton = new JButton(CreateProjectViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancelButton);
 
         createProjectButton.addActionListener(
@@ -109,9 +112,8 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
         if (createProjectState.getProjectError() != null) {
             JOptionPane.showMessageDialog(this, createProjectState.getProjectError());
         } else if (createProjectState.getProjectName() != null) {
-            // On success, switch to the get project view.
             JOptionPane.showMessageDialog(this, "Project created with name " + createProjectState.getProjectName() + ".");
-            createProjectState.setProjectName(null);
+            createProjectState.setProjectName("");
         }
     }
 

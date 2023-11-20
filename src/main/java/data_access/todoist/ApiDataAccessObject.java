@@ -9,9 +9,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface {
+public class ApiDataAccessObject implements
+        CreateProjectApiDataAccessInterface {
 
-    public Project getProject(String projectID) {
+    public Project getProject(String projectID) throws Exception {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -19,6 +20,7 @@ public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface 
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
@@ -28,10 +30,10 @@ public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface 
                         responseBody.getString("name")
                 );
             } else {
-                throw new RuntimeException("error");
+                throw new Exception("error retrieving projects: " + response.code());
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
 
@@ -42,7 +44,6 @@ public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface 
         RequestBody body = new FormBody.Builder()
                 .add("name", projectName)
                 .build();
-
         Request request = new Request.Builder()
                 .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
@@ -56,10 +57,10 @@ public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface 
                 JSONObject responseBody = new JSONObject(response.body().string());
                 return responseBody.getString("id");
             } else {
-                throw new Exception("error connectıng to todoıst");
+                throw new Exception("error creating projects: " + response.code());
             }
         } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
 }

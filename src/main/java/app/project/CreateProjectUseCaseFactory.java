@@ -20,9 +20,7 @@ public class CreateProjectUseCaseFactory {
         CreateProjectController createProjectController = createProjectUseCase(
                 viewManagerModel, createProjectViewModel, createProjectApiDAI, createProjectSqlDAI);
 
-
         return new CreateProjectView(createProjectController, createProjectViewModel, viewManagerModel);
-
     }
 
     private static CreateProjectController createProjectUseCase(ViewManagerModel viewManagerModel,
