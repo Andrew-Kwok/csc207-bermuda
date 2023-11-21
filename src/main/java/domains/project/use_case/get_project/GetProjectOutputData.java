@@ -11,7 +11,7 @@ public class GetProjectOutputData {
         this.projects = projects;
     }
 
-    public List<Project> getprojects() {
+    public List<Project> getProjects() {
         return projects;
     }
 }

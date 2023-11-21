@@ -10,7 +10,9 @@ import static constant.ViewConstant.GET_PROJECT_VIEW_NAME;
 public class GetProjectViewModel extends ViewModel{
     public final String TITLE_LABEL = "Get Project";
     private GetProjectState state = new GetProjectState();
-    public static final String CREATE_PROJECT_BUTTON_LABEL = "Create PROJECT";
+    public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
+    public static final String CHECK_PROJECT_BUTTON_LABEL = "Check Project";
+    public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     public GetProjectViewModel() {
         super(GET_PROJECT_VIEW_NAME);
@@ -33,5 +35,4 @@ public class GetProjectViewModel extends ViewModel{
     public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
 }

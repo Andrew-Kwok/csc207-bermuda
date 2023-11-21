@@ -49,12 +49,12 @@ public class GetProjectUseCaseFactory {
     }
 
     private static GetProjectController getProjectUseCase(ViewManagerModel viewManagerModel,
-                                                          CreateProjectViewModel createProjectViewModel, GetProjectViewModel getProjectViewModel,
+                                                          GetProjectViewModel getProjectViewModel,
                                                           GetProjectSqlDataAccessInterface getProjectSqlDAI,
                                                           GetProjectApiDataAccessInterface getProjectApiDAI) {
-        GetProjectOutputBoundary getProjectOutputBoundary = new GetProjectPresenter(viewManagerModel, createProjectViewModel, getProjectViewModel);
+        GetProjectOutputBoundary getProjectOutputBoundary = new GetProjectPresenter(viewManagerModel, getProjectViewModel);
 
-        GetProjectInputBoundary getProjectInteractor = new GetProjectInteractor(getProjectOutputBoundary, getProjectApiDAI, getProjectSqlDAI);
+        GetProjectInputBoundary getProjectInteractor = new GetProjectInteractor(getProjectOutputBoundary, getProjectSqlDAI, getProjectApiDAI);
 
         return new GetProjectController(getProjectInteractor);
     }

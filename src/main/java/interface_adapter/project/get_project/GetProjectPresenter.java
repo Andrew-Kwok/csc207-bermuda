@@ -6,15 +6,12 @@ import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class GetProjectPresenter implements GetProjectOutputBoundary {
-    private final CreateProjectViewModel createProjectViewModel;
     private final GetProjectViewModel getProjectViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public GetProjectPresenter(
             ViewManagerModel viewManagerModel,
-            CreateProjectViewModel createProjectViewModel,
             GetProjectViewModel getProjectViewModel) {
-        this.createProjectViewModel = createProjectViewModel;
         this.getProjectViewModel = getProjectViewModel;
         this.viewManagerModel = viewManagerModel;
     }
@@ -32,5 +29,4 @@ public class GetProjectPresenter implements GetProjectOutputBoundary {
         getProjectState.setGetProjectError(error);
         getProjectViewModel.firePropertyChanged();
     }
-
 }

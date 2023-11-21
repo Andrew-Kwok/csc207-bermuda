@@ -6,6 +6,7 @@ import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ import static constant.ViewConstant.GET_PROJECT_VIEW_NAME;
 
 public class GetProjectView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_PROJECT_VIEW_NAME;
+    private final LoggedInViewModel loggedInUserViewModel;
     private final GetProjectViewModel getProjectViewModel;
     private final GetProjectController getProjectController;
     private final CreateProjectViewModel createProjectViewModel;
@@ -26,14 +28,19 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
     JLabel title;
     final JButton createProject;
+    final JButton checkProject;
+    final JButton cancel;
     DefaultListModel<Project> projectListModel = new DefaultListModel<Project>();
+    JList<Project> projectList = new JList<Project>(projectListModel);
 
     public GetProjectView(ViewManagerModel viewManagerModel,
+                          LoggedInViewModel loggedInUserViewModel,
                           GetProjectViewModel getProjectViewModel,
                           GetProjectController getProjectContoller,
                           CreateProjectViewModel createProjectViewModel,
                           CreateProjectController createProjectController) {
         this.viewManagerModel = viewManagerModel;
+        this.loggedInUserViewModel = loggedInUserViewModel;
         this.getProjectViewModel = getProjectViewModel;
         this.getProjectController = getProjectContoller;
         this.createProjectViewModel = createProjectViewModel;
@@ -42,19 +49,54 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
         title = new JLabel(getProjectViewModel.TITLE_LABEL);
 
-        this.getProjectController.execute(null);
-
         JPanel buttons = new JPanel();
 
         createProject = new JButton(GetProjectViewModel.CREATE_PROJECT_BUTTON_LABEL);
         buttons.add(createProject);
 
+        checkProject = new JButton(GetProjectViewModel.CHECK_PROJECT_BUTTON_LABEL);
+        buttons.add(checkProject);
+
+        cancel = new JButton(GetProjectViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(cancel);
+
         createProject.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (e.getSource().equals(createProject)){
+                        viewManagerModel.setActiveView(createProjectViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+            }
+        );
+
+        checkProject.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (e.getSource().equals(checkProject)){
+                        Project project = projectList.getSelectedValue();
+                        if (project == null) {
+                            JOptionPane.showMessageDialog(null, "Please select a project.");
+                            return;
+                        } else {
+                            System.out.println("Selected project: " + project.getProjectName());
+                            // TODO: switch to GetTaskView
+                            // viewManagerModel.firePropertyChanged();
+                        }
+                    }
+                }
+            }
+        );
+
+        cancel.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        if (e.getSource().equals(createProject)){
-                            viewManagerModel.setActiveView(createProjectViewModel.getViewName());
+                        if (e.getSource().equals(cancel)){
+                            viewManagerModel.setActiveView(loggedInUserViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
                     }
@@ -64,7 +106,7 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(new JScrollPane(new JList<>(projectListModel)));
+        this.add(new JScrollPane(projectList));
         this.add(buttons);
     }
 
