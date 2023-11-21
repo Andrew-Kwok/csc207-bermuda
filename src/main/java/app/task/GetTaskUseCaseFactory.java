@@ -1,72 +1,92 @@
 package app.task;
 
-import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
-import domains.permission.use_case.create_permission.CreatePermissionInputBoundary;
-import domains.permission.use_case.create_permission.CreatePermissionInteractor;
-import domains.permission.use_case.create_permission.CreatePermissionOutputBoundary;
-import domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface;
-import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
-import domains.permission.use_case.get_permission.GetPermissionInputBoundary;
-import domains.permission.use_case.get_permission.GetPermissionInteractor;
-import domains.permission.use_case.get_permission.GetPermissionOutputBoundary;
-import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
-import interface_adapter.permission.create_permission.CreatePermissionController;
-import interface_adapter.permission.create_permission.CreatePermissionPresenter;
-import interface_adapter.permission.create_permission.CreatePermissionViewModel;
-import interface_adapter.permission.delete_permission.DeletePermissionController;
-import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
-import interface_adapter.permission.get_permission.GetPermissionController;
-import interface_adapter.permission.get_permission.GetPermissionPresenter;
-import interface_adapter.permission.get_permission.GetPermissionViewModel;
-import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
-import interface_adapter.user.loggedin.LoggedInViewModel;
+import domains.project.use_case.get_project.*;
+import domains.task.use_case.add_task.AddTaskDataAccessInterface;
+import domains.task.use_case.add_task.AddTaskInputBoundary;
+import domains.task.use_case.add_task.AddTaskInteractor;
+import domains.task.use_case.add_task.AddTaskOutputBoundary;
+import domains.task.use_case.get_task.GetTaskDataAccessInterface;
+import domains.task.use_case.get_task.GetTaskInputBoundary;
+import domains.task.use_case.get_task.GetTaskInteractor;
+import domains.task.use_case.get_task.GetTaskOutputBoundary;
+import interface_adapter.project.get_project.GetProjectController;
+import interface_adapter.project.get_project.GetProjectPresenter;
+import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.task.add_task.AddTaskController;
+import interface_adapter.task.add_task.AddTaskPresenter;
+import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.get_task.GetTaskController;
+import interface_adapter.task.get_task.GetTaskPresenter;
+import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import view.permission.GetPermissionView;
+import view.task.GetTaskView;
 
 public class GetTaskUseCaseFactory {
     private GetTaskUseCaseFactory() {
     }
 
-    public static GetPermissionView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
-                                           CreatePermissionViewModel createPermissionViewModel, CreatePermissionDataAccessInterface createPermissionDataAccessInterface,
-                                           GetPermissionViewModel getPermissionViewModel, GetPermissionDataAccessInterface getPermissionDataAccessInterface,
-                                           UpdatePermissionViewModel updatePermissionViewModel, UpdatePermissionDataAccessInterface updatePermissionDataAccessInterface,
-                                           DeletePermissionViewModel deletePermissionViewModel, DeletePermissionDataAccessInterface deletePermissionDataAccessInterface) {
-        CreatePermissionController createPermissionController = createPermissionUseCase(
-                viewManagerModel, createPermissionViewModel, getPermissionViewModel, createPermissionDataAccessInterface
+    public static GetTaskView create(ViewManagerModel viewManagerModel,
+                                     GetTaskViewModel getTaskViewModel, GetTaskDataAccessInterface getTaskDataAccessInterface,
+                                     AddTaskViewModel addTaskViewModel, AddTaskDataAccessInterface addTaskDataAccessInterface,
+                                     GetProjectViewModel getProjectViewModel, GetProjectApiDataAccessInterface getProjectApiDAI, GetProjectSqlDataAccessInterface getProjectSqlDAI) {
+
+        AddTaskController addTaskController = createAddTaskUseCase(
+                viewManagerModel, addTaskViewModel, getTaskViewModel, addTaskDataAccessInterface
         );
-        GetPermissionController getPermissionController = getPermissionUseCase(
-                viewManagerModel, getPermissionViewModel, getPermissionDataAccessInterface
+        GetTaskController getTaskController = getTaskUseCase(
+                viewManagerModel, getTaskViewModel, getTaskDataAccessInterface
         );
-        DeletePermissionController deletePermissionController = deletePermissionUseCase(
-                viewManagerModel, getPermissionViewModel, deletePermissionViewModel, deletePermissionDataAccessInterface
+        GetProjectController getProjectController = getProjectUseCase(
+                viewManagerModel,
+                getProjectViewModel,
+                getProjectSqlDAI,
+                getProjectApiDAI
         );
 
-        return new GetPermissionView(
-                viewManagerModel, loggedInViewModel,
-                getPermissionViewModel, getPermissionController,
-                createPermissionViewModel, updatePermissionViewModel,
-                deletePermissionViewModel, deletePermissionController
+        return new GetTaskView(
+                viewManagerModel,
+                getTaskViewModel, addTaskViewModel, getProjectViewModel,
+                getTaskController, addTaskController, getProjectController
         );
     }
 
-    private static CreatePermissionController createPermissionUseCase(ViewManagerModel viewManagerModel,
-                                                                      CreatePermissionViewModel createPermissionViewModel, GetPermissionViewModel getPermissionViewModel,
-                                                                      CreatePermissionDataAccessInterface createPermissionDataAccessInterface) {
-        CreatePermissionOutputBoundary createPermissionOutputBoundary = new CreatePermissionPresenter(viewManagerModel, createPermissionViewModel, getPermissionViewModel);
+    private static AddTaskController createAddTaskUseCase(ViewManagerModel viewManagerModel,
+                                                          AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
+                                                             AddTaskDataAccessInterface addTaskDataAccessInterface) {
 
-        CreatePermissionInputBoundary createPermissionInteractor = new CreatePermissionInteractor(createPermissionOutputBoundary, createPermissionDataAccessInterface);
+        AddTaskOutputBoundary addTaskOutputBoundary = new AddTaskPresenter(viewManagerModel, addTaskViewModel, getTaskViewModel);
 
-        return new CreatePermissionController(createPermissionInteractor);
+        AddTaskInputBoundary addTaskInteractor = new AddTaskInteractor(addTaskOutputBoundary, addTaskDataAccessInterface);
+
+        return new AddTaskController(addTaskInteractor);
     }
 
-    private static GetPermissionController getPermissionUseCase(ViewManagerModel viewManagerModel,
-                                                                GetPermissionViewModel getPermissionViewModel,
-                                                                GetPermissionDataAccessInterface getPermissionDataAccessInterface) {
-        GetPermissionOutputBoundary getPermissionOutputBoundary = new GetPermissionPresenter(viewManagerModel, getPermissionViewModel);
+    private static GetTaskController getTaskUseCase(ViewManagerModel viewManagerModel,
+                                                    GetTaskViewModel getTaskViewModel,
+                                                    GetTaskDataAccessInterface getTaskDataAccessInterface) {
 
-        GetPermissionInputBoundary getPermissionInteractor = new GetPermissionInteractor(getPermissionOutputBoundary, getPermissionDataAccessInterface);
+        GetTaskOutputBoundary getTaskOutputBoundary = new GetTaskPresenter(viewManagerModel, getTaskViewModel);
 
-        return new GetPermissionController(getPermissionInteractor);
+        GetTaskInputBoundary getTaskInteractor = new GetTaskInteractor(getTaskOutputBoundary, getTaskDataAccessInterface);
+
+        return new GetTaskController(getTaskInteractor);
+    }
+
+    private static GetProjectController getProjectUseCase(ViewManagerModel viewManagerModel,
+                                                          GetProjectViewModel getProjectViewModel,
+                                                          GetProjectSqlDataAccessInterface getProjectSqlDAI,
+                                                          GetProjectApiDataAccessInterface getProjectApiDAI) {
+        GetProjectOutputBoundary getProjectOutputBoundary = new GetProjectPresenter(
+                viewManagerModel,
+                getProjectViewModel
+        );
+
+        GetProjectInputBoundary getProjectInteractor = new GetProjectInteractor(
+                getProjectOutputBoundary,
+                getProjectSqlDAI,
+                getProjectApiDAI
+        );
+
+        return new GetProjectController(getProjectInteractor);
     }
 }

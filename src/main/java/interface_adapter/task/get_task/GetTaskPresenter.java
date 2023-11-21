@@ -10,8 +10,7 @@ public class GetTaskPresenter implements GetTaskOutputBoundary {
     private final GetTaskViewModel getTaskViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public GetTaskPresenter(ViewManagerModel viewManagerModel, GetTaskViewModel getTaskViewModel,
-                            GetTaskDataAccessInterface getTaskDataAccessInterface){
+    public GetTaskPresenter(ViewManagerModel viewManagerModel, GetTaskViewModel getTaskViewModel){
         this.viewManagerModel = viewManagerModel;
         this.getTaskViewModel = getTaskViewModel;
     }

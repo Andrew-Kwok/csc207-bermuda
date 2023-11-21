@@ -27,19 +27,16 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
     private final JTextField taskNameInputField = new JTextField(50);
     private final JTextField taskContentInputField = new JTextField(50);
     private final AddTaskController addTaskController;
-    private final GetTaskController getTaskController;
     private final JButton addTaskButton;
     private final JButton cancelButton;
     private JFormattedTextField formatText;
 
     public AddTaskView(
             AddTaskViewModel addTaskViewModel, AddTaskController addTaskController,
-            GetTaskViewModel getTaskViewModel, GetTaskController getTaskController,
-            ViewManagerModel viewManagerModel) {
+            GetTaskViewModel getTaskViewModel, ViewManagerModel viewManagerModel){
         this.addTaskViewModel = addTaskViewModel;
         this.addTaskController = addTaskController;
         this.getTaskViewModel = getTaskViewModel;
-        this.getTaskController = getTaskController;
         this.viewManagerModel = viewManagerModel;
 
         addTaskViewModel.addPropertyChangeListener(this);

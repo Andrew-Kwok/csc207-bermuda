@@ -9,7 +9,7 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
     private final GetTaskDataAccessInterface getTaskDataAccess;
     private final GetTaskOutputBoundary presenter;
 
-    public GetTaskInteractor(GetTaskDataAccessInterface getTaskDataAccess, GetTaskOutputBoundary presenter){
+    public GetTaskInteractor(GetTaskOutputBoundary presenter, GetTaskDataAccessInterface getTaskDataAccess){
         this.getTaskDataAccess = getTaskDataAccess;
         this.presenter = presenter;
     }

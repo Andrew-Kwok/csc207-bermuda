@@ -13,10 +13,11 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
 
     public AddTaskPresenter(
             ViewManagerModel viewManagerModel,
-            AddTaskViewModel addTaskViewModel) {
+            AddTaskViewModel addTaskViewModel,
+            GetTaskViewModel getTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.addTaskViewModel = addTaskViewModel;
-        this.getTaskViewModel = null; // TODO: Fix when GetTaskViewModel is implemented.
+        this.getTaskViewModel = getTaskViewModel; // TODO: Fix when GetTaskViewModel is implemented.
     }
 
     @Override
@@ -28,8 +29,8 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
 
         // On success, switch to the get task view.
 //        TODO: Fix when GetTaskViewModel is implemented.
-//        viewManagerModel.setActiveView(getTaskViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
+        viewManagerModel.setActiveView(getTaskViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
