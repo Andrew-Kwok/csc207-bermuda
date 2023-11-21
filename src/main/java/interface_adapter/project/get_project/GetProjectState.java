@@ -10,13 +10,13 @@ public class GetProjectState {
     private String userId = null;
     private List<Project> projects = new ArrayList<>();
     private String getProjectError = null;
-    private boolean initialized = false;
+    private boolean initial = false;
 
     public GetProjectState(GetProjectState copy) {
         this.userId = copy.userId;
         this.projects = copy.projects;
         this.getProjectError = copy.getProjectError;
-        this.initialized = copy.initialized;
+        this.initial = copy.initial;
     }
 
     public GetProjectState() {
@@ -34,8 +34,8 @@ public class GetProjectState {
         return getProjectError;
     }
 
-    public boolean isInitialized() {
-        return initialized;
+    public boolean isInitial() {
+        return initial;
     }
 
     public void setUserId(String userId) {
@@ -50,8 +50,8 @@ public class GetProjectState {
         this.getProjectError = getProjectError;
     }
 
-    public void setInitialized(boolean initialized) {
-        this.initialized = initialized;
+    public void setInitial(boolean initial) {
+        this.initial = initial;
     }
 }
  

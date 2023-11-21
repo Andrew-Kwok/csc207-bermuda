@@ -7,7 +7,7 @@ import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.logout.LogoutInputBoundary;
 import domains.user.use_case.logout.LogoutInteractor;
 import domains.user.use_case.logout.LogoutOutputBoundary;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
 import interface_adapter.user.login.LoginViewModel;

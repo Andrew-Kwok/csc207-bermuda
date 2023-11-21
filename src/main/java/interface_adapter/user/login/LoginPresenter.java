@@ -2,8 +2,8 @@ package interface_adapter.user.login;
 
 import domains.user.use_case.login.LoginOutputBoundary;
 import domains.user.use_case.login.LoginOutputData;
-import interface_adapter.user.loggedin_user.LoggedInState;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInState;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class LoginPresenter implements LoginOutputBoundary {

@@ -2,6 +2,7 @@ package interface_adapter.project.create_project;
 
 import domains.project.use_case.create_project.CreateProjectOutputBoundary;
 import domains.project.use_case.create_project.CreateProjectOutputData;
+import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -28,6 +29,11 @@ public class CreateProjectPresenter implements CreateProjectOutputBoundary {
         createProjectState.setProjectName(createProjectOutputData.getProjectName());
         this.createProjectViewModel.setState(createProjectState);
         createProjectViewModel.firePropertyChanged();
+
+        GetProjectState getProjectState = getProjectViewModel.getState();
+        getProjectState.setInitial(true);
+        getProjectViewModel.setState(getProjectState);
+        getProjectViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(getProjectViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

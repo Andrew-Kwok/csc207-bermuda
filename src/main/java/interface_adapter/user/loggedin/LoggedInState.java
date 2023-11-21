@@ -1,4 +1,4 @@
-package interface_adapter.user.loggedin_user;
+package interface_adapter.user.loggedin;
 
 import domains.user.entity.User;
 

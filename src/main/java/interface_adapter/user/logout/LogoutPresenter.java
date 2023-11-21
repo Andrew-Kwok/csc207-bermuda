@@ -2,8 +2,8 @@ package interface_adapter.user.logout;
 
 import domains.user.use_case.logout.LogoutOutputBoundary;
 import domains.user.use_case.logout.LogoutOutputData;
-import interface_adapter.user.loggedin_user.LoggedInState;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInState;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 

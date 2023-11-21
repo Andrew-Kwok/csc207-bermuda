@@ -3,8 +3,8 @@ package view.user;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
-import interface_adapter.user.loggedin_user.LoggedInState;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInState;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.logout.LogoutController;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -66,6 +66,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                             GetProjectState getProjectState = getProjectViewModel.getState();
                             LoggedInState loggedInState = loggedInUserViewModel.getState();
                             getProjectState.setUserId(loggedInState.getUser().getUserID());
+                            getProjectState.setInitial(true);
+                            getProjectViewModel.setState(getProjectState);
                             getProjectViewModel.firePropertyChanged();
 
                             viewManagerModel.setActiveView(getProjectViewModel.getViewName());

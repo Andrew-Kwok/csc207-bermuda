@@ -6,7 +6,7 @@ import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 import javax.swing.*;
@@ -30,8 +30,8 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     final JButton createProject;
     final JButton checkProject;
     final JButton cancel;
-    DefaultListModel<Project> projectListModel = new DefaultListModel<Project>();
-    JList<Project> projectList = new JList<Project>(projectListModel);
+    DefaultListModel<Project> projectListModel = new DefaultListModel<>();
+    JList<Project> projectList = new JList<>(projectListModel);
 
     public GetProjectView(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInUserViewModel,
@@ -82,7 +82,6 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                             JOptionPane.showMessageDialog(null, "Please select a project.");
                             return;
                         } else {
-                            System.out.println("Selected project: " + project.getProjectName());
                             // TODO: switch to GetTaskView
                             // viewManagerModel.firePropertyChanged();
                         }
@@ -119,9 +118,9 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         if (evt.getPropertyName().equals("getProjectState")) {
             GetProjectState state = (GetProjectState) evt.getNewValue();
 
-            if (state.isInitialized()) {
+            if (state.isInitial()) {
+                state.setInitial(false);
                 getProjectController.execute(state.getUserId());
-                state.setInitialized(false);
             } else if (state.getGetProjectError() != null) {
                 JOptionPane.showMessageDialog(this, state.getGetProjectError());
             } else {
