@@ -20,9 +20,8 @@ public class ShareProjectInteractor implements ShareProjectInputBoundary {
     }
     public void execute(ShareProjectInputData shareProjectInputData) {
         try {
-
-            shareProjectDataAccessInterface.savePermission(
-                    new NewPermissionFactory().create(
+            shareProjectDataAccessInterface.createPermission(
+                    NewPermissionFactory.create(
                             shareProjectInputData.getProjectId(),
                             shareProjectInputData.getUserId(),
                             "editor",

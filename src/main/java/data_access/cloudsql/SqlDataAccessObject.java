@@ -6,6 +6,7 @@ import domains.permission.use_case.delete_permission.DeletePermissionDataAccessI
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
 import domains.user.entity.User;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
@@ -19,9 +20,10 @@ import java.util.List;
 
 public class SqlDataAccessObject implements
         SqlDataAccessInterface,
-        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface, UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
+        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface,
+        UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
         SignupUserDataAccessInterface, LoginUserDataAccessInterface,
-        CreateProjectSqlDataAccessInterface {
+        CreateProjectSqlDataAccessInterface, ShareProjectDataAccessInterface {
 
     private final DataSource sqlDataSource;
 

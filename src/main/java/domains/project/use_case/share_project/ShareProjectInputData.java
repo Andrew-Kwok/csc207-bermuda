@@ -18,6 +18,7 @@ public class ShareProjectInputData {
     public String getUserId() {
         return userId;
     }
+
     public String getOtherUserName() {
         return otherUserName;
     }

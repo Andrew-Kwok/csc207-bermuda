@@ -49,12 +49,12 @@ public class ShareProjectView extends JPanel implements
         this.shareProjectController = shareProjectController;
         this.shareProjectViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Share Project Screen");
+        this.title = new JLabel("Share Project Screen");
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel otherUserNamePanel = new LabelTextPanel(
-                new JLabel("Other user"),
+                new JLabel(shareProjectViewModel.OTHER_USERNAME_FIELD),
                 otherUserNameTextField
         );
 
@@ -79,6 +79,10 @@ public class ShareProjectView extends JPanel implements
                                shareProjectViewModel.getState().getProjectId(),
                                shareProjectViewModel.getState().getUserId(),
                                otherUname
+                       );
+                       JOptionPane.showConfirmDialog(
+                               ShareProjectView.this,
+                               String.format("Project successfully shared with \"%s\"", otherUname)
                        );
                    }
                }
@@ -108,18 +112,31 @@ public class ShareProjectView extends JPanel implements
              @Override
              public void keyReleased(KeyEvent e) {}
          });
+
+         this.add(title);
+         this.add(otherUserNamePanel);
+         this.add(buttonsPanel);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showConfirmDialog(this, "share project action performed, not implemented");
+        JOptionPane.showConfirmDialog(
+                this, "share project action performed, not implemented");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ShareProjectState state = (ShareProjectState) evt.getNewValue();
 
-        if (state.getOtherUserName() != null) {
+        if (state.getOtherUserName().isEmpty()) {
+            JOptionPane.showConfirmDialog(
+                    this, "other user name is empty, please try again");
+            clearOtherUserNameTextField();
+        } else {
             otherUserNameTextField.setText(state.getOtherUserName());
         }
+    }
+
+    private void clearOtherUserNameTextField() {
+        otherUserNameTextField.setText("");
     }
 }
