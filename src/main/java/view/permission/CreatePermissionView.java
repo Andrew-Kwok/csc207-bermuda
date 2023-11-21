@@ -167,6 +167,7 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(cancel)) {
+                            clearInputFields();
                             viewManagerModel.setActiveView(getPermissionViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
