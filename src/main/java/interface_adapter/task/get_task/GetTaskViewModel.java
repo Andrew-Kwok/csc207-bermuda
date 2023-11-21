@@ -1,18 +1,21 @@
 package interface_adapter.task.get_task;
 
 import interface_adapter.permission.get_permission.GetPermissionState;
+import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeSupport;
 
 import static constant.ViewConstant.GET_TASK_VIEW_NAME;
 
-public class GetTaskViewModel {
+public class GetTaskViewModel extends ViewModel {
     public final String TITLE_LABEL = "Get Task";
+    public static final String ADD_TASK_BUTTON_LABEL = "Add Task";
+    public static final String GO_BACK_BUTTON_LABEL = "Go Back";
     private GetTaskState state = new GetTaskState();
-    public static final String GET_TASK_BUTTON_LABEL = "Get Task";
+    private static final String viewName = GET_TASK_VIEW_NAME;
 
     public GetTaskViewModel() {
-        super();
+        super(viewName);
     }
 
     public void setState(GetTaskState state) {

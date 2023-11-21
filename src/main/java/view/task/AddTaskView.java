@@ -80,7 +80,9 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(cancelButton)) {
                             clearInputFields();
-//                            TODO: Fix when GetTaskViewModel is implemented.
+                            viewManagerModel.setActiveView(getTaskViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+                            // TODO: Fix when GetTaskViewModel is implemented.
                         }
                     }
                 }
