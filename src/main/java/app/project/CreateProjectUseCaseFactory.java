@@ -27,7 +27,7 @@ public class CreateProjectUseCaseFactory {
                 createProjectSqlDAI
         );
 
-        return new CreateProjectView(createProjectController, createProjectViewModel, viewManagerModel);
+        return new CreateProjectView(createProjectController, createProjectViewModel, getProjectViewModel, viewManagerModel);
     }
 
     private static CreateProjectController createProjectUseCase(ViewManagerModel viewManagerModel,
