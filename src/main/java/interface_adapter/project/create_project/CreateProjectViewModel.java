@@ -1,4 +1,5 @@
 package interface_adapter.project.create_project;
+
 import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -6,9 +7,9 @@ import java.beans.PropertyChangeSupport;
 
 import static constant.ViewConstant.CREATE_PROJECT_VIEW_NAME;
 
-public class CreateProjectViewModel extends ViewModel{
-    public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
+public class CreateProjectViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Create Project";
+    public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
     public static final String PROJECT_NAME_LABEL = "Enter project name";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
@@ -18,7 +19,9 @@ public class CreateProjectViewModel extends ViewModel{
         super(CREATE_PROJECT_VIEW_NAME);
     }
 
-    public void setState(CreateProjectState createProjectState){this.createProjectState = createProjectState;}
+    public void setState(CreateProjectState createProjectState) {
+        this.createProjectState = createProjectState;
+    }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -32,5 +35,7 @@ public class CreateProjectViewModel extends ViewModel{
         support.addPropertyChangeListener(listener);
     }
 
-    public CreateProjectState getState(){return createProjectState;}
+    public CreateProjectState getState() {
+        return createProjectState;
+    }
 }

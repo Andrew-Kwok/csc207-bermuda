@@ -3,36 +3,19 @@ package data_access.todoist;
 import config.Config;
 import domains.project.entity.Project;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
+import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
+import domains.task.entity.Task;
+import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import okhttp3.*;
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface {
+import java.util.ArrayList;
+import java.util.List;
 
-    public Project getProject(String projectID) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url(String.format("%s/projects/%s", Config.getEnv("TODOIST_API_URL"), projectID))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.code() == 200) {
-                JSONObject responseBody = new JSONObject(response.body().string());
-                return new Project(
-                        responseBody.getString("id"),
-                        responseBody.getString("name")
-                );
-            } else {
-                throw new RuntimeException("error");
-            }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
+public class ApiDataAccessObject implements
+        CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface,
+        AddTaskDataAccessInterface {
 
     @Override
     public String createProject(String projectName) throws Exception {
@@ -41,7 +24,6 @@ public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface 
         RequestBody body = new FormBody.Builder()
                 .add("name", projectName)
                 .build();
-
         Request request = new Request.Builder()
                 .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
@@ -55,10 +37,71 @@ public class ApiDataAccessObject implements CreateProjectApiDataAccessInterface 
                 JSONObject responseBody = new JSONObject(response.body().string());
                 return responseBody.getString("id");
             } else {
-                throw new Exception("error connectıng to todoıst");
+                throw new Exception("error creating projects: " + response.code());
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Project> getProjects() throws Exception {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
+                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 200) {
+                JSONArray responseBody = new JSONArray(response.body().string());
+
+                List<Project> projects = new ArrayList<>();
+                for (int i = 0; i < responseBody.length(); i++) {
+                    JSONObject project = responseBody.getJSONObject(i);
+                    projects.add(new Project(
+                            project.getString("id"),
+                            project.getString("name")
+                    ));
+                }
+                return projects;
+            } else {
+                throw new Exception("error getting projects: " + response.code());
+            }
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void addTask(Task task) throws Exception {
+
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        RequestBody body = new FormBody.Builder()
+                .add("project_id", task.getProjectID())
+                .add("name", task.getTaskName())
+                .add("content", task.getTaskContent())
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("%s/tasks", Config.getEnv("TODOIST_API_URL")))
+                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 200) {
+
+            } else {
+                throw new Exception("error creating tasks: " + response.code());
+            }
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
 }

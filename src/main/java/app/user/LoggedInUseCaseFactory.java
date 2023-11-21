@@ -1,14 +1,14 @@
 package app.user;
 
+import domains.user.use_case.logout.LogoutInputBoundary;
+import domains.user.use_case.logout.LogoutInteractor;
+import domains.user.use_case.logout.LogoutOutputBoundary;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.logout.LogoutController;
 import interface_adapter.user.logout.LogoutPresenter;
 import interface_adapter.view_model.ViewManagerModel;
-import domains.user.use_case.logout.LogoutInputBoundary;
-import domains.user.use_case.logout.LogoutInteractor;
-import domains.user.use_case.logout.LogoutOutputBoundary;
 import view.user.LoggedInView;
 
 import javax.swing.*;
@@ -16,8 +16,11 @@ import java.io.IOException;
 
 public class LoggedInUseCaseFactory {
 
-    /** Prevent instantiation. */
-    private LoggedInUseCaseFactory() {}
+    /**
+     * Prevent instantiation.
+     */
+    private LoggedInUseCaseFactory() {
+    }
 
     public static LoggedInView create(
             ViewManagerModel viewManagerModel,

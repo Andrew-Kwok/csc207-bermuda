@@ -8,7 +8,10 @@ public class CreateProjectInputData {
         this.projectName = projectName;
         this.userId = userId;
     }
-    public String getName() { return projectName; }
+
+    public String getName() {
+        return projectName;
+    }
 
     public String getUserId() {
         return userId;

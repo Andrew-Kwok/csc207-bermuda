@@ -4,7 +4,6 @@ import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginState;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupController;
-
 import interface_adapter.user.signup.SignupState;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
@@ -65,7 +64,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(signUp);
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
-
 
 
         signUp.addActionListener(

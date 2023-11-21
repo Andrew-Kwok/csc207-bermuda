@@ -1,12 +1,10 @@
 package view.project;
-import view.common.LabelTextPanel;
 
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
-import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.view_model.ViewManagerModel;
-import org.checkerframework.checker.units.qual.C;
+import view.common.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +15,10 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static constant.ViewConstant.CREATE_PROJECT_VIEW_NAME;
+
 public class CreateProjectView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "CreateProjectView";
+    public final String viewName = CREATE_PROJECT_VIEW_NAME;
     private final CreateProjectViewModel createProjectViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField projectNameInputField = new JTextField(50);
@@ -42,8 +42,9 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
 
         JPanel buttons = new JPanel();
         createProjectButton = new JButton(CreateProjectViewModel.CREATE_PROJECT_BUTTON_LABEL);
-        cancelButton = new JButton(CreateProjectViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(createProjectButton);
+
+        cancelButton = new JButton(CreateProjectViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancelButton);
 
         createProjectButton.addActionListener(
@@ -97,20 +98,22 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
         this.add(title);
         this.add(projectNamePanel);
         this.add(buttons);
-    };
+    }
+
+    ;
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Not implemented yet.");
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CreateProjectState createProjectState = (CreateProjectState) evt.getNewValue();
         if (createProjectState.getProjectError() != null) {
             JOptionPane.showMessageDialog(this, createProjectState.getProjectError());
         } else if (createProjectState.getProjectName() != null) {
-            // On success, switch to the get project view.
             JOptionPane.showMessageDialog(this, "Project created with name " + createProjectState.getProjectName() + ".");
-            createProjectState.setProjectName(null);
+            createProjectState.setProjectName("");
         }
     }
 

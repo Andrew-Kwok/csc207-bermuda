@@ -1,16 +1,12 @@
 package domains.project.use_case.create_project;
 
 import domains.permission.entity.NewPermissionFactory;
-import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
-import domains.project.entity.NewProjectFactory;
-import domains.project.entity.Project;
-import domains.user.entity.User;
+
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
     CreateProjectInputData createProjectInputData;
-    CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface;
     CreateProjectOutputBoundary createProjectPresenter;
+    CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface;
     CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface;
-
 
     public CreateProjectInteractor(
             CreateProjectInputData createProjectInputData,
@@ -22,27 +18,30 @@ public class CreateProjectInteractor implements CreateProjectInputBoundary {
         this.createProjectPresenter = createProjectPresenter;
         this.createProjectSqlDataAccessInterface = createProjectSqlDataAccessInterface;
     }
+
     @Override
     public void execute(CreateProjectInputData createProjectInputData) {
-        try {
-            String projectID = createProjectApiDataAccessInterface.createProject(
-                    createProjectInputData.getName()
-            );
-            createProjectSqlDataAccessInterface.createPermission(
-                    NewPermissionFactory.create(
-                            projectID,
-                            createProjectInputData.getUserId(),
-                            "owner",
-                            "owner of project"
-                    )
-            );
-            Project project = NewProjectFactory.create(createProjectInputData.getName(), createProjectInputData.getUserId());
+        if (createProjectInputData.getName().isEmpty()) {
+            createProjectPresenter.prepareFailView("project name is empty");
+        } else {
+            try {
+                String projectID = createProjectApiDataAccessInterface.createProject(
+                        createProjectInputData.getName()
+                );
 
-            createProjectPresenter.prepareSuccessView(new CreateProjectOutputData(project.getProjectName()));
-            return;
-        } catch (Exception e) {
-            createProjectPresenter.prepareFailView("Could not create project");
-            return;
+                createProjectSqlDataAccessInterface.createPermission(
+                        NewPermissionFactory.create(
+                                projectID,
+                                createProjectInputData.getUserId(),
+                                "owner",
+                                "owner of project"
+                        )
+                );
+
+                createProjectPresenter.prepareSuccessView(new CreateProjectOutputData(createProjectInputData.getName()));
+            } catch (Exception e) {
+                createProjectPresenter.prepareFailView(e.getMessage());
+            }
         }
     }
 }

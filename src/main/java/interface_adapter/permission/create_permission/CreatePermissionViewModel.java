@@ -9,7 +9,7 @@ import static constant.ViewConstant.CREATE_PERMISSION_VIEW_NAME;
 public class CreatePermissionViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Create Permission";
     public static final String CREATE_PERMISSION_BUTTON_LABEL = "Create Permission";
-
+    public static final String CANCEL_BUTTON_LABEL = "Cancel";
     public static final String USER_ID_LABEL = "User ID";
     public static final String PROJECT_ID_LABEL = "Project ID";
     public static final String PERMISSION_NAME_LABEL = "Permission Name";
@@ -26,6 +26,7 @@ public class CreatePermissionViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     public void firePropertyChanged() {
         support.firePropertyChange("createPermissionState", null, this.state);
     }

@@ -6,6 +6,7 @@ public class GetProjectInputData {
     public GetProjectInputData(String userId) {
         this.userId = userId;
     }
+
     public String getUserId() {
         return userId;
     }

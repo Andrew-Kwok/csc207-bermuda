@@ -1,33 +1,50 @@
 package domains.project.use_case.get_project;
 
+import domains.permission.entity.Permission;
 import domains.project.entity.Project;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 public class GetProjectInteractor implements GetProjectInputBoundary {
-    private final GetProjectApiDataAccessInterface getProjectApiDataAccessInterface;
-    private final GetProjectSqlDataAccessInterface getProjectSqlDataAccessInterface;
-    private final GetProjectOutputBoundary presenter;
+    private final GetProjectOutputBoundary getProjectPresenter;
+    private final GetProjectSqlDataAccessInterface sqlDataAccessInterface;
+    private final GetProjectApiDataAccessInterface apiDataAccessInterface;
 
     public GetProjectInteractor(
-            GetProjectOutputBoundary presenter,
-            GetProjectApiDataAccessInterface getProjectApiDataAccessInterface,
-            GetProjectSqlDataAccessInterface getProjectSqlDataAccessInterface) {
-        this.presenter = presenter;
-        this.getProjectApiDataAccessInterface = getProjectApiDataAccessInterface;
-        this.getProjectSqlDataAccessInterface = getProjectSqlDataAccessInterface;
+            GetProjectOutputBoundary getProjectPresenter,
+            GetProjectSqlDataAccessInterface sqlDataAccessInterface,
+            GetProjectApiDataAccessInterface apiDataAccessInterface
+    ) {
+        this.getProjectPresenter = getProjectPresenter;
+        this.sqlDataAccessInterface = sqlDataAccessInterface;
+        this.apiDataAccessInterface = apiDataAccessInterface;
     }
-    @Override
-    public void execute(GetProjectInputData input) {
-        String userId = input.getUserId();
-        List<Project> projects;
-        try {
-            projects = getProjectSqlDataAccessInterface.getProjects(userId);
-        } catch (Exception e) {
-            presenter.prepareFailView(e.getMessage());
-            return;
-        }
 
-        GetProjectOutputData output = new GetProjectOutputData(projects);
-        presenter.prepareSuccessView(output);
+    public void execute(GetProjectInputData getProjectInputData) {
+        try {
+            List<Permission> permissions = sqlDataAccessInterface.getPermissions(getProjectInputData.getUserId());
+            List<Project> projects = apiDataAccessInterface.getProjects();
+
+            Set<String> projectIds = new HashSet<>();
+            for (Permission permission : permissions) {
+                projectIds.add(permission.getProjectID());
+            }
+
+            List<Project> result = new ArrayList<>();
+            for (Project project : projects) {
+                if (projectIds.contains(project.getProjectID())) {
+                    result.add(project);
+                }
+            }
+
+            getProjectPresenter.prepareSuccessView(
+                    new GetProjectOutputData(result)
+            );
+        } catch (Exception e) {
+            getProjectPresenter.prepareFailView(e.getMessage());
+        }
     }
 }
-

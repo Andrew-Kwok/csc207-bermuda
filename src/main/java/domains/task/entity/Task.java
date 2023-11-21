@@ -7,20 +7,23 @@ public class Task {
     private final String taskID;
     private final String projectID;
     private String taskName;
+    private String taskContent;
     private String taskStatus = "IPR";
     private String taskDescription = "";
     private ZonedDateTime taskDeadline = ZonedDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(LocalTime.MAX.getNano());
 
-    public Task(String taskID, String projectID, String taskName) {
+    public Task(String taskID, String projectID, String taskName, String content) {
         this.taskID = taskID;
         this.projectID = projectID;
         this.taskName = taskName;
+        this.taskContent = content;
     }
 
-    public Task(String taskID, String projectID, String taskName, String taskStatus, String taskDescription, ZonedDateTime taskDeadline) {
+    public Task(String taskID, String projectID, String taskName, String taskStatus, String taskContent, String taskDescription, ZonedDateTime taskDeadline) {
         this.taskID = taskID;
         this.projectID = projectID;
         this.taskName = taskName;
+        this.taskContent = taskContent;
         this.taskStatus = taskStatus;
         this.taskDescription = taskDescription;
         this.taskDeadline = taskDeadline;
@@ -34,6 +37,8 @@ public class Task {
         private String taskID;
         private String projectID;
         private String taskName;
+        private String taskContent;
+
         private String taskStatus = "IPR";
         private String taskDescription = "";
         private ZonedDateTime taskDeadline = ZonedDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(LocalTime.MAX.getNano());
@@ -56,6 +61,11 @@ public class Task {
             return this;
         }
 
+        public taskBuilder taskContent(String taskContent) {
+            this.taskContent = taskContent;
+            return this;
+        }
+
         public taskBuilder taskStatus(String taskStatus) {
             this.taskStatus = taskStatus;
             return this;
@@ -72,7 +82,7 @@ public class Task {
         }
 
         public Task build() {
-            return new Task(taskID, projectID, taskName, taskStatus, taskDescription, taskDeadline);
+            return new Task(taskID, projectID, taskName, taskContent, taskStatus, taskDescription, taskDeadline);
         }
     }
 
@@ -82,6 +92,10 @@ public class Task {
 
     public String getTaskName() {
         return taskName;
+    }
+
+    public String getTaskContent() {
+        return taskContent;
     }
 
     public String getTaskStatus() {
@@ -96,8 +110,16 @@ public class Task {
         return taskDeadline;
     }
 
+    public String getProjectID() {
+        return projectID;
+    }
+
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public void setTaskContent(String taskContent) {
+        this.taskContent = taskContent;
     }
 
     public void setTaskStatus(String taskStatus) {
@@ -113,15 +135,16 @@ public class Task {
     }
 
     @Override
-public String toString() {
+    public String toString() {
         return ("""
                 [Task ID: %s]
                 \t Project ID: %s
                 \t Task Name: %s
+                \t Task Content: %s
                 \t Task Status: %s
                 \t Task Description: %s
                 \t Task Deadline: %s
                 """).
-                formatted(taskID, projectID, taskName, taskStatus, taskDescription, taskDeadline);
+                formatted(taskID, projectID, taskName, taskContent, taskStatus, taskDescription, taskDeadline);
     }
 }

@@ -1,12 +1,12 @@
 package domains.permission.use_case.delete_permission;
 
-public class DeletePermissionInteractor {
+public class DeletePermissionInteractor implements DeletePermissionInputBoundary {
     private final DeletePermissionDataAccessInterface dataAccess;
     private final DeletePermissionOutputBoundary presenter;
 
-    public DeletePermissionInteractor(DeletePermissionDataAccessInterface dataAccess, DeletePermissionOutputBoundary presenter) {
-        this.dataAccess = dataAccess;
+    public DeletePermissionInteractor(DeletePermissionOutputBoundary presenter, DeletePermissionDataAccessInterface dataAccess) {
         this.presenter = presenter;
+        this.dataAccess = dataAccess;
     }
 
     public void execute(DeletePermissionInputData input) {
@@ -18,6 +18,8 @@ public class DeletePermissionInteractor {
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());
             }
+
+            presenter.prepareSuccessView(new DeletePermissionOutputData(input.getPermissionId()));
         }
     }
 }

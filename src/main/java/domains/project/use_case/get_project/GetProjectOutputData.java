@@ -1,5 +1,7 @@
 package domains.project.use_case.get_project;
+
 import domains.project.entity.Project;
+
 import java.util.List;
 
 public class GetProjectOutputData {
@@ -9,7 +11,7 @@ public class GetProjectOutputData {
         this.projects = projects;
     }
 
-    public List<Project> getProjects() {
+    public List<Project> getprojects() {
         return projects;
     }
 }
