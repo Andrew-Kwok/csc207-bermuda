@@ -1,17 +1,17 @@
 package domains.project.use_case.get_project;
 
-import domains.task.entity.Task;
+import domains.project.entity.Project;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GetProjectOutputData {
-    ArrayList<Task> tasks;
+    private final List<Project> projects;
 
-    public GetProjectOutputData(ArrayList<Task> tasks){
-        this.tasks = tasks;
+    public GetProjectOutputData(List<Project> projects) {
+        this.projects = projects;
     }
 
-    ArrayList<Task> getTasks(){
-        return tasks;
+    public List<Project> getProjects() {
+        return projects;
     }
 }

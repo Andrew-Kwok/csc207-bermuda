@@ -10,7 +10,7 @@ import interface_adapter.permission.get_permission.GetPermissionState;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionState;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 import javax.swing.*;

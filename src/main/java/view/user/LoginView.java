@@ -1,7 +1,7 @@
 package view.user;
 
-import interface_adapter.user.loggedin_user.LoggedInState;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInState;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginState;
 import interface_adapter.user.login.LoginViewModel;
@@ -174,7 +174,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             LoggedInState loggedInstate = (LoggedInState) evt.getNewValue();
             LoginState loginState = loginViewModel.getState();
             if (!loggedInstate.isLoggedIn()) {
-                loginState.setUsername(loggedInstate.getUsername());
+                loginState.setUsername(loggedInstate.getUser().getUsername());
                 setUsernameField(loginState);
                 clearPasswordField();
             }

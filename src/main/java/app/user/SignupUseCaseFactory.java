@@ -8,7 +8,7 @@ import domains.user.use_case.signup.SignupInputBoundary;
 import domains.user.use_case.signup.SignupInteractor;
 import domains.user.use_case.signup.SignupOutputBoundary;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginPresenter;
 import interface_adapter.user.login.LoginViewModel;
