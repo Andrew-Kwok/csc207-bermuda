@@ -4,7 +4,8 @@ import domains.user.use_case.logout.LogoutInputBoundary;
 import domains.user.use_case.logout.LogoutInteractor;
 import domains.user.use_case.logout.LogoutOutputBoundary;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.logout.LogoutController;
 import interface_adapter.user.logout.LogoutPresenter;
@@ -26,11 +27,12 @@ public class LoggedInUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInUserViewModel,
+            GetProjectViewModel getProjectViewModel,
             GetPermissionViewModel getPermissionViewModel) {
 
         try {
             LogoutController logoutController = createLogoutUseCase(viewManagerModel, loginViewModel, loggedInUserViewModel);
-            return new LoggedInView(viewManagerModel, loggedInUserViewModel, getPermissionViewModel, logoutController);
+            return new LoggedInView(viewManagerModel, loggedInUserViewModel, getProjectViewModel, getPermissionViewModel, logoutController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "LoggedIn View failed");
         }

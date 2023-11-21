@@ -4,6 +4,7 @@ import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
 import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
+import app.project.GetProjectUseCaseFactory;
 import app.task.AddTaskUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.LoginUseCaseFactory;
@@ -17,6 +18,8 @@ import domains.permission.use_case.get_permission.GetPermissionDataAccessInterfa
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
+import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
@@ -25,9 +28,10 @@ import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskViewModel;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
@@ -36,6 +40,7 @@ import view.permission.CreatePermissionView;
 import view.permission.GetPermissionView;
 import view.permission.UpdatePermissionView;
 import view.project.CreateProjectView;
+import view.project.GetProjectView;
 import view.task.AddTaskView;
 import view.user.LoggedInView;
 import view.user.LoginView;
@@ -68,6 +73,7 @@ public class Bermuda {
         UpdatePermissionViewModel updatePermissionViewModel = new UpdatePermissionViewModel();
         DeletePermissionViewModel deletePermissionViewModel = new DeletePermissionViewModel();
         CreateProjectViewModel createProjectViewModel = new CreateProjectViewModel();
+        GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
         AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
         GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
 
@@ -86,6 +92,8 @@ public class Bermuda {
 
         CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface = sqlDataAccessObject;
         CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface = apiDataAccessObject;
+        GetProjectSqlDataAccessInterface getProjectSqlDataAccessInterface = sqlDataAccessObject;
+        GetProjectApiDataAccessInterface getProjectApiDataAccessInterface = apiDataAccessObject;
 
         AddTaskDataAccessInterface addTaskDataAccessInterface = apiDataAccessObject;
 
@@ -105,7 +113,7 @@ public class Bermuda {
                 loginUserDataAccessInterface);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInUserView = LoggedInUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, getPermissionViewModel);
+        LoggedInView loggedInUserView = LoggedInUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInUserViewModel, getProjectViewModel, getPermissionViewModel);
         views.add(loggedInUserView, loggedInUserView.viewName);
 
         GetPermissionView getPermissionView = GetPermissionUseCaseFactory.create(viewManagerModel, loggedInUserViewModel,
@@ -123,9 +131,13 @@ public class Bermuda {
                 updatePermissionDataAccessInterface, getPermissionDataAccessInterface);
         views.add(updatePermissionView, updatePermissionView.viewName);
 
-        CreateProjectView createProjectView = CreateProjectUseCaseFactory.create(viewManagerModel, createProjectViewModel,
+        CreateProjectView createProjectView = CreateProjectUseCaseFactory.create(viewManagerModel, createProjectViewModel, getProjectViewModel,
                 createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface);
         views.add(createProjectView, createProjectView.viewName);
+
+        GetProjectView getProjectView = GetProjectUseCaseFactory.create(viewManagerModel, loggedInUserViewModel, createProjectViewModel, getProjectViewModel,
+                createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface, getProjectApiDataAccessInterface, getProjectSqlDataAccessInterface);
+        views.add(getProjectView, getProjectView.viewName);
 
         AddTaskView addTaskView = AddTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel,
                 addTaskDataAccessInterface);
