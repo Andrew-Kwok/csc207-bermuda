@@ -118,7 +118,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("getProjectState")) {
             GetProjectState state = (GetProjectState) evt.getNewValue();
-            if (state.getGetProjectError() != null) {
+
+            if (state.isInitialized()) {
+                getProjectController.execute(state.getUserId());
+                state.setInitialized(false);
+            } else if (state.getGetProjectError() != null) {
                 JOptionPane.showMessageDialog(this, state.getGetProjectError());
             } else {
                 projectListModel.clear();

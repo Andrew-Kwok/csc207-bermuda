@@ -1,6 +1,8 @@
 package view.user;
 
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
+import interface_adapter.project.get_project.GetProjectState;
+import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.user.loggedin_user.LoggedInState;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.logout.LogoutController;
@@ -19,6 +21,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public final String viewName = LOGGED_IN_VIEW_NAME;
     private final LoggedInViewModel loggedInViewModel;
+    private final GetProjectViewModel getProjectViewModel;
     private final GetPermissionViewModel getPermissionViewModel;
     private final LogoutController logoutController;
     private final ViewManagerModel viewManagerModel;
@@ -31,9 +34,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInUserViewModel, GetPermissionViewModel getPermissionViewModel, LogoutController logoutController) {
+    public LoggedInView(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInUserViewModel, GetProjectViewModel getProjectViewModel, GetPermissionViewModel getPermissionViewModel, LogoutController logoutController) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInUserViewModel;
+        this.getProjectViewModel = getProjectViewModel;
         this.getPermissionViewModel = getPermissionViewModel;
         this.logoutController = logoutController;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -59,9 +63,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(checkProject)) {
-                            System.out.println("Clicked check project");
-//                        viewManagerModel.setActiveView(checkProjectViewModel.getViewName());
-//                        viewManagerModel.firePropertyChanged();
+                            GetProjectState getProjectState = getProjectViewModel.getState();
+                            LoggedInState loggedInState = loggedInUserViewModel.getState();
+                            getProjectState.setUserId(loggedInState.getUser().getUserID());
+                            getProjectViewModel.firePropertyChanged();
+
+                            viewManagerModel.setActiveView(getProjectViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
@@ -86,7 +94,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logOut)) {
                             LoggedInState loggedInState = loggedInUserViewModel.getState();
-                            logoutController.execute(loggedInState.getUsername());
+                            logoutController.execute(loggedInState.getUser().getUsername());
                         }
                     }
                 }
@@ -110,9 +118,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInState state = (LoggedInState) evt.getNewValue();
-        username.setText(state.getUsername());
+        username.setText(state.getUser().getUsername());
         if (!state.isLoggedIn()) {
-            JOptionPane.showMessageDialog(this, "%s logged out!".formatted(state.getUsername()));
+            JOptionPane.showMessageDialog(this, "%s logged out!".formatted(state.getUser().getUsername()));
         }
     }
 }

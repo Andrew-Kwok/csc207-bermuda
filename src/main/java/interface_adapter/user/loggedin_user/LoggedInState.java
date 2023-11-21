@@ -26,7 +26,7 @@ public class LoggedInState {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

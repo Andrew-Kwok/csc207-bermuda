@@ -3,17 +3,14 @@ package domains.project.use_case.create_project;
 import domains.permission.entity.NewPermissionFactory;
 
 public class CreateProjectInteractor implements CreateProjectInputBoundary {
-    CreateProjectInputData createProjectInputData;
     CreateProjectOutputBoundary createProjectPresenter;
     CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface;
     CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface;
 
     public CreateProjectInteractor(
-            CreateProjectInputData createProjectInputData,
             CreateProjectOutputBoundary createProjectPresenter,
             CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface,
             CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface) {
-        this.createProjectInputData = createProjectInputData;
         this.createProjectApiDataAccessInterface = createProjectApiDataAccessInterface;
         this.createProjectPresenter = createProjectPresenter;
         this.createProjectSqlDataAccessInterface = createProjectSqlDataAccessInterface;

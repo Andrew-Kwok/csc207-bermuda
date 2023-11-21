@@ -174,7 +174,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             LoggedInState loggedInstate = (LoggedInState) evt.getNewValue();
             LoginState loginState = loginViewModel.getState();
             if (!loggedInstate.isLoggedIn()) {
-                loginState.setUsername(loggedInstate.getUsername());
+                loginState.setUsername(loggedInstate.getUser().getUsername());
                 setUsernameField(loginState);
                 clearPasswordField();
             }

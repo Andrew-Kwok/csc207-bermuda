@@ -2,7 +2,6 @@ package interface_adapter.project.get_project;
 
 import domains.project.use_case.get_project.GetProjectOutputBoundary;
 import domains.project.use_case.get_project.GetProjectOutputData;
-import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class GetProjectPresenter implements GetProjectOutputBoundary {
