@@ -99,6 +99,8 @@ public class Bermuda {
         CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface = apiDataAccessObject;
         ShareProjectDataAccessInterface shareProjectDataAccessInterface = sqlDataAccessObject;
 
+        AddTaskDataAccessInterface addTaskDataAccessInterface = apiDataAccessObject;
+
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
 //            loginUserDataAccessInterface = (LoginUserDataAccessInterface) signupUserDataAccessInterface;
