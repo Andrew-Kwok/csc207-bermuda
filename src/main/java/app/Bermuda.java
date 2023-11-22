@@ -50,6 +50,11 @@ import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Created by CSC207 project team
+ * Initiate the environment and key elements to run Bermuda
+ * Set up Views and Java Swring as UI
+ */
 public class Bermuda {
     public static void main(String[] args) {
         JFrame application = new JFrame("Bermuda Example");
