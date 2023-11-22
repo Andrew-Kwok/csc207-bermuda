@@ -3,6 +3,10 @@ package domains.user.use_case.signup;
 import domains.user.entity.NewUserFactory;
 import domains.user.entity.User;
 
+/**
+ * @author Henry
+ * The signup Interactor class takes inputdata from Controller and returns output data
+ */
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
