@@ -21,7 +21,7 @@ import domains.permission.use_case.update_permission.UpdatePermissionDataAccessI
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
-import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
+import domains.share_project.ShareProjectDataAccessInterface;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
 
@@ -30,6 +30,7 @@ import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.project.share_project.ShareProjectViewModel;
@@ -81,6 +82,7 @@ public class Bermuda {
         AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
         GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
         ShareProjectViewModel shareProjectViewModel = new ShareProjectViewModel();
+        GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
 
         // data access object
         DataSource sqlDataSource = SqlConfig.NewSQL();
@@ -149,7 +151,7 @@ public class Bermuda {
         views.add(addTaskView, addTaskView.viewName);
 
         // set the initial view
-        viewManagerModel.setActiveView(loginView.viewName);
+        viewManagerModel.setActiveView(shareProjectView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

@@ -1,8 +1,7 @@
-package domains.project.use_case.share_project;
+package domains.share_project;
 
 import domains.permission.entity.NewPermissionFactory;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
-import domains.project.use_case.create_project.CreateProjectInteractor;
 
 public class ShareProjectInteractor implements ShareProjectInputBoundary {
     private final ShareProjectDataAccessInterface shareProjectDataAccessInterface;

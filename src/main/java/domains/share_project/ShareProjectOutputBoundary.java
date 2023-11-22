@@ -1,4 +1,4 @@
-package domains.project.use_case.share_project;
+package domains.share_project;
 
 public interface ShareProjectOutputBoundary {
     void prepareSuccessView(ShareProjectOutputData shareProjectOutputData);

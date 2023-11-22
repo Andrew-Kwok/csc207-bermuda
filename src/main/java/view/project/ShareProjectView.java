@@ -5,12 +5,10 @@ import interface_adapter.project.share_project.ShareProjectController;
 import interface_adapter.project.share_project.ShareProjectViewModel;
 import interface_adapter.project.share_project.ShareProjectState;
 import interface_adapter.view_model.ViewManagerModel;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
 
 import view.common.LabelTextPanel;
 
 import constant.ViewConstant;
-import view.user.LoggedInView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +47,7 @@ public class ShareProjectView extends JPanel implements
         this.shareProjectController = shareProjectController;
         this.shareProjectViewModel.addPropertyChangeListener(this);
 
-        this.title = new JLabel("Share Project Screen");
+        this.title = new JLabel(shareProjectViewModel.TITLE_LABEL);
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -95,7 +93,7 @@ public class ShareProjectView extends JPanel implements
                 if (e.getSource().equals(cancelButton)) {
                     shareProjectViewModel.setState(new ShareProjectState());
                     shareProjectViewModel.firePropertyChanged();
-                    viewManagerModel.setActiveView(getProjectViewModel.getViewName());
+//                    viewManagerModel.setActiveView(getProjectViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
             }

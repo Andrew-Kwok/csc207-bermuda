@@ -1,10 +1,10 @@
 package app.project;
 
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
-import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
-import domains.project.use_case.share_project.ShareProjectInputBoundary;
-import domains.project.use_case.share_project.ShareProjectInteractor;
-import domains.project.use_case.share_project.ShareProjectOutputBoundary;
+import domains.share_project.ShareProjectDataAccessInterface;
+import domains.share_project.ShareProjectInputBoundary;
+import domains.share_project.ShareProjectInteractor;
+import domains.share_project.ShareProjectOutputBoundary;
 
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.project.share_project.ShareProjectController;
