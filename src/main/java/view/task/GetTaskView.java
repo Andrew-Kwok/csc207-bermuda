@@ -21,15 +21,13 @@ import static constant.ViewConstant.GET_TASK_VIEW_NAME;
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_TASK_VIEW_NAME;
 
-    private final ViewManagerModel viewManagerModel;
     private final GetTaskViewModel getTaskViewModel;
     private final AddTaskViewModel addTaskViewModel;
     private final GetProjectViewModel getProjectViewModel;
     private final GetTaskController getTaskController;
     private final AddTaskController addTaskController;
     private final GetProjectController getProjectController;
-
-
+    private final ViewManagerModel viewManagerModel;
     JLabel title;
 
     private final JButton addTask;

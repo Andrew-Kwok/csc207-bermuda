@@ -12,10 +12,9 @@ public class GetTaskViewModel extends ViewModel {
     public static final String ADD_TASK_BUTTON_LABEL = "Add Task";
     public static final String GO_BACK_BUTTON_LABEL = "Go Back";
     private GetTaskState state = new GetTaskState();
-    private static final String viewName = GET_TASK_VIEW_NAME;
 
     public GetTaskViewModel() {
-        super(viewName);
+        super(GET_TASK_VIEW_NAME);
     }
 
     public void setState(GetTaskState state) {

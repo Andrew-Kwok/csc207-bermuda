@@ -111,7 +111,7 @@ public class ApiDataAccessObject implements
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks", Config.getEnv("TODOIST_API_URL")))
+                .url(String.format("%s/tasks?project_id=%s", Config.getEnv("TODOIST_API_URL"), projectID))
                 .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
                 .addHeader("Content-Type", "application/json")
                 .build();
