@@ -31,8 +31,8 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
     JLabel title;
     final JButton createProject;
-    final JButton checkProject;
-    final JButton cancel;
+    final JButton checkTask;
+    final JButton goBack;
     DefaultListModel<Project> projectListModel = new DefaultListModel<>();
     JList<Project> projectList = new JList<>(projectListModel);
 
@@ -59,11 +59,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         createProject = new JButton(GetProjectViewModel.CREATE_PROJECT_BUTTON_LABEL);
         buttons.add(createProject);
 
-        checkProject = new JButton(GetProjectViewModel.CHECK_PROJECT_BUTTON_LABEL);
-        buttons.add(checkProject);
+        checkTask = new JButton(GetProjectViewModel.CHECK_TASK_BUTTON_LABEL);
+        buttons.add(checkTask);
 
-        cancel = new JButton(GetProjectViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+        goBack = new JButton(GetProjectViewModel.GO_BACK_BUTTON_LABEL);
+        buttons.add(goBack);
 
         createProject.addActionListener(
             new ActionListener() {
@@ -77,11 +77,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
             }
         );
 
-        checkProject.addActionListener(
+        checkTask.addActionListener(
             new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (e.getSource().equals(checkProject)){
+                    if (e.getSource().equals(checkTask)){
                         Project project = projectList.getSelectedValue();
                         if (project == null) {
                             JOptionPane.showMessageDialog(null, "Please select a project.");
@@ -100,11 +100,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
             }
         );
 
-        cancel.addActionListener(
+        goBack.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        if (e.getSource().equals(cancel)){
+                        if (e.getSource().equals(goBack)){
                             viewManagerModel.setActiveView(loggedInUserViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
