@@ -12,8 +12,6 @@ public class GetTaskController {
     public void execute(String projectID){
         projectID = projectID.trim();
 
-        System.out.println(projectID);
-
         GetTaskInputData getTaskInputData = new GetTaskInputData(projectID);
         getTaskUseCaseInteractor.execute(getTaskInputData);
     }

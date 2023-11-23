@@ -5,7 +5,7 @@ import domains.task.entity.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetTaskInteractor implements GetTaskInputBoundary{
+public class GetTaskInteractor implements GetTaskInputBoundary {
     private final GetTaskDataAccessInterface getTaskDataAccess;
     private final GetTaskOutputBoundary presenter;
 
@@ -15,18 +15,19 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
     }
 
     @Override
-    public ArrayList<Task> execute(GetTaskInputData getTaskInputData) {
-        String projectID = getTaskInputData.getProjectID();
-        ArrayList<Task> tasks;
-        try {
-            tasks = getTaskDataAccess.getTasks(projectID);
-        } catch (Exception e) {
-            presenter.prepareFailView(e.getMessage());
-            return null;
+    public void execute(GetTaskInputData getTaskInputData) {
+        if (getTaskInputData == null) {
+            presenter.prepareFailView("Input data is null");
+        } else if (getTaskInputData.getProjectID() == null || getTaskInputData.getProjectID().equals("")) {
+            presenter.prepareFailView("Project ID is missing");
+        } else {
+            String projectID = getTaskInputData.getProjectID();
+            try {
+                List<Task> tasks = getTaskDataAccess.getTasks(projectID);
+                presenter.prepareSuccessView(new GetTaskOutputData(tasks));
+            } catch (Exception e) {
+                presenter.prepareFailView(e.getMessage());
+            }
         }
-
-        GetTaskOutputData output = new GetTaskOutputData(tasks);
-        presenter.prepareSuccessView(output);
-        return tasks;
     }
 }

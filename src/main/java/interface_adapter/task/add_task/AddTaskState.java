@@ -2,10 +2,10 @@ package interface_adapter.task.add_task;
 
 public class AddTaskState {
 
-    private String projectID = "2320965999"; // TODO: Remove this default value when integrating Project & Task.
+    private String projectID = null;
     private String taskID = "";
     private String taskName = "";
-    private String taskContent = "";
+    private String taskDescription = "";
     private String addTaskError = null;
 
     public AddTaskState() {
@@ -23,8 +23,8 @@ public class AddTaskState {
         return taskName;
     }
 
-    public String getTaskContent() {
-        return taskContent;
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
     public String getAddTaskError() {
@@ -43,8 +43,8 @@ public class AddTaskState {
         this.taskName = taskName;
     }
 
-    public void setTaskContent(String taskContent) {
-        this.taskContent = taskContent;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
 
     public void setAddTaskError(String addTaskError) {
@@ -57,7 +57,7 @@ public class AddTaskState {
                 "projectID='" + projectID + '\'' +
                 ", taskID='" + taskID + '\'' +
                 ", taskName='" + taskName + '\'' +
-                ", taskContent='" + taskContent + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
                 ", addTaskError='" + addTaskError + '\'' +
                 '}';
     }

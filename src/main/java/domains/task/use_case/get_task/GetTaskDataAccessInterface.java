@@ -6,5 +6,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface GetTaskDataAccessInterface {
-    ArrayList<Task> getTasks(String projectID) throws Exception;
+    List<Task> getTasks(String projectID) throws Exception;
 }

@@ -25,10 +25,13 @@ public class GetTaskUseCaseFactory {
     private GetTaskUseCaseFactory() {
     }
 
-    public static GetTaskView create(ViewManagerModel viewManagerModel,
-                                     GetTaskViewModel getTaskViewModel, GetTaskDataAccessInterface getTaskDataAccessInterface,
-                                     AddTaskViewModel addTaskViewModel, AddTaskDataAccessInterface addTaskDataAccessInterface,
-                                     GetProjectViewModel getProjectViewModel, GetProjectApiDataAccessInterface getProjectApiDAI, GetProjectSqlDataAccessInterface getProjectSqlDAI) {
+    public static GetTaskView create(
+            ViewManagerModel viewManagerModel,
+            AddTaskViewModel addTaskViewModel,
+            GetTaskViewModel getTaskViewModel,
+            GetProjectViewModel getProjectViewModel,
+            AddTaskDataAccessInterface addTaskDataAccessInterface,
+            GetTaskDataAccessInterface getTaskDataAccessInterface) {
 
         AddTaskController addTaskController = createAddTaskUseCase(
                 viewManagerModel, addTaskViewModel, getTaskViewModel, addTaskDataAccessInterface
@@ -36,17 +39,11 @@ public class GetTaskUseCaseFactory {
         GetTaskController getTaskController = getTaskUseCase(
                 viewManagerModel, getTaskViewModel, getTaskDataAccessInterface
         );
-        GetProjectController getProjectController = getProjectUseCase(
-                viewManagerModel,
-                getProjectViewModel,
-                getProjectSqlDAI,
-                getProjectApiDAI
-        );
 
         return new GetTaskView(
-                viewManagerModel,
-                getTaskViewModel, addTaskViewModel, getProjectViewModel,
-                getTaskController, addTaskController, getProjectController
+                viewManagerModel, getProjectViewModel,
+                getTaskViewModel, getTaskController,
+                addTaskViewModel, addTaskController
         );
     }
 
@@ -70,23 +67,5 @@ public class GetTaskUseCaseFactory {
         GetTaskInputBoundary getTaskInteractor = new GetTaskInteractor(getTaskOutputBoundary, getTaskDataAccessInterface);
 
         return new GetTaskController(getTaskInteractor);
-    }
-
-    private static GetProjectController getProjectUseCase(ViewManagerModel viewManagerModel,
-                                                          GetProjectViewModel getProjectViewModel,
-                                                          GetProjectSqlDataAccessInterface getProjectSqlDAI,
-                                                          GetProjectApiDataAccessInterface getProjectApiDAI) {
-        GetProjectOutputBoundary getProjectOutputBoundary = new GetProjectPresenter(
-                viewManagerModel,
-                getProjectViewModel
-        );
-
-        GetProjectInputBoundary getProjectInteractor = new GetProjectInteractor(
-                getProjectOutputBoundary,
-                getProjectSqlDAI,
-                getProjectApiDAI
-        );
-
-        return new GetProjectController(getProjectInteractor);
     }
 }

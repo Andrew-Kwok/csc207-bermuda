@@ -6,6 +6,8 @@ import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.task.get_task.GetTaskState;
+import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -24,12 +26,13 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     private final GetProjectController getProjectController;
     private final CreateProjectViewModel createProjectViewModel;
     private final CreateProjectController createProjectController;
+    private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
 
     JLabel title;
     final JButton createProject;
-    final JButton checkProject;
-    final JButton cancel;
+    final JButton checkTask;
+    final JButton goBack;
     DefaultListModel<Project> projectListModel = new DefaultListModel<>();
     JList<Project> projectList = new JList<>(projectListModel);
 
@@ -38,13 +41,15 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                           GetProjectViewModel getProjectViewModel,
                           GetProjectController getProjectContoller,
                           CreateProjectViewModel createProjectViewModel,
-                          CreateProjectController createProjectController) {
+                          CreateProjectController createProjectController,
+                          GetTaskViewModel getTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInUserViewModel = loggedInUserViewModel;
         this.getProjectViewModel = getProjectViewModel;
         this.getProjectController = getProjectContoller;
         this.createProjectViewModel = createProjectViewModel;
         this.createProjectController = createProjectController;
+        this.getTaskViewModel = getTaskViewModel;
         this.getProjectViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(getProjectViewModel.TITLE_LABEL);
@@ -54,11 +59,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         createProject = new JButton(GetProjectViewModel.CREATE_PROJECT_BUTTON_LABEL);
         buttons.add(createProject);
 
-        checkProject = new JButton(GetProjectViewModel.CHECK_PROJECT_BUTTON_LABEL);
-        buttons.add(checkProject);
+        checkTask = new JButton(GetProjectViewModel.CHECK_TASK_BUTTON_LABEL);
+        buttons.add(checkTask);
 
-        cancel = new JButton(GetProjectViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+        goBack = new JButton(GetProjectViewModel.GO_BACK_BUTTON_LABEL);
+        buttons.add(goBack);
 
         createProject.addActionListener(
             new ActionListener() {
@@ -72,29 +77,34 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
             }
         );
 
-        checkProject.addActionListener(
+        checkTask.addActionListener(
             new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (e.getSource().equals(checkProject)){
+                    if (e.getSource().equals(checkTask)){
                         Project project = projectList.getSelectedValue();
                         if (project == null) {
                             JOptionPane.showMessageDialog(null, "Please select a project.");
-                            return;
                         } else {
-                            // TODO: switch to GetTaskView
-                            // viewManagerModel.firePropertyChanged();
+                            GetTaskState getTaskState = getTaskViewModel.getState();
+                            getTaskState.setProjectID(project.getProjectID());
+                            getTaskState.setInitial(true);
+                            getTaskViewModel.setState(getTaskState);
+                            getTaskViewModel.firePropertyChanged();
+
+                            viewManagerModel.setActiveView(getTaskViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
             }
         );
 
-        cancel.addActionListener(
+        goBack.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        if (e.getSource().equals(cancel)){
+                        if (e.getSource().equals(goBack)){
                             viewManagerModel.setActiveView(loggedInUserViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
