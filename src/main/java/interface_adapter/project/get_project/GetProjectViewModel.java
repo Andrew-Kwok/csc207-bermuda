@@ -10,8 +10,8 @@ public class GetProjectViewModel extends ViewModel{
     public final String TITLE_LABEL = "Get Project";
     private GetProjectState state = new GetProjectState();
     public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
-    public static final String CHECK_PROJECT_BUTTON_LABEL = "Check Project";
-    public static final String CANCEL_BUTTON_LABEL = "Cancel";
+    public static final String CHECK_TASK_BUTTON_LABEL = "Check Task";
+    public static final String GO_BACK_BUTTON_LABEL = "Go Back";
 
     public GetProjectViewModel() {
         super(GET_PROJECT_VIEW_NAME);

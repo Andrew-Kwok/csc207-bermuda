@@ -21,21 +21,16 @@ public class AddTaskUseCaseFactory {
             AddTaskDataAccessInterface addTaskDAO) {
 
         AddTaskController addTaskController = createAddTaskUseCase(viewManagerModel, addTaskViewModel, getTaskViewModel, addTaskDAO);
-        GetTaskController getTaskController = createGetTaskUseCase();
 
-        return new AddTaskView(addTaskViewModel, addTaskController, getTaskViewModel, getTaskController, viewManagerModel);
+        return new AddTaskView(addTaskViewModel, addTaskController, getTaskViewModel, viewManagerModel);
     }
 
     private static AddTaskController createAddTaskUseCase(
             ViewManagerModel viewManagerModel, AddTaskViewModel addTaskViewModel, GetTaskViewModel getTaskViewModel,
             AddTaskDataAccessInterface addTaskDAO) {
 
-        AddTaskOutputBoundary addTaskOutputBoundary = new AddTaskPresenter(viewManagerModel, addTaskViewModel);
+        AddTaskOutputBoundary addTaskOutputBoundary = new AddTaskPresenter(viewManagerModel, addTaskViewModel, getTaskViewModel);
         AddTaskInputBoundary addTaskInteractor = new AddTaskInteractor(addTaskOutputBoundary, addTaskDAO);
         return new AddTaskController(addTaskInteractor);
-    }
-
-    private static GetTaskController createGetTaskUseCase() {
-        return null;
     }
 }

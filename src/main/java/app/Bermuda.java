@@ -6,6 +6,7 @@ import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
 import app.project.GetProjectUseCaseFactory;
 import app.task.AddTaskUseCaseFactory;
+import app.task.GetTaskUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.LoginUseCaseFactory;
 import app.user.SignupUseCaseFactory;
@@ -21,6 +22,7 @@ import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterfa
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
+import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
@@ -42,6 +44,7 @@ import view.permission.UpdatePermissionView;
 import view.project.CreateProjectView;
 import view.project.GetProjectView;
 import view.task.AddTaskView;
+import view.task.GetTaskView;
 import view.user.LoggedInView;
 import view.user.LoginView;
 import view.user.SignupView;
@@ -101,6 +104,7 @@ public class Bermuda {
         GetProjectApiDataAccessInterface getProjectApiDataAccessInterface = apiDataAccessObject;
 
         AddTaskDataAccessInterface addTaskDataAccessInterface = apiDataAccessObject;
+        GetTaskDataAccessInterface getTaskDataAccessInterface = apiDataAccessObject;
 
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
@@ -140,13 +144,17 @@ public class Bermuda {
                 createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface);
         views.add(createProjectView, createProjectView.viewName);
 
-        GetProjectView getProjectView = GetProjectUseCaseFactory.create(viewManagerModel, loggedInUserViewModel, createProjectViewModel, getProjectViewModel,
+        GetProjectView getProjectView = GetProjectUseCaseFactory.create(viewManagerModel, loggedInUserViewModel, createProjectViewModel, getProjectViewModel, getTaskViewModel,
                 createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface, getProjectApiDataAccessInterface, getProjectSqlDataAccessInterface);
         views.add(getProjectView, getProjectView.viewName);
 
         AddTaskView addTaskView = AddTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel,
                 addTaskDataAccessInterface);
         views.add(addTaskView, addTaskView.viewName);
+
+        GetTaskView getTaskView = GetTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel, getProjectViewModel,
+                addTaskDataAccessInterface, getTaskDataAccessInterface);
+        views.add(getTaskView, getTaskView.viewName);
 
         // set the initial view
         viewManagerModel.setActiveView(loginView.viewName);
