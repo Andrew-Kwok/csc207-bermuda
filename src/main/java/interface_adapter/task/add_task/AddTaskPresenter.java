@@ -28,7 +28,6 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
         addTaskViewModel.firePropertyChanged();
 
         // On success, switch to the get task view.
-//        TODO: Fix when GetTaskViewModel is implemented.
         viewManagerModel.setActiveView(getTaskViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
