@@ -106,7 +106,7 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                 }
         );
 
-        taskDescriptionPanel.addKeyListener(
+        taskDescriptionInputField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
@@ -155,5 +155,9 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
     private void clearInputFields() {
         taskNameInputField.setText("");
         taskDescriptionInputField.setText("");
+
+        AddTaskState addTaskState = addTaskViewModel.getState();
+        addTaskState.setTaskName("");
+        addTaskState.setTaskDescription("");
     }
 }
