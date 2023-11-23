@@ -11,12 +11,12 @@ public class AddTaskController {
         this.addTaskUseCaseInteractor = addTaskUseCaseInteractor;
     }
 
-    public void execute(String projectId, String taskName, String taskContent) {
+    public void execute(String projectId, String taskName, String taskDescription) {
         projectId = projectId.trim();
         taskName = taskName.trim();
-        taskContent = taskContent.trim();
+        taskDescription = taskDescription.trim();
 
-        AddTaskInputData addTaskInputData = new AddTaskInputData(projectId, taskName, taskContent);
+        AddTaskInputData addTaskInputData = new AddTaskInputData(projectId, taskName, taskDescription);
         addTaskUseCaseInteractor.execute(addTaskInputData);
     }
 

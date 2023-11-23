@@ -84,8 +84,8 @@ public class ApiDataAccessObject implements
                 .build();
         RequestBody body = new FormBody.Builder()
                 .add("project_id", task.getProjectID())
-                .add("name", task.getTaskName())
-                .add("content", task.getTaskContent())
+                .add("content", task.getTaskName())
+                .add("description", task.getTaskDescription())
                 .build();
         Request request = new Request.Builder()
                 .url(String.format("%s/tasks", Config.getEnv("TODOIST_API_URL")))
@@ -127,8 +127,8 @@ public class ApiDataAccessObject implements
                     tasks.add(new Task(
                             task.getString("id"),
                             task.getString("project_id"),
-                            task.getString("name"),
-                            task.getString("content")
+                            task.getString("content"),
+                            task.getString("description")
                     ));
                 }
                 return tasks;

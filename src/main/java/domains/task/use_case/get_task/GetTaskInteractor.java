@@ -5,7 +5,7 @@ import domains.task.entity.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetTaskInteractor implements GetTaskInputBoundary{
+public class GetTaskInteractor implements GetTaskInputBoundary {
     private final GetTaskDataAccessInterface getTaskDataAccess;
     private final GetTaskOutputBoundary presenter;
 

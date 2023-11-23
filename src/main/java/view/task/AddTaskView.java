@@ -25,7 +25,7 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
     private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField taskNameInputField = new JTextField(50);
-    private final JTextField taskContentInputField = new JTextField(50);
+    private final JTextField taskDescriptionInputField = new JTextField(50);
     private final AddTaskController addTaskController;
     private final JButton addTaskButton;
     private final JButton cancelButton;
@@ -45,7 +45,7 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel taskNamePanel = new LabelTextPanel(new JLabel(AddTaskViewModel.TASK_NAME_LABEL), taskNameInputField);
-        LabelTextPanel taskContentPanel = new LabelTextPanel(new JLabel(AddTaskViewModel.TASK_CONTENT_LABEL), taskContentInputField);
+        LabelTextPanel taskDescriptionPanel = new LabelTextPanel(new JLabel(AddTaskViewModel.TASK_DESCRIPTION_LABEL), taskDescriptionInputField);
 
         JPanel buttons = new JPanel();
         addTaskButton = new JButton(addTaskViewModel.ADD_TASK_BUTTON_LABEL);
@@ -63,7 +63,7 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                             addTaskController.execute(
                                     addTaskState.getProjectID(),
                                     addTaskState.getTaskName(),
-                                    addTaskState.getTaskContent()
+                                    addTaskState.getTaskDescription()
                             );
                             clearInputFields();
                         }
@@ -79,7 +79,6 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                             clearInputFields();
                             viewManagerModel.setActiveView(getTaskViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
-                            // TODO: Fix when GetTaskViewModel is implemented.
                         }
                     }
                 }
@@ -107,13 +106,13 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                 }
         );
 
-        taskContentInputField.addKeyListener(
+        taskDescriptionPanel.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         AddTaskState addTaskState = addTaskViewModel.getState();
-                        String text = taskContentInputField.getText() + e.getKeyChar();
-                        addTaskState.setTaskContent(text);
+                        String text = taskDescriptionInputField.getText() + e.getKeyChar();
+                        addTaskState.setTaskDescription(text);
                         addTaskViewModel.setState(addTaskState);
                     }
 
@@ -133,7 +132,7 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
 
         this.add(title);
         this.add(taskNamePanel);
-        this.add(taskContentPanel);
+        this.add(taskDescriptionPanel);
         this.add(buttons);
     }
 
@@ -155,6 +154,6 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
 
     private void clearInputFields() {
         taskNameInputField.setText("");
-        taskContentInputField.setText("");
+        taskDescriptionInputField.setText("");
     }
 }

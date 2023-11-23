@@ -4,6 +4,7 @@ import domains.task.entity.Task;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
+import interface_adapter.task.add_task.AddTaskState;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
 import interface_adapter.task.get_task.GetTaskState;
@@ -21,31 +22,29 @@ import static constant.ViewConstant.GET_TASK_VIEW_NAME;
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_TASK_VIEW_NAME;
 
-    private final GetTaskViewModel getTaskViewModel;
-    private final AddTaskViewModel addTaskViewModel;
     private final GetProjectViewModel getProjectViewModel;
+    private final GetTaskViewModel getTaskViewModel;
     private final GetTaskController getTaskController;
+    private final AddTaskViewModel addTaskViewModel;
     private final AddTaskController addTaskController;
-    private final GetProjectController getProjectController;
     private final ViewManagerModel viewManagerModel;
     JLabel title;
-
     private final JButton addTask;
     private final JButton goBack;
 
     DefaultListModel<Task> taskListModel = new DefaultListModel<>();
     JList<Task> taskList = new JList<>(taskListModel);
 
-    public GetTaskView(ViewManagerModel viewManagerModel, GetTaskViewModel getTaskViewModel, AddTaskViewModel addTaskViewModel, GetProjectViewModel getProjectViewModel,
-                       GetTaskController getTaskController, AddTaskController addTaskController, GetProjectController getProjectController){
-
+    public GetTaskView(ViewManagerModel viewManagerModel, GetProjectViewModel getProjectViewModel,
+                       GetTaskViewModel getTaskViewModel, GetTaskController getTaskController,
+                       AddTaskViewModel addTaskViewModel, AddTaskController addTaskController) {
         this.viewManagerModel = viewManagerModel;
         this.getTaskViewModel = getTaskViewModel;
         this.addTaskViewModel = addTaskViewModel;
         this.getProjectViewModel = getProjectViewModel;
         this.getTaskController = getTaskController;
         this.addTaskController = addTaskController;
-        this.getProjectController = getProjectController;
+        this.getTaskViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(getTaskViewModel.TITLE_LABEL);
 
@@ -62,6 +61,11 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         if (e.getSource().equals(addTask)){
+                            GetTaskState getTaskState = getTaskViewModel.getState();
+                            AddTaskState addTaskState = addTaskViewModel.getState();
+                            addTaskState.setProjectID(getTaskState.getProjectID());
+                            addTaskViewModel.setState(addTaskState);
+
                             viewManagerModel.setActiveView(addTaskViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
@@ -96,7 +100,11 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("getTaskState")) {
             GetTaskState state = (GetTaskState) evt.getNewValue();
-            if (state.getGetTaskError() != null) {
+
+            if (state.isInitial()) {
+                state.setInitial(false);
+                getTaskController.execute(state.getProjectID());
+            } else if (state.getGetTaskError() != null) {
                 JOptionPane.showMessageDialog(this, state.getGetTaskError());
             } else {
                 taskListModel.clear();

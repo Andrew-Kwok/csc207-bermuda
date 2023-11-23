@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GetTaskInputBoundary {
 
-    List<Task> execute(GetTaskInputData getTaskInputData);
+    void execute(GetTaskInputData getTaskInputData);
 }
