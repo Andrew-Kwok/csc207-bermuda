@@ -9,8 +9,8 @@ public class ShareProjectPagePresenter implements ShareProjectPageOutputBoundary
     private final ShareProjectPageViewModel shareProjectPageViewModel;
     private final ShareProjectPageState state = new ShareProjectPageState();
     public ShareProjectPagePresenter(
-            ShareProjectPageViewModel shareProjectPageViewModel,
-            ViewManagerModel viewManagerModel
+            ViewManagerModel viewManagerModel,
+            ShareProjectPageViewModel shareProjectPageViewModel
     ) {
         this.shareProjectPageViewModel = shareProjectPageViewModel;
         this.viewManagerModel = viewManagerModel;

@@ -24,6 +24,7 @@ import domains.project.use_case.create_project.CreateProjectApiDataAccessInterfa
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
+import domains.share_project.share_project_page.ShareProjectPageDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.share_project.ShareProjectDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskDataAccessInterface;
@@ -115,9 +116,11 @@ public class Bermuda {
 
         CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface = sqlDataAccessObject;
         CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface = apiDataAccessObject;
-        ShareProjectDataAccessInterface shareProjectDataAccessInterface = sqlDataAccessObject;
         GetProjectSqlDataAccessInterface getProjectSqlDataAccessInterface = sqlDataAccessObject;
         GetProjectApiDataAccessInterface getProjectApiDataAccessInterface = apiDataAccessObject;
+
+        ShareProjectDataAccessInterface shareProjectDataAccessInterface = sqlDataAccessObject;
+        ShareProjectPageDataAccessInterface shareProjectPageDataAccessInterface = sqlDataAccessObject;
 
         AddTaskDataAccessInterface addTaskDataAccessInterface = apiDataAccessObject;
         GetTaskDataAccessInterface getTaskDataAccessInterface = apiDataAccessObject;
@@ -165,8 +168,12 @@ public class Bermuda {
                 shareProjectDataAccessInterface);
         views.add(shareProjectPageView, shareProjectPageView.viewName);
 
-        GetProjectView getProjectView = GetProjectUseCaseFactory.create(viewManagerModel, loggedInUserViewModel, createProjectViewModel, getProjectViewModel, getTaskViewModel,
-                createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface, getProjectApiDataAccessInterface, getProjectSqlDataAccessInterface);
+        GetProjectView getProjectView = GetProjectUseCaseFactory.create(
+                viewManagerModel, loggedInUserViewModel, createProjectViewModel,
+                getProjectViewModel, shareProjectPageViewModel ,getTaskViewModel,
+                createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface,
+                getProjectApiDataAccessInterface, getProjectSqlDataAccessInterface,
+                shareProjectPageDataAccessInterface);
         views.add(getProjectView, getProjectView.viewName);
 
         AddTaskView addTaskView = AddTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel,
@@ -178,7 +185,7 @@ public class Bermuda {
         views.add(getTaskView, getTaskView.viewName);
 
         // set the initial view
-        viewManagerModel.setActiveView(shareProjectPageView.viewName);
+        viewManagerModel.setActiveView(getProjectView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
