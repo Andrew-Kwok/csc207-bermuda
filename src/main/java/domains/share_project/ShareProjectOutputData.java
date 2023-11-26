@@ -1,17 +1,20 @@
 package domains.share_project;
 
+import java.util.*;
+import domains.user.entity.User;
 public class ShareProjectOutputData {
-    private final String projectId;
     private final String otherUserName;
-
-    public ShareProjectOutputData(
-            String projectId, String otherUserName
-    ) {
-        this.projectId = projectId;
+    private final String otherUserId;
+    private final String projectId;
+    public ShareProjectOutputData(String otherUserName, String otherUserId, String projectId) {
         this.otherUserName = otherUserName;
+        this.otherUserId = otherUserId;
+        this.projectId = projectId;
     }
 
     public String getProjectId() { return projectId; }
+
+    public String getOtherUserId() { return otherUserId; }
 
     public String getOtherUserName() { return otherUserName; }
 }

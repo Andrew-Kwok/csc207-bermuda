@@ -1,20 +1,15 @@
 package domains.share_project;
 
 import domains.permission.entity.NewPermissionFactory;
-import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
-
 public class ShareProjectInteractor implements ShareProjectInputBoundary {
     private final ShareProjectDataAccessInterface shareProjectDataAccessInterface;
-    private final CreatePermissionDataAccessInterface createPermissionDataAccessInterface;
     private final ShareProjectOutputBoundary shareProjectPresenter;
 
     public ShareProjectInteractor(
             ShareProjectDataAccessInterface shareProjectDataAccessInterface,
-            CreatePermissionDataAccessInterface createPermissionDataAccessInterface,
             ShareProjectOutputBoundary shareProjectPresenter
     ) {
         this.shareProjectDataAccessInterface = shareProjectDataAccessInterface;
-        this.createPermissionDataAccessInterface = createPermissionDataAccessInterface;
         this.shareProjectPresenter = shareProjectPresenter;
     }
     public void execute(ShareProjectInputData shareProjectInputData) {
@@ -22,14 +17,15 @@ public class ShareProjectInteractor implements ShareProjectInputBoundary {
             shareProjectDataAccessInterface.createPermission(
                     NewPermissionFactory.create(
                             shareProjectInputData.getProjectId(),
-                            shareProjectInputData.getUserId(),
+                            shareProjectInputData.getOtherUserId(),
                             "editor",
                             "")
             );
 
             ShareProjectOutputData outputData = new ShareProjectOutputData(
-                    shareProjectInputData.getProjectId(),
-                    shareProjectInputData.getOtherUserName()
+                    shareProjectInputData.getOtherUserName(),
+                    shareProjectInputData.getOtherUserId(),
+                    shareProjectInputData.getProjectId()
             );
             shareProjectPresenter.prepareSuccessView(outputData);
             return;

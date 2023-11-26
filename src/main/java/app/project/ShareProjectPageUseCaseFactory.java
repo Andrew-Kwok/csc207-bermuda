@@ -1,39 +1,39 @@
 package app.project;
 
-import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.share_project.ShareProjectDataAccessInterface;
 import domains.share_project.ShareProjectInputBoundary;
 import domains.share_project.ShareProjectInteractor;
 import domains.share_project.ShareProjectOutputBoundary;
 
 import interface_adapter.project.get_project.GetProjectViewModel;
-import interface_adapter.project.share_project.ShareProjectController;
-import interface_adapter.project.share_project.ShareProjectPresenter;
-import interface_adapter.project.share_project.ShareProjectViewModel;
+import interface_adapter.share_project.ShareProjectController;
+import interface_adapter.share_project.ShareProjectPresenter;
+import interface_adapter.share_project.ShareProjectViewModel;
+import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
-import view.project.ShareProjectView;
+import view.ShareProjectPageView;
 
-public class ShareProjectUseCaseFactory {
-    private ShareProjectUseCaseFactory() {}
+public class ShareProjectPageUseCaseFactory {
+    private ShareProjectPageUseCaseFactory() {}
 
-    public static ShareProjectView create(
+    public static ShareProjectPageView create(
             ViewManagerModel viewManagerModel,
             GetProjectViewModel getProjectViewModel,
+            ShareProjectPageViewModel shareProjectPageViewModel,
             ShareProjectViewModel shareProjectViewModel,
-            ShareProjectDataAccessInterface shareProjectDataAccessInterface,
-            CreatePermissionDataAccessInterface createPermissionDataAccessInterface
+            ShareProjectDataAccessInterface shareProjectDataAccessInterface
             ) {
         ShareProjectController shareProjectController = shareProjectUseCase(
                 viewManagerModel,
                 shareProjectViewModel,
-                shareProjectDataAccessInterface,
-                createPermissionDataAccessInterface
+                shareProjectDataAccessInterface
         );
 
-        return new ShareProjectView(
+        return new ShareProjectPageView(
                 viewManagerModel,
                 getProjectViewModel,
+                shareProjectPageViewModel,
                 shareProjectViewModel,
                 shareProjectController
         );
@@ -41,14 +41,12 @@ public class ShareProjectUseCaseFactory {
 
     private static ShareProjectController shareProjectUseCase(ViewManagerModel viewManagerModel,
                                                               ShareProjectViewModel shareProjectViewModel,
-                                                              ShareProjectDataAccessInterface shareProjectDataAccessInterface,
-                                                              CreatePermissionDataAccessInterface createPermissionDataAccessInterface
+                                                              ShareProjectDataAccessInterface shareProjectDataAccessInterface
     ) {
         ShareProjectOutputBoundary presenter = new ShareProjectPresenter(viewManagerModel, shareProjectViewModel);
 
         ShareProjectInputBoundary interactor = new ShareProjectInteractor(
                 shareProjectDataAccessInterface,
-                createPermissionDataAccessInterface,
                 presenter
         );
         return new ShareProjectController(interactor);

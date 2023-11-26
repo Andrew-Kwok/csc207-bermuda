@@ -8,9 +8,11 @@ import domains.permission.use_case.update_permission.UpdatePermissionDataAccessI
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.share_project.ShareProjectDataAccessInterface;
+import domains.share_project.share_project_page.ShareProjectPageDataAccessInterface;
 import domains.user.entity.User;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
+import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -25,7 +27,7 @@ public class SqlDataAccessObject implements
         UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
         SignupUserDataAccessInterface, LoginUserDataAccessInterface,
         CreateProjectSqlDataAccessInterface, GetProjectSqlDataAccessInterface,
-        ShareProjectDataAccessInterface {
+        ShareProjectDataAccessInterface, ShareProjectPageDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
@@ -215,7 +217,30 @@ public class SqlDataAccessObject implements
             throw new Exception("Error setting sql connection");
         }
     }
+    public List<List<String>> getUsersNameAndId() {
+        String sql = "SELECT id, username FROM user";
+        List<List<String>> usersNameAndId = new ArrayList<>();
 
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    List<String> userNameAndId = new ArrayList<>();
+                    userNameAndId.add(resultSet.getString("username"));
+                    userNameAndId.add(resultSet.getString("id"));
+                    usersNameAndId.add(userNameAndId);
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+
+        return usersNameAndId;
+
+    }
     public boolean existsByName(String username) throws Exception {
         String sql = "SELECT * FROM user WHERE username = ?";
         try (Connection connection = sqlDataSource.getConnection();

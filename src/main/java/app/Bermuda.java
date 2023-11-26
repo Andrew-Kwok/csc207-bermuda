@@ -4,7 +4,7 @@ import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
 import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
-import app.project.ShareProjectUseCaseFactory;
+import app.project.ShareProjectPageUseCaseFactory;
 import app.task.AddTaskUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.LoginUseCaseFactory;
@@ -31,9 +31,10 @@ import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskViewModel;
-import interface_adapter.project.share_project.ShareProjectViewModel;
+import interface_adapter.share_project.ShareProjectViewModel;
 import interface_adapter.user.loggedin_user.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupViewModel;
@@ -45,7 +46,7 @@ import view.permission.GetPermissionView;
 import view.permission.UpdatePermissionView;
 import view.project.CreateProjectView;
 import view.task.AddTaskView;
-import view.project.ShareProjectView;
+import view.ShareProjectPageView;
 import view.user.LoggedInView;
 import view.user.LoginView;
 import view.user.SignupView;
@@ -82,6 +83,7 @@ public class Bermuda {
         AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
         GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
         ShareProjectViewModel shareProjectViewModel = new ShareProjectViewModel();
+        ShareProjectPageViewModel shareProjectPageViewModel = new ShareProjectPageViewModel();
         GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
 
         // data access object
@@ -141,17 +143,17 @@ public class Bermuda {
                 createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface);
         views.add(createProjectView, createProjectView.viewName);
 
-        ShareProjectView shareProjectView = ShareProjectUseCaseFactory.create(
-                viewManagerModel, getProjectViewModel, shareProjectViewModel,
-                shareProjectDataAccessInterface, createPermissionDataAccessInterface);
-        views.add(shareProjectView, shareProjectView.viewName);
+        ShareProjectPageView shareProjectPageView = ShareProjectPageUseCaseFactory.create(
+                viewManagerModel, getProjectViewModel, shareProjectPageViewModel, shareProjectViewModel,
+                shareProjectDataAccessInterface);
+        views.add(shareProjectPageView, shareProjectPageView.viewName);
 
         AddTaskView addTaskView = AddTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel,
                 addTaskDataAccessInterface);
         views.add(addTaskView, addTaskView.viewName);
 
         // set the initial view
-        viewManagerModel.setActiveView(shareProjectView.viewName);
+        viewManagerModel.setActiveView(shareProjectPageView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

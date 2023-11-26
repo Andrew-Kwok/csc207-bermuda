@@ -1,4 +1,4 @@
-package interface_adapter.project.share_project;
+package interface_adapter.share_project;
 
 import domains.share_project.ShareProjectInputBoundary;
 import domains.share_project.ShareProjectInputData;
@@ -9,13 +9,9 @@ public class ShareProjectController {
     ) {
         this.shareProjectInteractor = shareProjectInteractor;
     }
-    public void execute(
-            String projectId, String userId, String otherUserName
-    ) {
+    public void execute(String projectId, String otherUserId, String otherUserName) {
         shareProjectInteractor.execute(new ShareProjectInputData(
-                projectId,
-                userId,
-                otherUserName
+                projectId, otherUserId, otherUserName
         ));
     }
 }

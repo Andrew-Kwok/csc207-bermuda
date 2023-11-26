@@ -2,12 +2,11 @@ package domains.share_project;
 
 public class ShareProjectInputData {
     private final String projectId;
-    private final String userId;
+    private final String otherUserId;
     private final String otherUserName;
-
-    public ShareProjectInputData(String projectId, String userId, String otherUserName) {
+    public ShareProjectInputData(String projectId, String otherUserId, String otherUserName) {
         this.projectId = projectId;
-        this.userId = userId;
+        this.otherUserId = otherUserId;
         this.otherUserName = otherUserName;
     }
 
@@ -15,8 +14,8 @@ public class ShareProjectInputData {
         return projectId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getOtherUserId() {
+        return otherUserId;
     }
 
     public String getOtherUserName() {
