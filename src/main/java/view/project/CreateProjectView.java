@@ -3,6 +3,7 @@ package view.project;
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.common.LabelTextPanel;
 
@@ -20,6 +21,7 @@ import static constant.ViewConstant.CREATE_PROJECT_VIEW_NAME;
 public class CreateProjectView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = CREATE_PROJECT_VIEW_NAME;
     private final CreateProjectViewModel createProjectViewModel;
+    private final GetProjectViewModel getProjectViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField projectNameInputField = new JTextField(50);
     private final CreateProjectController createProjectController;
@@ -28,9 +30,11 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
 
     public CreateProjectView(
             CreateProjectController createProjectController, CreateProjectViewModel createProjectViewModel,
+            GetProjectViewModel getProjectViewModel,
             ViewManagerModel viewManagerModel) {
         this.createProjectController = createProjectController;
         this.createProjectViewModel = createProjectViewModel;
+        this.getProjectViewModel = getProjectViewModel;
         this.viewManagerModel = viewManagerModel;
 
         createProjectViewModel.addPropertyChangeListener(this);
@@ -66,6 +70,8 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(cancelButton)) {
                             clearInputFields();
+                            viewManagerModel.setActiveView(getProjectViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }

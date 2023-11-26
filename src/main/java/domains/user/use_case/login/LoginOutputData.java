@@ -1,21 +1,23 @@
 package domains.user.use_case.login;
 
+import domains.user.entity.User;
+
 public class LoginOutputData {
 
-    private final String username;
+    private final User user;
     private final int errorCode;
 
     public int getErrorCode() {
         return errorCode;
     }
 
-    public LoginOutputData(String username, int errorCode) {
-        this.username = username;
+    public LoginOutputData(User user, int errorCode) {
+        this.user = user;
         this.errorCode = errorCode;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
 }
