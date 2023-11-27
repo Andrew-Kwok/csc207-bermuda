@@ -2,12 +2,14 @@ package view.project;
 
 import domains.project.entity.Project;
 import interface_adapter.project.create_project.CreateProjectController;
+import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
+import interface_adapter.user.loggedin.LoggedInState;
 import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -70,6 +72,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (e.getSource().equals(createProject)){
+                        CreateProjectState createProjectState = createProjectViewModel.getState();
+                        LoggedInState loggedInState = loggedInUserViewModel.getState();
+                        createProjectState.setUserId(loggedInState.getUser().getUserID());
+                        createProjectViewModel.setState(createProjectState);
+
                         viewManagerModel.setActiveView(createProjectViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }
