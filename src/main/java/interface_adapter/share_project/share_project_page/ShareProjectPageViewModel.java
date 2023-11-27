@@ -17,7 +17,7 @@ public class ShareProjectPageViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public ShareProjectPageViewModel() { super(ViewConstant.SHARE_PROJECT_PAGE_VIEW_NAME); }
 
-    public void setState(ShareProjectPageState state) { this.state = state; }
+    public void setState(ShareProjectPageState newState) { this.state = newState; }
 
     public ShareProjectPageState getState() { return this.state; }
 

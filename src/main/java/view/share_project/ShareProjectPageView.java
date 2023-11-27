@@ -19,7 +19,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * This class is a View for ShareProjectPageView.
- * It contains the title, the text field for the other user name,
+ * It contains the title, the text field for the other username,
  * the share button and the back button.
  *
  * Inherits from JPanel.
@@ -74,12 +74,6 @@ public class ShareProjectPageView extends JPanel implements
         this.shareProjectPageViewModel.addPropertyChangeListener(this);
 
         this.title = new JLabel(ShareProjectPageViewModel.TITLE_LABEL);
-        this.projectIdLabel = new JLabel(
-                ShareProjectPageViewModel.PROJECT_ID_LABEL + ": " +
-                        this.shareProjectPageViewModel.getState().getProjectId());
-        this.projectNameLabel = new JLabel(
-                ShareProjectPageViewModel.PROJECT_NAME_LABEL + ": " +
-                this.shareProjectPageViewModel.getState().getProjectName());
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -145,6 +139,11 @@ public class ShareProjectPageView extends JPanel implements
             }
         });
 
+         this.projectIdLabel = new JLabel(
+                ShareProjectPageViewModel.PROJECT_ID_LABEL + " :");
+         this.projectNameLabel = new JLabel(
+                ShareProjectPageViewModel.PROJECT_NAME_LABEL + " :");
+
          this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
          this.add(title);
          this.add(projectIdLabel);
@@ -168,6 +167,19 @@ public class ShareProjectPageView extends JPanel implements
             viewManagerModel.setActiveView(getProjectViewModel.getViewName());
             return;
         }
+
+        this.projectIdLabel.setText(
+                String.format("%s : %s",
+                        ShareProjectPageViewModel.PROJECT_ID_LABEL,
+                        shareProjectPageViewModel.getState().getProjectId()
+                )
+        );
+        this.projectNameLabel.setText(
+                String.format("%s : %s",
+                        ShareProjectPageViewModel.PROJECT_NAME_LABEL,
+                        shareProjectPageViewModel.getState().getProjectName()
+                )
+        );
 
         if (state.getUsersNameAndId().isEmpty()) {
             JOptionPane.showConfirmDialog(

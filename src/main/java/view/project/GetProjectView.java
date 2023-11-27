@@ -133,11 +133,6 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                                         shareProjectPageViewModel.getState().getErrorMessage());
                                 return;
                             }
-                            System.out.println(shareProjectPageViewModel.getState().getUsersNameAndId());
-                        System.out.println(shareProjectPageViewModel.getState().getProjectId());
-                        System.out.println(shareProjectPageViewModel.getState().getProjectName());
-                        System.out.println(shareProjectPageViewModel.getState().getUserId());
-                        System.out.println(shareProjectPageViewModel.getState().getErrorMessage());
 
                             viewManagerModel.setActiveView(shareProjectPageViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
