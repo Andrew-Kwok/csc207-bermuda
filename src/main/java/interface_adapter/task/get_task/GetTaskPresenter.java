@@ -1,9 +1,7 @@
 package interface_adapter.task.get_task;
 
-import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskOutputBoundary;
 import domains.task.use_case.get_task.GetTaskOutputData;
-import interface_adapter.permission.get_permission.GetPermissionState;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class GetTaskPresenter implements GetTaskOutputBoundary {

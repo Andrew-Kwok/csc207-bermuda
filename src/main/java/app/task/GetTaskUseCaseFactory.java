@@ -1,6 +1,5 @@
 package app.task;
 
-import domains.project.use_case.get_project.*;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskInputBoundary;
 import domains.task.use_case.add_task.AddTaskInteractor;
@@ -9,8 +8,6 @@ import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskInputBoundary;
 import domains.task.use_case.get_task.GetTaskInteractor;
 import domains.task.use_case.get_task.GetTaskOutputBoundary;
-import interface_adapter.project.get_project.GetProjectController;
-import interface_adapter.project.get_project.GetProjectPresenter;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskPresenter;

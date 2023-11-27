@@ -1,6 +1,5 @@
 package interface_adapter.task.get_task;
 
-import interface_adapter.permission.get_permission.GetPermissionState;
 import interface_adapter.view_model.ViewModel;
 
 import java.beans.PropertyChangeSupport;
