@@ -10,6 +10,8 @@ public class ViewConstant {
     public static final String UPDATE_PERMISSION_VIEW_NAME = "update-permission";
     public static final String DELETE_PERMISSION_VIEW_NAME = "delete-permission";
     public static final String CREATE_PROJECT_VIEW_NAME = "create-project";
+    public static final String SHARE_PROJECT_PAGE_VIEW_NAME = "share-project-page";
+    public static final String SHARE_PROJECT_VIEW_NAME = "share-project";
     public static final String GET_PROJECT_VIEW_NAME = "get-project";
     public static final String ADD_TASK_VIEW_NAME = "add-task";
     public static final String GET_TASK_VIEW_NAME = "get-task";
