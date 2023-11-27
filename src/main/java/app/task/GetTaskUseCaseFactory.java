@@ -12,6 +12,7 @@ import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskPresenter;
 import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.edit_task.EditTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
 import interface_adapter.task.get_task.GetTaskPresenter;
 import interface_adapter.task.get_task.GetTaskViewModel;
@@ -26,6 +27,7 @@ public class GetTaskUseCaseFactory {
             ViewManagerModel viewManagerModel,
             AddTaskViewModel addTaskViewModel,
             GetTaskViewModel getTaskViewModel,
+            EditTaskViewModel editTaskViewModel,
             GetProjectViewModel getProjectViewModel,
             AddTaskDataAccessInterface addTaskDataAccessInterface,
             GetTaskDataAccessInterface getTaskDataAccessInterface) {
@@ -40,7 +42,8 @@ public class GetTaskUseCaseFactory {
         return new GetTaskView(
                 viewManagerModel, getProjectViewModel,
                 getTaskViewModel, getTaskController,
-                addTaskViewModel, addTaskController
+                addTaskViewModel, addTaskController,
+                editTaskViewModel
         );
     }
 
