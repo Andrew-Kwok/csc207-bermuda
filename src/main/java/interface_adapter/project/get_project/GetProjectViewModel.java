@@ -11,6 +11,7 @@ public class GetProjectViewModel extends ViewModel{
     private GetProjectState state = new GetProjectState();
     public static final String CREATE_PROJECT_BUTTON_LABEL = "Create Project";
     public static final String CHECK_TASK_BUTTON_LABEL = "Check Task";
+    public static final String SHARE_PROJECT_BUTTON_LABEL = "Share Project";
     public static final String GO_BACK_BUTTON_LABEL = "Go Back";
 
     public GetProjectViewModel() {

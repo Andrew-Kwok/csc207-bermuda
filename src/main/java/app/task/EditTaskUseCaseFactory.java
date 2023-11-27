@@ -1,19 +1,19 @@
 package app.task;
 
 import domains.task.use_case.edit_task.EditTaskDataAccessInterface;
-import domains.task.use_case.get_task.GetTaskDataAccessInterface;
-import domains.task.use_case.get_task.GetTaskOutputBoundary;
-import domains.task.use_case.get_task.GetTaskInputBoundary;
-import domains.task.use_case.get_task.GetTaskInteractor;
-import interface_adapter.task.edit_task.EditTaskController;
-import interface_adapter.task.edit_task.EditTaskViewModel;
-import interface_adapter.task.edit_task.EditTaskPresenter;
-import domains.task.use_case.edit_task.EditTaskOutputBoundary;
 import domains.task.use_case.edit_task.EditTaskInputBoundary;
 import domains.task.use_case.edit_task.EditTaskInteractor;
+import domains.task.use_case.edit_task.EditTaskOutputBoundary;
+import domains.task.use_case.get_task.GetTaskDataAccessInterface;
+import domains.task.use_case.get_task.GetTaskInputBoundary;
+import domains.task.use_case.get_task.GetTaskInteractor;
+import domains.task.use_case.get_task.GetTaskOutputBoundary;
+import interface_adapter.task.edit_task.EditTaskController;
+import interface_adapter.task.edit_task.EditTaskPresenter;
+import interface_adapter.task.edit_task.EditTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
-import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.task.get_task.GetTaskPresenter;
+import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.task.EditTaskView;
 

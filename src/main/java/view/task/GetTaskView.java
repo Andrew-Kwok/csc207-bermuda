@@ -1,8 +1,6 @@
 package view.task;
 
-import domains.permission.entity.Permission;
 import domains.task.entity.Task;
-import interface_adapter.permission.update_permission.UpdatePermissionState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
@@ -13,7 +11,6 @@ import interface_adapter.task.get_task.GetTaskController;
 import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import view.permission.GetPermissionView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
