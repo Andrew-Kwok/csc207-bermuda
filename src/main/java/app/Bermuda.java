@@ -6,6 +6,7 @@ import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
 import app.project.GetProjectUseCaseFactory;
 import app.task.AddTaskUseCaseFactory;
+import app.task.EditTaskUseCaseFactory;
 import app.task.GetTaskUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.LoginUseCaseFactory;
@@ -22,6 +23,7 @@ import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterfa
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
+import domains.task.use_case.edit_task.EditTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
@@ -32,6 +34,7 @@ import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.edit_task.EditTaskViewModel;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
@@ -44,6 +47,7 @@ import view.permission.UpdatePermissionView;
 import view.project.CreateProjectView;
 import view.project.GetProjectView;
 import view.task.AddTaskView;
+import view.task.EditTaskView;
 import view.task.GetTaskView;
 import view.user.LoggedInView;
 import view.user.LoginView;
@@ -84,6 +88,7 @@ public class Bermuda {
         GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
         AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
         GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
+        EditTaskViewModel editTaskViewModel = new EditTaskViewModel();
 
         // data access object
         DataSource sqlDataSource = SqlConfig.NewSQL();
@@ -105,6 +110,7 @@ public class Bermuda {
 
         AddTaskDataAccessInterface addTaskDataAccessInterface = apiDataAccessObject;
         GetTaskDataAccessInterface getTaskDataAccessInterface = apiDataAccessObject;
+        EditTaskDataAccessInterface editTaskDataAccessInterface = apiDataAccessObject;
 
 //        try {
 //            signupUserDataAccessInterface = new FileUserDataAccessObject("./users.csv", "./projects,csv");
@@ -152,9 +158,13 @@ public class Bermuda {
                 addTaskDataAccessInterface);
         views.add(addTaskView, addTaskView.viewName);
 
-        GetTaskView getTaskView = GetTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel, getProjectViewModel,
+        GetTaskView getTaskView = GetTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel, editTaskViewModel, getProjectViewModel,
                 addTaskDataAccessInterface, getTaskDataAccessInterface);
         views.add(getTaskView, getTaskView.viewName);
+
+        EditTaskView editTaskView = EditTaskUseCaseFactory.create(viewManagerModel, editTaskViewModel, getTaskViewModel,
+                editTaskDataAccessInterface, getTaskDataAccessInterface);
+        views.add(editTaskView, editTaskView.viewName);
 
         // set the initial view
         viewManagerModel.setActiveView(loginView.viewName);
