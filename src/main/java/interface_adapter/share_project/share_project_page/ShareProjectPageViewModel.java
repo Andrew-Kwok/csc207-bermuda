@@ -1,11 +1,10 @@
 package interface_adapter.share_project.share_project_page;
 
-import java.util.*;
+import constant.ViewConstant;
+import interface_adapter.view_model.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
-import interface_adapter.view_model.ViewModel;
-import constant.ViewConstant;
 public class ShareProjectPageViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Share Project Page";
     public static final String SHARE_BUTTON_LABEL = "Share";

@@ -1,6 +1,6 @@
 package interface_adapter.share_project.share_project_page;
 
-import java.util.*;
+import java.util.List;
 public class ShareProjectPageState {
     private String projectId;
     private String projectName;

@@ -1,21 +1,20 @@
 package view.share_project;
 
+import constant.ViewConstant;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.share_project.ShareProjectController;
 import interface_adapter.share_project.ShareProjectViewModel;
-import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.share_project.share_project_page.ShareProjectPageState;
+import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
-import constant.ViewConstant;
-
 import javax.swing.*;
-import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 /**
  * This class is a View for ShareProjectPageView.

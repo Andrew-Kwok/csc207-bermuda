@@ -1,10 +1,8 @@
 package interface_adapter.share_project;
 
-import interface_adapter.project.get_project.GetProjectViewModel;
-import interface_adapter.view_model.ViewManagerModel;
-
 import domains.share_project.ShareProjectOutputBoundary;
 import domains.share_project.ShareProjectOutputData;
+import interface_adapter.view_model.ViewManagerModel;
 
 public class ShareProjectPresenter implements ShareProjectOutputBoundary {
     private final ShareProjectViewModel shareProjectViewModel;

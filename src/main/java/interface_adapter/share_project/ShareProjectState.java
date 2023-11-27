@@ -1,8 +1,5 @@
 package interface_adapter.share_project;
 
-import java.util.*;
-
-import domains.user.entity.User;
 public class ShareProjectState {
     private String projectId;
     private String userId;

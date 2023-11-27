@@ -1,6 +1,6 @@
 package domains.share_project.share_project_page;
 
-import java.util.*;
+import java.util.List;
 public class ShareProjectPageOutputData {
     private final List<List<String>> usersNameAndId;
     private final String projectId;

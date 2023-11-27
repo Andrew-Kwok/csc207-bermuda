@@ -1,7 +1,5 @@
 package domains.share_project;
 
-import java.util.*;
-import domains.user.entity.User;
 public class ShareProjectOutputData {
     private final String otherUserName;
     private final String otherUserId;

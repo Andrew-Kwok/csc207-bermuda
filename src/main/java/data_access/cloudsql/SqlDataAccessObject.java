@@ -12,7 +12,6 @@ import domains.share_project.share_project_page.ShareProjectPageDataAccessInterf
 import domains.user.entity.User;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
-import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

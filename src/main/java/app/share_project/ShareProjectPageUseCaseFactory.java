@@ -4,14 +4,12 @@ import domains.share_project.ShareProjectDataAccessInterface;
 import domains.share_project.ShareProjectInputBoundary;
 import domains.share_project.ShareProjectInteractor;
 import domains.share_project.ShareProjectOutputBoundary;
-
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.share_project.ShareProjectController;
 import interface_adapter.share_project.ShareProjectPresenter;
 import interface_adapter.share_project.ShareProjectViewModel;
 import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-
 import view.share_project.ShareProjectPageView;
 
 public class ShareProjectPageUseCaseFactory {

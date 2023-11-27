@@ -1,7 +1,6 @@
 package view.project;
 
 import domains.project.entity.Project;
-
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
