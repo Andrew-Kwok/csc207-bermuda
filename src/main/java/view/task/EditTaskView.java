@@ -138,8 +138,6 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
         this.add(buttons);
     }
 
-    ;
-
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Not implemented yet.");
     }
@@ -153,8 +151,7 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
         } else if (editTaskState.getEditTaskError() != null) {
             JOptionPane.showMessageDialog(this, editTaskState.getEditTaskError());
         } else if (editTaskState.getTaskID() != null) {
-            JOptionPane.showMessageDialog(this, "Task updated with id " + editTaskState.getTaskID() + ".");
-            this.getTaskController.execute(null);
+            JOptionPane.showMessageDialog(this, String.format("Task \"%s\" is successfully updated.",editTaskState.getTaskName()));
         }
     }
 
@@ -167,5 +164,9 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
     private void clearInputFields() {
         taskNameInputField.setText("");
         taskDescriptionInputField.setText("");
+
+        EditTaskState editTaskState = editTaskViewModel.getState();
+        editTaskState.setTaskName("");
+        editTaskState.setTaskDescription("");
     }
 }

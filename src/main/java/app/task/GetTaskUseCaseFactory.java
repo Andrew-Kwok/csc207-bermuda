@@ -1,6 +1,5 @@
 package app.task;
 
-import domains.project.use_case.get_project.*;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskInputBoundary;
 import domains.task.use_case.add_task.AddTaskInteractor;
@@ -9,12 +8,11 @@ import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskInputBoundary;
 import domains.task.use_case.get_task.GetTaskInteractor;
 import domains.task.use_case.get_task.GetTaskOutputBoundary;
-import interface_adapter.project.get_project.GetProjectController;
-import interface_adapter.project.get_project.GetProjectPresenter;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskPresenter;
 import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.edit_task.EditTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
 import interface_adapter.task.get_task.GetTaskPresenter;
 import interface_adapter.task.get_task.GetTaskViewModel;
@@ -29,6 +27,7 @@ public class GetTaskUseCaseFactory {
             ViewManagerModel viewManagerModel,
             AddTaskViewModel addTaskViewModel,
             GetTaskViewModel getTaskViewModel,
+            EditTaskViewModel editTaskViewModel,
             GetProjectViewModel getProjectViewModel,
             AddTaskDataAccessInterface addTaskDataAccessInterface,
             GetTaskDataAccessInterface getTaskDataAccessInterface) {
@@ -43,7 +42,8 @@ public class GetTaskUseCaseFactory {
         return new GetTaskView(
                 viewManagerModel, getProjectViewModel,
                 getTaskViewModel, getTaskController,
-                addTaskViewModel, addTaskController
+                addTaskViewModel, addTaskController,
+                editTaskViewModel
         );
     }
 
