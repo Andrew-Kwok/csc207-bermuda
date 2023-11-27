@@ -1,7 +1,6 @@
 package view.task;
 
 import domains.task.entity.Task;
-import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
