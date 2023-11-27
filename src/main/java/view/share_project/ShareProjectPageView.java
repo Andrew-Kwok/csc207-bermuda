@@ -1,4 +1,4 @@
-package view;
+package view.share_project;
 
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.share_project.ShareProjectController;
@@ -27,7 +27,7 @@ import java.beans.PropertyChangeListener;
 public class ShareProjectPageView extends JPanel implements
         ActionListener, PropertyChangeListener {
 
-    public final String viewName = ViewConstant.SHARE_PROJECT_VIEW_NAME;
+    public final String viewName = ViewConstant.SHARE_PROJECT_PAGE_VIEW_NAME;
 
     private final ViewManagerModel viewManagerModel;
     private final GetProjectViewModel getProjectViewModel;
@@ -36,6 +36,8 @@ public class ShareProjectPageView extends JPanel implements
     private final ShareProjectController shareProjectController;
 
     final JLabel title;
+    final JLabel projectIdLabel;
+    final JLabel projectNameLabel;
 
     final JButton shareButton;
     final JButton backButton;
@@ -62,22 +64,30 @@ public class ShareProjectPageView extends JPanel implements
             ShareProjectPageViewModel shareProjectPageViewModel,
             ShareProjectViewModel shareProjectViewModel,
             ShareProjectController shareProjectController
-    ) { this.viewManagerModel = viewManagerModel;
+    ) {
+        this.viewManagerModel = viewManagerModel;
         this.getProjectViewModel = getProjectViewModel;
         this.shareProjectPageViewModel = shareProjectPageViewModel;
         this.shareProjectViewModel = shareProjectViewModel;
         this.shareProjectController = shareProjectController;
-        this.shareProjectViewModel.addPropertyChangeListener(this);
 
-        this.title = new JLabel(shareProjectPageViewModel.TITLE_LABEL);
+        this.shareProjectPageViewModel.addPropertyChangeListener(this);
+
+        this.title = new JLabel(ShareProjectPageViewModel.TITLE_LABEL);
+        this.projectIdLabel = new JLabel(
+                ShareProjectPageViewModel.PROJECT_ID_LABEL + ": " +
+                        this.shareProjectPageViewModel.getState().getProjectId());
+        this.projectNameLabel = new JLabel(
+                ShareProjectPageViewModel.PROJECT_NAME_LABEL + ": " +
+                this.shareProjectPageViewModel.getState().getProjectName());
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttonsPanel = new JPanel();
-        shareButton = new JButton(ShareProjectViewModel.SHARE_BUTTON_LABEL);
+        shareButton = new JButton(ShareProjectPageViewModel.SHARE_BUTTON_LABEL);
         buttonsPanel.add(shareButton);
 
-        backButton = new JButton(ShareProjectViewModel.CANCEL_BUTTON_LABEL);
+        backButton = new JButton(ShareProjectPageViewModel.BACK_BUTTON_LABEL);
         buttonsPanel.add(backButton);
 
         shareButton.addActionListener(new ActionListener() {
@@ -91,6 +101,7 @@ public class ShareProjectPageView extends JPanel implements
                        );
                        return;
                    }
+
                    String otherUname = userList.getSelectedValue().getUsername();
                    String otherUserId = userList.getSelectedValue().getUserId();
                    int res = JOptionPane.showConfirmDialog(
@@ -128,9 +139,7 @@ public class ShareProjectPageView extends JPanel implements
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(backButton)) {
-                    shareProjectPageViewModel.setState(new ShareProjectPageState());
-                    shareProjectPageViewModel.firePropertyChanged();
-//                    viewManagerModel.setActiveView(getProjectViewModel.getViewName());
+                    viewManagerModel.setActiveView(getProjectViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
             }
@@ -138,6 +147,8 @@ public class ShareProjectPageView extends JPanel implements
 
          this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
          this.add(title);
+         this.add(projectIdLabel);
+         this.add(projectNameLabel);
          this.add(new JScrollPane(userList));
          this.add(buttonsPanel);
     }
@@ -154,7 +165,7 @@ public class ShareProjectPageView extends JPanel implements
         if (state.getErrorMessage() != null) {
             JOptionPane.showConfirmDialog(
                     this, state.getErrorMessage());
-//            viewManagerModel.setActiveView(getProjectViewModel.getViewName());
+            viewManagerModel.setActiveView(getProjectViewModel.getViewName());
             return;
         }
 

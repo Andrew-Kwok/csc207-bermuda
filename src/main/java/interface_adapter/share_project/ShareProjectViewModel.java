@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import interface_adapter.view_model.ViewModel;
-
+import constant.ViewConstant;
 /**
  * This class is a ViewModel for ShareProjectView.
  * It contains the state, the label constants and field constant for the view.
@@ -22,7 +22,7 @@ public class ShareProjectViewModel extends ViewModel {
      *
      */
     public ShareProjectViewModel() {
-        super("share-project");
+        super(ViewConstant.SHARE_PROJECT_VIEW_NAME);
     }
 
     /**

@@ -60,6 +60,8 @@ public class GetProjectUseCaseFactory {
                 getProjectController,
                 createProjectViewModel,
                 createProjectController,
+                shareProjectPageViewModel,
+                shareProjectPageController,
                 getTaskViewModel
         );
     }

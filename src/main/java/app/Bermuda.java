@@ -4,7 +4,7 @@ import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
 import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
-import app.project.ShareProjectPageUseCaseFactory;
+import app.share_project.ShareProjectPageUseCaseFactory;
 import app.project.GetProjectUseCaseFactory;
 import app.task.AddTaskUseCaseFactory;
 import app.task.GetTaskUseCaseFactory;
@@ -40,9 +40,8 @@ import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskViewModel;
-import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.share_project.ShareProjectViewModel;
-import interface_adapter.user.loggedin_user.LoggedInViewModel;
+import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.user.login.LoginViewModel;
 import interface_adapter.user.signup.SignupViewModel;
 import interface_adapter.view_model.ViewManagerModel;
@@ -55,7 +54,7 @@ import view.project.CreateProjectView;
 import view.project.GetProjectView;
 import view.task.AddTaskView;
 import view.task.GetTaskView;
-import view.ShareProjectPageView;
+import view.share_project.ShareProjectPageView;
 import view.user.LoggedInView;
 import view.user.LoginView;
 import view.user.SignupView;
@@ -185,7 +184,7 @@ public class Bermuda {
         views.add(getTaskView, getTaskView.viewName);
 
         // set the initial view
-        viewManagerModel.setActiveView(getProjectView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

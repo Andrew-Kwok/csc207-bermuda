@@ -9,7 +9,7 @@ public class ShareProjectPageController {
         this.shareProjectInteractor = shareProjectInteractor;
     }
 
-    public void execute(ShareProjectPageInputData input) {
-        shareProjectInteractor.execute(input);
+    public void execute(String projectId, String projectName, String userId) {
+        shareProjectInteractor.execute(new ShareProjectPageInputData(userId, projectId, projectName));
     }
 }

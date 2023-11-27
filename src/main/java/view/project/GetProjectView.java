@@ -1,11 +1,14 @@
 package view.project;
 
 import domains.project.entity.Project;
+
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.share_project.share_project_page.ShareProjectPageController;
+import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin.LoggedInViewModel;
@@ -21,17 +24,21 @@ import static constant.ViewConstant.GET_PROJECT_VIEW_NAME;
 
 public class GetProjectView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_PROJECT_VIEW_NAME;
+
     private final LoggedInViewModel loggedInUserViewModel;
     private final GetProjectViewModel getProjectViewModel;
     private final GetProjectController getProjectController;
     private final CreateProjectViewModel createProjectViewModel;
     private final CreateProjectController createProjectController;
+    private final ShareProjectPageViewModel shareProjectPageViewModel;
+    private final ShareProjectPageController shareProjectPageController;
     private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
 
     JLabel title;
     final JButton createProject;
     final JButton checkTask;
+    final JButton shareProject;
     final JButton goBack;
     DefaultListModel<Project> projectListModel = new DefaultListModel<>();
     JList<Project> projectList = new JList<>(projectListModel);
@@ -42,6 +49,8 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                           GetProjectController getProjectContoller,
                           CreateProjectViewModel createProjectViewModel,
                           CreateProjectController createProjectController,
+                          ShareProjectPageViewModel shareProjectPageViewModel,
+                          ShareProjectPageController shareProjectPageController,
                           GetTaskViewModel getTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInUserViewModel = loggedInUserViewModel;
@@ -49,6 +58,8 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         this.getProjectController = getProjectContoller;
         this.createProjectViewModel = createProjectViewModel;
         this.createProjectController = createProjectController;
+        this.shareProjectPageViewModel = shareProjectPageViewModel;
+        this.shareProjectPageController = shareProjectPageController;
         this.getTaskViewModel = getTaskViewModel;
         this.getProjectViewModel.addPropertyChangeListener(this);
 
@@ -61,6 +72,9 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
         checkTask = new JButton(GetProjectViewModel.CHECK_TASK_BUTTON_LABEL);
         buttons.add(checkTask);
+
+        shareProject = new JButton(GetProjectViewModel.SHARE_PROJECT_BUTTON_LABEL);
+        buttons.add(shareProject);
 
         goBack = new JButton(GetProjectViewModel.GO_BACK_BUTTON_LABEL);
         buttons.add(goBack);
@@ -100,6 +114,38 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
             }
         );
 
+        shareProject.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (e.getSource().equals(shareProject)){
+                        Project project = projectList.getSelectedValue();
+//                        if (project == null) {
+//                            JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project.");
+//                        } else {
+                            shareProjectPageController.execute(
+//                                    project.getProjectID(), project.getProjectName(),
+                                    "1", "temp",
+                                    getProjectViewModel.getState().getUserId());
+                            if (shareProjectPageViewModel.getState().getErrorMessage() != null) {
+                                JOptionPane.showMessageDialog(
+                                        GetProjectView.this,
+                                        shareProjectPageViewModel.getState().getErrorMessage());
+                                return;
+                            }
+                            System.out.println(shareProjectPageViewModel.getState().getUsersNameAndId());
+                        System.out.println(shareProjectPageViewModel.getState().getProjectId());
+                        System.out.println(shareProjectPageViewModel.getState().getProjectName());
+                        System.out.println(shareProjectPageViewModel.getState().getUserId());
+                        System.out.println(shareProjectPageViewModel.getState().getErrorMessage());
+
+                            viewManagerModel.setActiveView(shareProjectPageViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+//                        }
+                    }
+                }
+            }
+        );
         goBack.addActionListener(
                 new ActionListener() {
                     @Override

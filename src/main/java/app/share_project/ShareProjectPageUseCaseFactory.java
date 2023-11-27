@@ -1,4 +1,4 @@
-package app.project;
+package app.share_project;
 
 import domains.share_project.ShareProjectDataAccessInterface;
 import domains.share_project.ShareProjectInputBoundary;
@@ -12,7 +12,7 @@ import interface_adapter.share_project.ShareProjectViewModel;
 import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
-import view.ShareProjectPageView;
+import view.share_project.ShareProjectPageView;
 
 public class ShareProjectPageUseCaseFactory {
     private ShareProjectPageUseCaseFactory() {}

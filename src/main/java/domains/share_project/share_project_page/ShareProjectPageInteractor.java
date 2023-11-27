@@ -17,14 +17,14 @@ public class ShareProjectPageInteractor implements ShareProjectPageInputBoundary
          List<List<String>> usersNameAndId = dataAccessInterface.getUsersNameAndId();
 
          for (List<String> userNameAndId : usersNameAndId) {
-            if (userNameAndId.get(0).equals(input.getUserId())) {
+            if (userNameAndId.get(1).equals(input.getUserId())) {
                usersNameAndId.remove(userNameAndId);
                break;
             }
          }
 
          presenter.prepareSuccessView(new ShareProjectPageOutputData(
-                 usersNameAndId, input.getProjectId(), input.getProjectId(), null));
+                 usersNameAndId, input.getProjectId(), input.getProjectName(), null));
       } catch (Exception e) {
          presenter.prepareFailView(new ShareProjectPageOutputData(
                  null, null, null, 1));
