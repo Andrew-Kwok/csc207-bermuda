@@ -106,18 +106,18 @@ public class ShareProjectPageView extends JPanel implements
                    );
                    if (res == JOptionPane.YES_OPTION) {
                        shareProjectController.execute(
-                               shareProjectViewModel.getState().getProjectId(),
+                               shareProjectPageViewModel.getState().getProjectId(),
                                otherUserId,
                                otherUname
                        );
                    }
                    if (shareProjectViewModel.getState().getErrorMessage() != null) {
-                       JOptionPane.showConfirmDialog(
+                       JOptionPane.showMessageDialog(
                                ShareProjectPageView.this,
                                shareProjectViewModel.getState().getErrorMessage()
                        );
                    } else {
-                       JOptionPane.showConfirmDialog(
+                       JOptionPane.showMessageDialog(
                                ShareProjectPageView.this,
                                String.format(
                                        "Project successfully shared with \"%s\"",
@@ -162,7 +162,7 @@ public class ShareProjectPageView extends JPanel implements
         ShareProjectPageState state = (ShareProjectPageState) evt.getNewValue();
         userListModel.clear();
         if (state.getErrorMessage() != null) {
-            JOptionPane.showConfirmDialog(
+            JOptionPane.showMessageDialog(
                     this, state.getErrorMessage());
             viewManagerModel.setActiveView(getProjectViewModel.getViewName());
             return;

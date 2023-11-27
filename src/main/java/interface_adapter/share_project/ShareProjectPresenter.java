@@ -33,7 +33,7 @@ public class ShareProjectPresenter implements ShareProjectOutputBoundary {
     @Override
     public void prepareFailView(Integer errorCode) {
         ShareProjectState errState = new ShareProjectState();
-        errState.setErrorMessage("Internal server error, error code" + errorCode.toString() + ".");
+        errState.setErrorMessage("Internal server error, error code " + errorCode.toString() + ".");
         shareProjectViewModel.setState(errState);
         shareProjectViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(shareProjectViewModel.getViewName());

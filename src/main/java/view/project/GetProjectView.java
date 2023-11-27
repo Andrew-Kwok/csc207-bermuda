@@ -127,12 +127,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (e.getSource().equals(shareProject)){
                         Project project = projectList.getSelectedValue();
-//                        if (project == null) {
-//                            JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project.");
-//                        } else {
+                        if (project == null) {
+                            JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project.");
+                        } else {
                             shareProjectPageController.execute(
-//                                    project.getProjectID(), project.getProjectName(),
-                                    "1", "temp",
+                                    project.getProjectID(), project.getProjectName(),
                                     getProjectViewModel.getState().getUserId());
                             if (shareProjectPageViewModel.getState().getErrorMessage() != null) {
                                 JOptionPane.showMessageDialog(
@@ -143,7 +142,7 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
                             viewManagerModel.setActiveView(shareProjectPageViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
-//                        }
+                        }
                     }
                 }
             }
