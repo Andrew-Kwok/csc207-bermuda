@@ -1,4 +1,4 @@
-package interface_adapter.share_project.share_project_page;
+package interface_adapter.project.share_project_page;
 
 import constant.ViewConstant;
 import interface_adapter.view_model.ViewModel;

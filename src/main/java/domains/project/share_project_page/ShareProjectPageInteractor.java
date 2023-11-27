@@ -1,4 +1,4 @@
-package domains.share_project.share_project_page;
+package domains.project.share_project_page;
 
 import java.util.List;
 public class ShareProjectPageInteractor implements ShareProjectPageInputBoundary {
@@ -14,14 +14,7 @@ public class ShareProjectPageInteractor implements ShareProjectPageInputBoundary
 
    public void execute(ShareProjectPageInputData input) {
       try {
-         List<List<String>> usersNameAndId = dataAccessInterface.getUsersNameAndId();
-
-         for (List<String> userNameAndId : usersNameAndId) {
-            if (userNameAndId.get(1).equals(input.getUserId())) {
-               usersNameAndId.remove(userNameAndId);
-               break;
-            }
-         }
+         List<List<String>> usersNameAndId = dataAccessInterface.getUsersNameAndId(input.getProjectId());
 
          presenter.prepareSuccessView(new ShareProjectPageOutputData(
                  usersNameAndId, input.getProjectId(), input.getProjectName(), null));

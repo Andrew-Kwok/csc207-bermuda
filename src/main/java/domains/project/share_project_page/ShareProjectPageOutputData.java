@@ -1,4 +1,4 @@
-package domains.share_project.share_project_page;
+package domains.project.share_project_page;
 
 import java.util.List;
 public class ShareProjectPageOutputData {

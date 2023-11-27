@@ -1,4 +1,4 @@
-package interface_adapter.share_project;
+package interface_adapter.project.share_project;
 
 public class ShareProjectState {
     private String projectId;

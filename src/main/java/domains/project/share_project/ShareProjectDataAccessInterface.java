@@ -1,4 +1,4 @@
-package domains.share_project;
+package domains.project.share_project;
 
 import domains.permission.entity.Permission;
 

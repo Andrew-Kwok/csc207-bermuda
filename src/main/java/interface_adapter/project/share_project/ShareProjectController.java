@@ -1,7 +1,7 @@
-package interface_adapter.share_project;
+package interface_adapter.project.share_project;
 
-import domains.share_project.ShareProjectInputBoundary;
-import domains.share_project.ShareProjectInputData;
+import domains.project.share_project.ShareProjectInputBoundary;
+import domains.project.share_project.ShareProjectInputData;
 public class ShareProjectController {
     ShareProjectInputBoundary shareProjectInteractor;
     public ShareProjectController(

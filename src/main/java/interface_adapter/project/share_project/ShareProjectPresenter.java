@@ -1,7 +1,7 @@
-package interface_adapter.share_project;
+package interface_adapter.project.share_project;
 
-import domains.share_project.ShareProjectOutputBoundary;
-import domains.share_project.ShareProjectOutputData;
+import domains.project.share_project.ShareProjectOutputBoundary;
+import domains.project.share_project.ShareProjectOutputData;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class ShareProjectPresenter implements ShareProjectOutputBoundary {

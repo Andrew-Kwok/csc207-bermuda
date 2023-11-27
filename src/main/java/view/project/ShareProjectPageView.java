@@ -1,11 +1,11 @@
-package view.share_project;
+package view.project;
 
 import constant.ViewConstant;
 import interface_adapter.project.get_project.GetProjectViewModel;
-import interface_adapter.share_project.ShareProjectController;
-import interface_adapter.share_project.ShareProjectViewModel;
-import interface_adapter.share_project.share_project_page.ShareProjectPageState;
-import interface_adapter.share_project.share_project_page.ShareProjectPageViewModel;
+import interface_adapter.project.share_project.ShareProjectController;
+import interface_adapter.project.share_project.ShareProjectViewModel;
+import interface_adapter.project.share_project_page.ShareProjectPageState;
+import interface_adapter.project.share_project_page.ShareProjectPageViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 import javax.swing.*;

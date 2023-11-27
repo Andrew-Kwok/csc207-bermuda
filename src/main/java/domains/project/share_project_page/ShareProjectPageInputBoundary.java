@@ -1,4 +1,4 @@
-package domains.share_project.share_project_page;
+package domains.project.share_project_page;
 
 public interface ShareProjectPageInputBoundary {
     void execute(ShareProjectPageInputData input);
