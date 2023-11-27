@@ -167,5 +167,9 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
     private void clearInputFields() {
         taskNameInputField.setText("");
         taskDescriptionInputField.setText("");
+
+        EditTaskState editTaskState = editTaskViewModel.getState();
+        editTaskState.setTaskName("");
+        editTaskState.setTaskDescription("");
     }
 }
