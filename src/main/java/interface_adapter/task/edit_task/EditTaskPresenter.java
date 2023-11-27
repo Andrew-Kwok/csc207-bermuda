@@ -2,6 +2,7 @@ package interface_adapter.task.edit_task;
 
 import domains.task.use_case.edit_task.EditTaskOutputBoundary;
 import domains.task.use_case.edit_task.EditTaskOutputData;
+import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -22,6 +23,9 @@ public class EditTaskPresenter implements EditTaskOutputBoundary {
         EditTaskState editTaskState = editTaskViewModel.getState();
         editTaskState.setTaskID(editTaskOutputData.getTaskID());
         editTaskViewModel.firePropertyChanged();
+
+        GetTaskState getTaskState = getTaskViewModel.getState();
+        getTaskState.setInitial(true);
         getTaskViewModel.firePropertyChanged();
 
         // On success, switch to the get task view.
