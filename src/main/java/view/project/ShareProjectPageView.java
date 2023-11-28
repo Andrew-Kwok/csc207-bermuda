@@ -123,10 +123,12 @@ public class ShareProjectPageView extends JPanel implements
                                        otherUname
                                )
                            );
-                       }
+                       viewManagerModel.setActiveView(getProjectViewModel.getViewName());
+                       viewManagerModel.firePropertyChanged();
                    }
                }
-            });
+            }
+        });
 
         backButton.addActionListener(new ActionListener() {
             @Override
