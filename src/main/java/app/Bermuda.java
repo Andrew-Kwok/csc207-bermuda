@@ -63,13 +63,16 @@ import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 
-/**
+/*
  * Created by CSC207 project team
  * Initiate the environment and key elements to run Bermuda
  * Set up Views and Javax Swing as UI
- */
+*/
+
+
 public class Bermuda {
     public static void main(String[] args) {
+
         JFrame application = new JFrame("Bermuda Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,9 +184,9 @@ public class Bermuda {
                 addTaskDataAccessInterface);
         views.add(addTaskView, addTaskView.viewName);
 
-        GetTaskView getTaskView = GetTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel, editTaskViewModel, getProjectViewModel,
-                addTaskDataAccessInterface, getTaskDataAccessInterface);
-        views.add(getTaskView, getTaskView.viewName);
+//        GetTaskView getTaskView = GetTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel, editTaskViewModel, getProjectViewModel,
+//                addTaskDataAccessInterface, getTaskDataAccessInterface);
+//        views.add(getTaskView, getTaskView.viewName);
 
         EditTaskView editTaskView = EditTaskUseCaseFactory.create(viewManagerModel, editTaskViewModel, getTaskViewModel,
                 editTaskDataAccessInterface, getTaskDataAccessInterface);
@@ -195,5 +198,6 @@ public class Bermuda {
 
         application.pack();
         application.setVisible(true);
+
     }
 }

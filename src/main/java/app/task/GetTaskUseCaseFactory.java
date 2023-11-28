@@ -4,6 +4,7 @@ import domains.task.use_case.add_task.AddTaskDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskInputBoundary;
 import domains.task.use_case.add_task.AddTaskInteractor;
 import domains.task.use_case.add_task.AddTaskOutputBoundary;
+import domains.task.use_case.close_task.*;
 import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskInputBoundary;
 import domains.task.use_case.get_task.GetTaskInteractor;
@@ -12,6 +13,9 @@ import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskPresenter;
 import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.close_task.CloseTaskController;
+import interface_adapter.task.close_task.CloseTaskPresenter;
+import interface_adapter.task.close_task.CloseTaskViewModel;
 import interface_adapter.task.edit_task.EditTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
 import interface_adapter.task.get_task.GetTaskPresenter;
@@ -29,8 +33,10 @@ public class GetTaskUseCaseFactory {
             GetTaskViewModel getTaskViewModel,
             EditTaskViewModel editTaskViewModel,
             GetProjectViewModel getProjectViewModel,
+            CloseTaskViewModel closeTaskViewModel,
             AddTaskDataAccessInterface addTaskDataAccessInterface,
-            GetTaskDataAccessInterface getTaskDataAccessInterface) {
+            GetTaskDataAccessInterface getTaskDataAccessInterface,
+            CloseTaskDataAccessInterface closeTaskDataAccessInterface) {
 
         AddTaskController addTaskController = createAddTaskUseCase(
                 viewManagerModel, addTaskViewModel, getTaskViewModel, addTaskDataAccessInterface
@@ -39,11 +45,15 @@ public class GetTaskUseCaseFactory {
                 viewManagerModel, getTaskViewModel, getTaskDataAccessInterface
         );
 
+        CloseTaskController closeTaskController = closeTaskUseCase(viewManagerModel,
+                getTaskViewModel, closeTaskViewModel, closeTaskDataAccessInterface);
+
         return new GetTaskView(
                 viewManagerModel, getProjectViewModel,
                 getTaskViewModel, getTaskController,
                 addTaskViewModel, addTaskController,
-                editTaskViewModel
+                editTaskViewModel,
+                closeTaskViewModel, closeTaskController
         );
     }
 
@@ -68,4 +78,15 @@ public class GetTaskUseCaseFactory {
 
         return new GetTaskController(getTaskInteractor);
     }
+
+    private static CloseTaskController closeTaskUseCase(ViewManagerModel viewManagerModel,
+                                                        GetTaskViewModel getTaskViewModel,
+                                                        CloseTaskViewModel closeTaskViewModel,
+                                                        CloseTaskDataAccessInterface closeTaskDataAccessInterface){
+        CloseTaskOutputBoundary closeTaskOutputBoundary = new CloseTaskPresenter(viewManagerModel, getTaskViewModel, closeTaskViewModel);
+        CloseTaskInputBoundary closeTaskInteractor = new CloseTaskInteractor(closeTaskOutputBoundary, closeTaskDataAccessInterface);
+
+        return new CloseTaskController(closeTaskInteractor);
+    }
+
 }
