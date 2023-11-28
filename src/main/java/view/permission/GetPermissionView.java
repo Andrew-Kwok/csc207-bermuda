@@ -1,6 +1,5 @@
 package view.permission;
 
-import domains.permission.entity.Permission;
 import interface_adapter.permission.create_permission.CreatePermissionViewModel;
 import interface_adapter.permission.delete_permission.DeletePermissionController;
 import interface_adapter.permission.delete_permission.DeletePermissionState;
@@ -18,8 +17,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
-import static constant.ViewConstant.GET_PERMISSION_VIEW_NAME;
+import static constant.ViewConstant.*;
 
 public class GetPermissionView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_PERMISSION_VIEW_NAME;
@@ -39,8 +39,8 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
     private final JButton deletePermission;
     private final JButton goBack;
 
-    DefaultListModel<Permission> permissionListModel = new DefaultListModel<>();
-    JList<Permission> permissionList = new JList<>(permissionListModel);
+    DefaultListModel<Map<String, String>> permissionListModel = new DefaultListModel<>();
+    JList<Map<String, String>> permissionList = new JList<>(permissionListModel);
 
     public GetPermissionView(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInUserViewModel,
                              GetPermissionViewModel getPermissionViewModel, GetPermissionController getPermissionController,
@@ -95,16 +95,16 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(updatePermission)) {
-                            Permission selectedPermission = permissionList.getSelectedValue();
+                            Map<String, String> selectedPermission = permissionList.getSelectedValue();
                             if (selectedPermission == null) {
                                 JOptionPane.showMessageDialog(GetPermissionView.this, "Please select a permission to update.");
                             } else {
                                 UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
-                                updatePermissionState.setPermissionId(selectedPermission.getPermissionID());
-                                updatePermissionState.setUserId(selectedPermission.getUserID());
-                                updatePermissionState.setProjectId(selectedPermission.getProjectID());
-                                updatePermissionState.setPermissionName(selectedPermission.getPermissionName());
-                                updatePermissionState.setPermissionDescription(selectedPermission.getPermissionDescription());
+                                updatePermissionState.setPermissionId(selectedPermission.get(PERMISSION_ID));
+                                updatePermissionState.setUserId(selectedPermission.get(USER_ID));
+                                updatePermissionState.setProjectId(selectedPermission.get(PROJECT_ID));
+                                updatePermissionState.setPermissionName(selectedPermission.get(PERMISSION_NAME));
+                                updatePermissionState.setPermissionDescription(selectedPermission.get(PERMISSION_DESCRIPTION));
                                 updatePermissionState.setInitial(true);
                                 updatePermissionViewModel.setState(updatePermissionState);
                                 updatePermissionViewModel.firePropertyChanged();
@@ -122,13 +122,13 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(deletePermission)) {
-                            Permission selectedPermission = permissionList.getSelectedValue();
+                            Map<String, String> selectedPermission = permissionList.getSelectedValue();
                             if (selectedPermission == null) {
                                 JOptionPane.showMessageDialog(GetPermissionView.this, "Please select a permission to delete.");
                             } else {
-                                int result = JOptionPane.showConfirmDialog(GetPermissionView.this, String.format("Are you sure you want to delete permission \"%s\"?", selectedPermission.getPermissionName()));
+                                int result = JOptionPane.showConfirmDialog(GetPermissionView.this, String.format("Are you sure you want to delete permission \"%s\"?", selectedPermission.get(PERMISSION_NAME)));
                                 if (result == JOptionPane.YES_OPTION) {
-                                    deletePermissionController.execute(selectedPermission.getPermissionID());
+                                    deletePermissionController.execute(selectedPermission.get(PERMISSION_ID));
                                 }
                             }
                         }
@@ -167,7 +167,7 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
                 JOptionPane.showMessageDialog(this, state.getGetPermissionError());
             } else {
                 permissionListModel.clear();
-                for (Permission permission : state.getPermissions()) {
+                for (Map<String, String> permission : state.getPermissions()) {
                     permissionListModel.addElement(permission);
                 }
             }

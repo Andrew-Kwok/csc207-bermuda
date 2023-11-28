@@ -1,6 +1,5 @@
 package view.project;
 
-import domains.project.entity.Project;
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
@@ -20,8 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
-import static constant.ViewConstant.GET_PROJECT_VIEW_NAME;
+import static constant.ViewConstant.*;
 
 public class GetProjectView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_PROJECT_VIEW_NAME;
@@ -41,8 +41,8 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     final JButton checkTask;
     final JButton shareProject;
     final JButton goBack;
-    DefaultListModel<Project> projectListModel = new DefaultListModel<>();
-    JList<Project> projectList = new JList<>(projectListModel);
+    DefaultListModel<Map<String, String>> projectListModel = new DefaultListModel<>();
+    JList<Map<String, String>> projectList = new JList<>(projectListModel);
 
     public GetProjectView(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInUserViewModel,
@@ -99,15 +99,15 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
         checkTask.addActionListener(
             new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (e.getSource().equals(checkTask)){
-                        Project project = projectList.getSelectedValue();
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        if (e.getSource().equals(checkTask)){
+                        Map<String, String>  project = projectList.getSelectedValue();
                         if (project == null) {
                             JOptionPane.showMessageDialog(null, "Please select a project.");
                         } else {
                             GetTaskState getTaskState = getTaskViewModel.getState();
-                            getTaskState.setProjectID(project.getProjectID());
+                            getTaskState.setProjectID(project.get(PROJECT_ID));
                             getTaskState.setInitial(true);
                             getTaskViewModel.setState(getTaskState);
                             getTaskViewModel.firePropertyChanged();
@@ -125,13 +125,15 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (e.getSource().equals(shareProject)){
-                        Project project = projectList.getSelectedValue();
+                        Map<String, String> project = projectList.getSelectedValue();
                         if (project == null) {
                             JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project.");
                         } else {
                             shareProjectPageController.execute(
-                                    project.getProjectID(), project.getProjectName(),
-                                    getProjectViewModel.getState().getUserId());
+                                    project.get(PROJECT_ID),
+                                    project.get(PROJECT_NAME),
+                                    getProjectViewModel.getState().getUserId()
+                            );
                             if (shareProjectPageViewModel.getState().getErrorMessage() != null) {
                                 JOptionPane.showMessageDialog(
                                         GetProjectView.this,
@@ -181,7 +183,7 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 JOptionPane.showMessageDialog(this, state.getGetProjectError());
             } else {
                 projectListModel.clear();
-                for (Project project : state.getProjects()) {
+                for (Map<String, String> project : state.getProjects()) {
                     projectListModel.addElement(project);
                 }
             }

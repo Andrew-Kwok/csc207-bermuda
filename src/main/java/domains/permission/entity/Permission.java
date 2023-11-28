@@ -1,5 +1,9 @@
 package domains.permission.entity;
 
+import java.util.Map;
+
+import static constant.ViewConstant.*;
+
 public class Permission {
     private final String permissionID;
     private final String projectID;
@@ -60,5 +64,15 @@ public class Permission {
                 \t Permission Description: %s
                 """).
                 formatted(permissionID, projectID, userID, permissionName, permissionDescription);
+    }
+
+    public Map<String, String> toMap() {
+        return Map.of(
+                PERMISSION_ID, permissionID,
+                PROJECT_ID, projectID,
+                USER_ID, userID,
+                PERMISSION_NAME, permissionName,
+                PERMISSION_DESCRIPTION, permissionDescription
+        );
     }
 }
