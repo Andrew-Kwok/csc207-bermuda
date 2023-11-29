@@ -1,7 +1,5 @@
 package domains.permission.entity;
 
-import domains.task.entity.Task;
-
 import java.util.Map;
 
 import static constant.ViewConstant.*;

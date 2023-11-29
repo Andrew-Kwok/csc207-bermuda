@@ -4,6 +4,9 @@ import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
 import interface_adapter.task.add_task.AddTaskViewModel;
+import interface_adapter.task.close_task.CloseTaskController;
+import interface_adapter.task.close_task.CloseTaskState;
+import interface_adapter.task.close_task.CloseTaskViewModel;
 import interface_adapter.task.edit_task.EditTaskState;
 import interface_adapter.task.edit_task.EditTaskViewModel;
 import interface_adapter.task.get_task.GetTaskController;
@@ -29,10 +32,14 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     private final AddTaskViewModel addTaskViewModel;
     private final AddTaskController addTaskController;
     private final EditTaskViewModel editTaskViewModel;
+
+    private final CloseTaskViewModel closeTaskViewModel;
+    private final CloseTaskController closeTaskController;
     private final ViewManagerModel viewManagerModel;
     JLabel title;
     private final JButton addTask;
     private final JButton editTask;
+    private final JButton closeTask;
     private final JButton goBack;
 
     DefaultListModel<Map<String, String>> taskListModel = new DefaultListModel<>();
@@ -41,7 +48,8 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public GetTaskView(ViewManagerModel viewManagerModel, GetProjectViewModel getProjectViewModel,
                        GetTaskViewModel getTaskViewModel, GetTaskController getTaskController,
                        AddTaskViewModel addTaskViewModel, AddTaskController addTaskController,
-                       EditTaskViewModel editTaskViewModel) {
+                       EditTaskViewModel editTaskViewModel,
+                       CloseTaskViewModel closeTaskViewModel, CloseTaskController closeTaskController) {
         this.viewManagerModel = viewManagerModel;
         this.getTaskViewModel = getTaskViewModel;
         this.addTaskViewModel = addTaskViewModel;
@@ -49,7 +57,11 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         this.getTaskController = getTaskController;
         this.addTaskController = addTaskController;
         this.editTaskViewModel = editTaskViewModel;
+        this.closeTaskViewModel = closeTaskViewModel;
+        this.closeTaskController = closeTaskController;
+
         this.getTaskViewModel.addPropertyChangeListener(this);
+        this.closeTaskViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(getTaskViewModel.TITLE_LABEL);
 
@@ -60,6 +72,9 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
         editTask = new JButton(GetTaskViewModel.EDIT_TASK_BUTTON_LABEL);
         buttons.add(editTask);
+
+        closeTask = new JButton(getTaskViewModel.CLOSE_TASK_BUTTON_LABEL);
+        buttons.add(closeTask);
 
         goBack = new JButton(GetTaskViewModel.GO_BACK_BUTTON_LABEL);
         buttons.add(goBack);
@@ -108,6 +123,25 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 }
         );
 
+        closeTask.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(closeTask)) {
+                            Map<String, String> selectedTask = taskList.getSelectedValue();
+                            if (selectedTask == null) {
+                                JOptionPane.showMessageDialog(GetTaskView.this, "Please select a task to close.");
+                            } else {
+                                int result = JOptionPane.showConfirmDialog(GetTaskView.this, String.format("Are you sure you want to close task \"%s\"?", selectedTask.get(TASK_NAME)));
+                                if (result == JOptionPane.YES_OPTION) {
+                                    closeTaskController.execute(selectedTask.get(TASK_ID));
+                                }
+                            }
+                        }
+                    }
+                }
+        );
+
         goBack.addActionListener(
                 new ActionListener() {
                     @Override
@@ -146,6 +180,16 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 for (Map<String, String> task : state.getTasks()) {
                     taskListModel.addElement(task);
                 }
+            }
+        }
+
+        if (evt.getPropertyName().equals("closeTaskState")) {
+            CloseTaskState state = (CloseTaskState) evt.getNewValue();
+            if (state.getCloseTaskError() != null) {
+                JOptionPane.showMessageDialog(this, state.getCloseTaskError());
+            } else {
+                JOptionPane.showMessageDialog(this, String.format("Task with id \"%s\" closed.", state.getTaskID()));
+                this.getTaskController.execute(null);
             }
         }
     }

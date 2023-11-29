@@ -24,6 +24,7 @@ public class EditTaskPresenter implements EditTaskOutputBoundary {
         editTaskState.setTaskID(editTaskOutputData.getTaskID());
         editTaskViewModel.firePropertyChanged();
 
+        // update/refresh getTask view to reflect the new edits to task.
         GetTaskState getTaskState = getTaskViewModel.getState();
         getTaskState.setInitial(true);
         getTaskViewModel.firePropertyChanged();

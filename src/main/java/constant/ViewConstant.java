@@ -16,6 +16,7 @@ public class ViewConstant {
     public static final String ADD_TASK_VIEW_NAME = "add-task";
     public static final String GET_TASK_VIEW_NAME = "get-task";
     public static final String EDIT_TASK_VIEW_NAME = "edit-task";
+    public static final String CLOSE_TASK_VIEW_NAME = "close-task";
 
     // button names
 

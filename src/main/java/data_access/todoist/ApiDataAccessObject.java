@@ -6,6 +6,7 @@ import domains.project.use_case.create_project.CreateProjectApiDataAccessInterfa
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.task.entity.Task;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
+import domains.task.use_case.close_task.CloseTaskDataAccessInterface;
 import domains.task.use_case.edit_task.EditTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 import okhttp3.*;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class ApiDataAccessObject implements
         CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface,
-        AddTaskDataAccessInterface, GetTaskDataAccessInterface, EditTaskDataAccessInterface {
+        AddTaskDataAccessInterface, GetTaskDataAccessInterface, EditTaskDataAccessInterface, CloseTaskDataAccessInterface {
 
     @Override
     public String createProject(String projectName) throws Exception {
@@ -176,6 +177,31 @@ public class ApiDataAccessObject implements
 
             } else {
                 throw new Exception("error editing tasks: " + response.code());
+            }
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoıst: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void closeTask(String taskID) throws Exception {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        RequestBody body = new FormBody.Builder()
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("%s/tasks/%s/close", Config.getEnv("TODOIST_API_URL"), taskID))
+                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 204) {
+
+            } else {
+                throw new Exception("error deleting task: " + response.code());
             }
         } catch (Exception e) {
             throw new Exception("error connectıng to todoıst: " + e.getMessage());
