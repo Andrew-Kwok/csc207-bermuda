@@ -188,7 +188,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             if (state.getCloseTaskError() != null) {
                 JOptionPane.showMessageDialog(this, state.getCloseTaskError());
             } else {
-                JOptionPane.showMessageDialog(this, String.format("Task with id \"%s\" deleted.", state.getTaskID()));
+                JOptionPane.showMessageDialog(this, String.format("Task with id \"%s\" closed.", state.getTaskID()));
                 this.getTaskController.execute(null);
             }
         }
