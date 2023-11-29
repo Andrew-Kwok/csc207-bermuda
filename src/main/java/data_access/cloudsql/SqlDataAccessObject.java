@@ -5,8 +5,8 @@ import domains.permission.use_case.create_permission.CreatePermissionDataAccessI
 import domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface;
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
-import domains.project.share_project.ShareProjectDataAccessInterface;
-import domains.project.share_project_page.ShareProjectPageDataAccessInterface;
+import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
+import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.user.entity.User;
@@ -56,7 +56,14 @@ public class SqlDataAccessObject implements
                     String permissionName = resultSet.getString("permission_name");
                     String permissionDescription = resultSet.getString("permission_description");
 
-                    Permission permission = new Permission(id, projectId, userId, permissionName, permissionDescription);
+//                    Permission permission = new Permission(id, projectId, userId, permissionName, permissionDescription);
+                    Permission permission = Permission.builder().
+                            permissionID(id).
+                            projectID(projectId).
+                            userID(userId).
+                            permissionName(permissionName).
+                            permissionDescription(permissionDescription).
+                            build();
                     permissions.add(permission);
                 }
             } catch (Exception e) {
@@ -127,11 +134,18 @@ public class SqlDataAccessObject implements
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new User(
-                            resultSet.getString("id"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getInt("user_level"));
+                    return User.builder().
+                            userID(resultSet.getString("id")).
+                            username(resultSet.getString("username")).
+                            password(resultSet.getString("password")).
+                            userLevel(resultSet.getInt("user_level")).
+                            build();
+
+//                    return new User(
+//                            resultSet.getString("id"),
+//                            resultSet.getString("username"),
+//                            resultSet.getString("password"),
+//                            resultSet.getInt("user_level"));
                 }
             } catch (Exception e) {
                 throw new Exception("Error getting user");
@@ -153,11 +167,18 @@ public class SqlDataAccessObject implements
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new User(
-                            resultSet.getString("id"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getInt("user_level"));
+                    return User.builder().
+                            userID(resultSet.getString("id")).
+                            username(resultSet.getString("username")).
+                            password(resultSet.getString("password")).
+                            userLevel(resultSet.getInt("user_level")).
+                            build();
+
+//                    return new User(
+//                            resultSet.getString("id"),
+//                            resultSet.getString("username"),
+//                            resultSet.getString("password"),
+//                            resultSet.getInt("user_level"));
                 }
             } catch (Exception e) {
                 throw new Exception("Error getting user");

@@ -1,13 +1,12 @@
 package interface_adapter.task.get_task;
 
-import domains.task.entity.Task;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GetTaskState {
     private String projectID = null;
-    private List<Task> tasks = new ArrayList<>();
+    private List<Map<String, String>> tasks = new ArrayList<>();
     private String getTaskError = null;
     private boolean initial = false;
 
@@ -25,7 +24,7 @@ public class GetTaskState {
         return projectID;
     }
 
-    public List<Task> getTasks(){
+    public List<Map<String, String>> getTasks(){
         return tasks;
     }
 
@@ -41,7 +40,7 @@ public class GetTaskState {
         this.projectID = projectID;
     }
 
-    public void setTasks(List<Task> tasks){
+    public void setTasks(List<Map<String, String>> tasks){
         this.tasks = tasks;
     }
 

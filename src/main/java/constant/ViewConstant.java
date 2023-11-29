@@ -18,4 +18,16 @@ public class ViewConstant {
     public static final String EDIT_TASK_VIEW_NAME = "edit-task";
 
     // button names
+
+    // entity fields
+    public static final String USER_ID = "userID";
+    public static final String PERMISSION_ID = "permissionID";
+    public static final String PERMISSION_NAME = "permissionName";
+    public static final String PERMISSION_DESCRIPTION = "permissionDescription";
+    public static final String PROJECT_ID = "projectID";
+    public static final String PROJECT_NAME = "projectName";
+    public static final String PROJECT_DESCRIPTION = "projectDescription";
+    public static final String TASK_ID = "taskID";
+    public static final String TASK_NAME = "taskName";
+    public static final String TASK_DESCRIPTION = "taskDescription";
 }

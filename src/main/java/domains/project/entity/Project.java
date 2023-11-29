@@ -1,23 +1,20 @@
 package domains.project.entity;
 
+import java.util.Map;
+
+import static constant.ViewConstant.PROJECT_ID;
+import static constant.ViewConstant.PROJECT_NAME;
+
 public class Project {
 
     // Refer to the API documentation for the meaning of these fields.
     private final String projectID;
     private String projectName;
-    private String projectStatus = "IPR";
 
     public Project(String projectID, String projectName) {
         this.projectID = projectID;
         this.projectName = projectName;
     }
-
-    public Project(String projectID, String projectName, String projectStatus) {
-        this.projectID = projectID;
-        this.projectName = projectName;
-        this.projectStatus = projectStatus;
-    }
-
 
     public static ProjectBuilder builder() {
         return new ProjectBuilder();
@@ -26,8 +23,6 @@ public class Project {
     public static class ProjectBuilder {
         private String projectID;
         private String projectName;
-        private String projectStatus = "IPR";
-
         ProjectBuilder() {
         }
 
@@ -41,13 +36,8 @@ public class Project {
             return this;
         }
 
-        public ProjectBuilder projectStatus(String projectStatus) {
-            this.projectStatus = projectStatus;
-            return this;
-        }
-
         public Project build() {
-            return new Project(projectID, projectName, projectStatus);
+            return new Project(projectID, projectName);
         }
     }
 
@@ -60,17 +50,9 @@ public class Project {
         return projectName;
     }
 
-    public String getProjectStatus() {
-        return projectStatus;
-    }
-
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
-    }
-
-    public void setProjectStatus(String projectStatus) {
-        this.projectStatus = projectStatus;
     }
 
     @Override
@@ -78,8 +60,14 @@ public class Project {
         return ("""
                 [Project ID: %s]
                 \t Project Name: %s
-                \t Project Status: %s
                 """).
-                formatted(projectID, projectName, projectStatus);
+                formatted(projectID, projectName);
+    }
+
+    public Map<String, String> toMap() {
+        return Map.of(
+                PROJECT_ID, projectID,
+                PROJECT_NAME, projectName
+        );
     }
 }

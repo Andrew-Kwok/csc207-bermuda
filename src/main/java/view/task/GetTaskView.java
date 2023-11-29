@@ -1,6 +1,5 @@
 package view.task;
 
-import domains.task.entity.Task;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.task.add_task.AddTaskController;
 import interface_adapter.task.add_task.AddTaskState;
@@ -17,8 +16,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
-import static constant.ViewConstant.GET_TASK_VIEW_NAME;
+import static constant.ViewConstant.*;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = GET_TASK_VIEW_NAME;
@@ -35,8 +35,8 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     private final JButton editTask;
     private final JButton goBack;
 
-    DefaultListModel<Task> taskListModel = new DefaultListModel<>();
-    JList<Task> taskList = new JList<>(taskListModel);
+    DefaultListModel<Map<String, String>> taskListModel = new DefaultListModel<>();
+    JList<Map<String, String>> taskList = new JList<>(taskListModel);
 
     public GetTaskView(ViewManagerModel viewManagerModel, GetProjectViewModel getProjectViewModel,
                        GetTaskViewModel getTaskViewModel, GetTaskController getTaskController,
@@ -86,15 +86,15 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         if (e.getSource().equals(editTask)){
-                            Task selectedTask = taskList.getSelectedValue();
+                            Map<String, String> selectedTask = taskList.getSelectedValue();
                             if (selectedTask == null) {
                                 JOptionPane.showMessageDialog(GetTaskView.this, "Please select a task to edit.");
                             } else {
                                 EditTaskState editTaskState = editTaskViewModel.getState();
-                                editTaskState.setProjectID(selectedTask.getProjectID());
-                                editTaskState.setTaskID(selectedTask.getTaskID());
-                                editTaskState.setTaskName(selectedTask.getTaskName());
-                                editTaskState.setTaskDescription(selectedTask.getTaskDescription());
+                                editTaskState.setProjectID(selectedTask.get(PROJECT_ID));
+                                editTaskState.setTaskID(selectedTask.get(TASK_ID));
+                                editTaskState.setTaskName(selectedTask.get(TASK_NAME));
+                                editTaskState.setTaskDescription(selectedTask.get(TASK_DESCRIPTION));
                                 editTaskState.setInitial(true);
 
                                 editTaskViewModel.setState(editTaskState);
@@ -143,7 +143,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 JOptionPane.showMessageDialog(this, state.getGetTaskError());
             } else {
                 taskListModel.clear();
-                for (Task task : state.getTasks()) {
+                for (Map<String, String> task : state.getTasks()) {
                     taskListModel.addElement(task);
                 }
             }

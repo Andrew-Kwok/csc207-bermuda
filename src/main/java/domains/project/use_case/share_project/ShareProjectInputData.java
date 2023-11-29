@@ -1,4 +1,4 @@
-package domains.project.share_project;
+package domains.project.use_case.share_project;
 
 public class ShareProjectInputData {
     private final String projectId;

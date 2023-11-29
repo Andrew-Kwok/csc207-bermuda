@@ -1,17 +1,16 @@
 package domains.project.use_case.get_project;
 
-import domains.project.entity.Project;
-
 import java.util.List;
+import java.util.Map;
 
 public class GetProjectOutputData {
-    private final List<Project> projects;
+    private final List<Map<String, String>> projects;
 
-    public GetProjectOutputData(List<Project> projects) {
+    public GetProjectOutputData(List<Map<String, String>> projects) {
         this.projects = projects;
     }
 
-    public List<Project> getProjects() {
+    public List<Map<String, String>> getProjects() {
         return projects;
     }
 }

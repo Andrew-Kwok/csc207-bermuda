@@ -3,10 +3,7 @@ package domains.project.use_case.get_project;
 import domains.permission.entity.Permission;
 import domains.project.entity.Project;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GetProjectInteractor implements GetProjectInputBoundary {
     private final GetProjectOutputBoundary getProjectPresenter;
@@ -41,10 +38,18 @@ public class GetProjectInteractor implements GetProjectInputBoundary {
             }
 
             getProjectPresenter.prepareSuccessView(
-                    new GetProjectOutputData(result)
+                    new GetProjectOutputData(getLists(result))
             );
         } catch (Exception e) {
             getProjectPresenter.prepareFailView(e.getMessage());
         }
+    }
+
+    private List<Map<String, String>> getLists(List<Project> projects) {
+        List<Map<String, String>> result = new ArrayList<>();
+        for (Project project : projects) {
+            result.add(project.toMap());
+        }
+        return result;
     }
 }
