@@ -1,11 +1,11 @@
 package app.project;
 
-import domains.project.share_project_page.ShareProjectPageDataAccessInterface;
-import domains.project.share_project_page.ShareProjectPageInputBoundary;
-import domains.project.share_project_page.ShareProjectPageInteractor;
-import domains.project.share_project_page.ShareProjectPageOutputBoundary;
 import domains.project.use_case.create_project.*;
 import domains.project.use_case.get_project.*;
+import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
+import domains.project.use_case.share_project_page.ShareProjectPageInputBoundary;
+import domains.project.use_case.share_project_page.ShareProjectPageInteractor;
+import domains.project.use_case.share_project_page.ShareProjectPageOutputBoundary;
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectPresenter;
 import interface_adapter.project.create_project.CreateProjectViewModel;

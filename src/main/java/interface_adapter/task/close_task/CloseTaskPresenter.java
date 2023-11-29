@@ -2,7 +2,6 @@ package interface_adapter.task.close_task;
 
 import domains.task.use_case.close_task.CloseTaskOutputBoundary;
 import domains.task.use_case.close_task.CloseTaskOutputData;
-import interface_adapter.permission.delete_permission.DeletePermissionState;
 import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.view_model.ViewManagerModel;

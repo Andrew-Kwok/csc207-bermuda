@@ -1,9 +1,9 @@
-package app.share_project;
+package app.project;
 
-import domains.project.share_project.ShareProjectDataAccessInterface;
-import domains.project.share_project.ShareProjectInputBoundary;
-import domains.project.share_project.ShareProjectInteractor;
-import domains.project.share_project.ShareProjectOutputBoundary;
+import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
+import domains.project.use_case.share_project.ShareProjectInputBoundary;
+import domains.project.use_case.share_project.ShareProjectInteractor;
+import domains.project.use_case.share_project.ShareProjectOutputBoundary;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.project.share_project.ShareProjectController;
 import interface_adapter.project.share_project.ShareProjectPresenter;

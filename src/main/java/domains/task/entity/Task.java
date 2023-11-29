@@ -1,5 +1,9 @@
 package domains.task.entity;
 
+import java.util.Map;
+
+import static constant.ViewConstant.*;
+
 public class Task {
     private final String taskID;
     private final String projectID;
@@ -90,5 +94,14 @@ public class Task {
                 \t Task Description: %s
                 """).
                 formatted(taskID, projectID, taskName, taskDescription);
+    }
+
+    public Map<String, String> toMap() {
+        return Map.of(
+                TASK_ID, taskID,
+                PROJECT_ID, projectID,
+                TASK_NAME, taskName,
+                TASK_DESCRIPTION, taskDescription
+        );
     }
 }

@@ -1,12 +1,11 @@
 package interface_adapter.permission.get_permission;
 
-import domains.permission.entity.Permission;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GetPermissionState {
-    private List<Permission> permissions = new ArrayList<>();
+    private List<Map<String, String>> permissions = new ArrayList<>();
     private String getPermissionError = null;
 
     public GetPermissionState(GetPermissionState copy) {
@@ -17,7 +16,7 @@ public class GetPermissionState {
     public GetPermissionState() {
     }
 
-    public List<Permission> getPermissions() {
+    public List<Map<String, String>> getPermissions() {
         return permissions;
     }
 
@@ -25,7 +24,7 @@ public class GetPermissionState {
         return getPermissionError;
     }
 
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions(List<Map<String, String>> permissions) {
         this.permissions = permissions;
     }
 

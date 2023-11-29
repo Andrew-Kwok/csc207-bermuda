@@ -65,10 +65,16 @@ public class ApiDataAccessObject implements
                 List<Project> projects = new ArrayList<>();
                 for (int i = 0; i < responseBody.length(); i++) {
                     JSONObject project = responseBody.getJSONObject(i);
-                    projects.add(new Project(
-                            project.getString("id"),
-                            project.getString("name")
-                    ));
+
+                    Project projectObj = Project.builder()
+                            .projectID(project.getString("id"))
+                            .projectName(project.getString("name"))
+                            .build();
+                    projects.add(projectObj);
+//                    projects.add(new Project(
+//                            project.getString("id"),
+//                            project.getString("name")
+//                    ));
                 }
                 return projects;
             } else {
@@ -126,12 +132,20 @@ public class ApiDataAccessObject implements
                 ArrayList<Task> tasks = new ArrayList<>();
                 for (int i = 0; i < responseBody.length(); i++) {
                     JSONObject task = responseBody.getJSONObject(i);
-                    tasks.add(new Task(
-                            task.getString("id"),
-                            task.getString("project_id"),
-                            task.getString("content"),
-                            task.getString("description")
-                    ));
+                    Task taskObj = Task.builder()
+                            .taskID(task.getString("id"))
+                            .projectID(task.getString("project_id"))
+                            .taskName(task.getString("content"))
+                            .taskDescription(task.getString("description"))
+                            .build();
+                    tasks.add(taskObj);
+
+//                    tasks.add(new Task(
+//                            task.getString("id"),
+//                            task.getString("project_id"),
+//                            task.getString("content"),
+//                            task.getString("description")
+//                    ));
                 }
                 return tasks;
             } else {
