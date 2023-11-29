@@ -72,7 +72,6 @@ import java.awt.*;
  */
 public class Bermuda {
     public static void main(String[] args) {
-
         JFrame application = new JFrame("Bermuda Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
