@@ -1,5 +1,7 @@
 package domains.permission.entity;
 
+import domains.task.entity.Task;
+
 import java.util.Map;
 
 import static constant.ViewConstant.*;
@@ -52,6 +54,50 @@ public class Permission {
 
     public void setPermissionDescription(String permissionDescription) {
         this.permissionDescription = permissionDescription;
+    }
+
+    public static permissionBuilder builder() {
+        return new permissionBuilder();
+    }
+
+    public static class permissionBuilder {
+        private String permissionID;
+        private String projectID;
+        private String userID;
+        private String permissionName;
+        private String permissionDescription = "";
+
+        permissionBuilder() {
+        }
+
+        public permissionBuilder permissionID(String permissionID) {
+            this.permissionID = permissionID;
+            return this;
+        }
+
+        public permissionBuilder projectID(String projectID) {
+            this.projectID = projectID;
+            return this;
+        }
+
+        public permissionBuilder userID(String userID) {
+            this.userID = userID;
+            return this;
+        }
+
+        public permissionBuilder permissionName(String permissionName) {
+            this.permissionName = permissionName;
+            return this;
+        }
+
+        public permissionBuilder permissionDescription(String permissionDescription) {
+            this.permissionDescription = permissionDescription;
+            return this;
+        }
+
+        public Permission build() {
+            return new Permission(permissionID, projectID, userID, permissionName, permissionDescription);
+        }
     }
 
     @Override
