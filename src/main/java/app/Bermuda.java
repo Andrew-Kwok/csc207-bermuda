@@ -70,8 +70,6 @@ import java.awt.*;
  * Initiate the environment and key elements to run Bermuda
  * Set up Views and Javax Swing as UI
 */
-
-
 public class Bermuda {
     public static void main(String[] args) {
 
