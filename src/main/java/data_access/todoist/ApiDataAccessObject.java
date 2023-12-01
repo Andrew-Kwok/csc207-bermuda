@@ -20,6 +20,15 @@ public class ApiDataAccessObject implements
         CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface,
         AddTaskDataAccessInterface, GetTaskDataAccessInterface, EditTaskDataAccessInterface, CloseTaskDataAccessInterface {
 
+    private String apiUrl;
+    private String apiToken;
+
+
+    public ApiDataAccessObject(String apiUrl, String apiToken) {
+        this.apiUrl = apiUrl;
+        this.apiToken = apiToken;
+    }
+    
     @Override
     public String createProject(String projectName) throws Exception {
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -28,8 +37,8 @@ public class ApiDataAccessObject implements
                 .add("name", projectName)
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/projects", apiUrl))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -52,8 +61,8 @@ public class ApiDataAccessObject implements
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/projects", apiUrl))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .build();
 
@@ -96,8 +105,8 @@ public class ApiDataAccessObject implements
                 .add("description", task.getTaskDescription())
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks", Config.getEnv("TODOIST_API_URL")))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks", apiUrl))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -119,8 +128,8 @@ public class ApiDataAccessObject implements
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks?project_id=%s", Config.getEnv("TODOIST_API_URL"), projectID))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks?project_id=%s", apiUrl, projectID))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .build();
 
@@ -165,8 +174,8 @@ public class ApiDataAccessObject implements
                 .add("description", task.getTaskDescription())
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks/%s", Config.getEnv("TODOIST_API_URL"), task.getTaskID()))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks/%s", apiUrl, task.getTaskID()))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -190,8 +199,8 @@ public class ApiDataAccessObject implements
         RequestBody body = new FormBody.Builder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks/%s/close", Config.getEnv("TODOIST_API_URL"), taskID))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks/%s/close", apiUrl, taskID))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();

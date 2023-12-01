@@ -12,6 +12,7 @@ import app.task.GetTaskUseCaseFactory;
 import app.user.LoggedInUseCaseFactory;
 import app.user.LoginUseCaseFactory;
 import app.user.SignupUseCaseFactory;
+import config.Config;
 import data_access.cloudsql.SqlConfig;
 import data_access.cloudsql.SqlDataAccessObject;
 import data_access.todoist.ApiDataAccessObject;
@@ -108,7 +109,10 @@ public class Bermuda {
         DataSource sqlDataSource = SqlConfig.NewSQL();
         SqlDataAccessObject sqlDataAccessObject = new SqlDataAccessObject(sqlDataSource);
 
-        ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject();
+        ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject(
+                Config.getEnv("TODOIST_API_URL"),
+                Config.getEnv("TODOIST_API_TOKEN")
+        );
 
         SignupUserDataAccessInterface signupUserDataAccessInterface = sqlDataAccessObject;
         LoginUserDataAccessInterface loginUserDataAccessInterface = sqlDataAccessObject;
