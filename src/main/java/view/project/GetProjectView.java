@@ -3,6 +3,8 @@ package view.project;
 import domains.project.entity.Project;
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.delete_project.DeleteProjectController;
+import interface_adapter.project.delete_project.DeleteProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
@@ -24,11 +26,14 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     private final GetProjectController getProjectController;
     private final CreateProjectViewModel createProjectViewModel;
     private final CreateProjectController createProjectController;
+    private final DeleteProjectViewModel deleteProjectViewModel;
+    private final DeleteProjectController deleteProjectController;
     private final ViewManagerModel viewManagerModel;
 
     JLabel title;
     final JButton createProject;
     final JButton checkProject;
+    final JButton deleteProject;
     final JButton cancel;
     DefaultListModel<Project> projectListModel = new DefaultListModel<>();
     JList<Project> projectList = new JList<>(projectListModel);
@@ -38,14 +43,20 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                           GetProjectViewModel getProjectViewModel,
                           GetProjectController getProjectContoller,
                           CreateProjectViewModel createProjectViewModel,
-                          CreateProjectController createProjectController) {
+                          CreateProjectController createProjectController,
+                          DeleteProjectViewModel deleteProjectViewModel,
+                          DeleteProjectController deleteProjectController
+                          ) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInUserViewModel = loggedInUserViewModel;
         this.getProjectViewModel = getProjectViewModel;
         this.getProjectController = getProjectContoller;
         this.createProjectViewModel = createProjectViewModel;
         this.createProjectController = createProjectController;
+        this.deleteProjectViewModel = deleteProjectViewModel;
+        this.deleteProjectController = deleteProjectController;
         this.getProjectViewModel.addPropertyChangeListener(this);
+        this.deleteProjectViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(getProjectViewModel.TITLE_LABEL);
 
@@ -56,6 +67,9 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
         checkProject = new JButton(GetProjectViewModel.CHECK_PROJECT_BUTTON_LABEL);
         buttons.add(checkProject);
+
+        deleteProject = new JButton(GetProjectViewModel.DELETE_PROJECT_BUTTON_LABEL);
+        buttons.add(deleteProject);
 
         cancel = new JButton(GetProjectViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
@@ -89,6 +103,27 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 }
             }
         );
+
+        deleteProject.addActionListener(
+                new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        if (evt.getSource().equals(deleteProject)) {
+                            Project selectedProject = projectList.getSelectedValue();
+                            if (selectedProject == null) {
+                                JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project to delete.");
+                            } else {
+                                int result = JOptionPane.showConfirmDialog(GetProjectView.this, String.format("Are you sure you want to delete project \"%s\"?", selectedProject.getProjectName()));
+                                if (result == JOptionPane.YES_OPTION) {
+                                    deleteProjectController.execute(selectedProject.getProjectID());
+                                }
+                            }
+                        }
+                    }
+                }
+        );
+
 
         cancel.addActionListener(
                 new ActionListener() {

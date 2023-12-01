@@ -18,6 +18,7 @@ import domains.permission.use_case.get_permission.GetPermissionDataAccessInterfa
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.project.use_case.delete_project.DeleteProjectApiDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
@@ -29,6 +30,7 @@ import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.get_project.GetProjectViewModel;
+import interface_adapter.project.delete_project.DeleteProjectViewModel;
 import interface_adapter.task.add_task.AddTaskViewModel;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin.LoggedInViewModel;
@@ -79,6 +81,7 @@ public class Bermuda {
         DeletePermissionViewModel deletePermissionViewModel = new DeletePermissionViewModel();
         CreateProjectViewModel createProjectViewModel = new CreateProjectViewModel();
         GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
+        DeleteProjectViewModel deleteProjectViewModel = new DeleteProjectViewModel();
         AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
         GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
 
@@ -97,6 +100,7 @@ public class Bermuda {
 
         CreateProjectSqlDataAccessInterface createProjectSqlDataAccessInterface = sqlDataAccessObject;
         CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface = apiDataAccessObject;
+        DeleteProjectApiDataAccessInterface deleteProjectApiDataAccessInterface = apiDataAccessObject;
         GetProjectSqlDataAccessInterface getProjectSqlDataAccessInterface = sqlDataAccessObject;
         GetProjectApiDataAccessInterface getProjectApiDataAccessInterface = apiDataAccessObject;
 
@@ -141,7 +145,8 @@ public class Bermuda {
         views.add(createProjectView, createProjectView.viewName);
 
         GetProjectView getProjectView = GetProjectUseCaseFactory.create(viewManagerModel, loggedInUserViewModel, createProjectViewModel, getProjectViewModel,
-                createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface, getProjectApiDataAccessInterface, getProjectSqlDataAccessInterface);
+                deleteProjectViewModel, createProjectApiDataAccessInterface, createProjectSqlDataAccessInterface, getProjectApiDataAccessInterface, getProjectSqlDataAccessInterface,
+                deleteProjectApiDataAccessInterface);
         views.add(getProjectView, getProjectView.viewName);
 
         AddTaskView addTaskView = AddTaskUseCaseFactory.create(viewManagerModel, addTaskViewModel, getTaskViewModel,
