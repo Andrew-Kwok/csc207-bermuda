@@ -124,6 +124,18 @@ public class SqlDataAccessObject implements
         }
     }
 
+    public void clearAllPermissions() throws Exception {
+        String sql = "DELETE FROM permission";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
     public User getUserByUserId(String userId) throws Exception {
         String sql = "SELECT * FROM user WHERE id = ?";
 
@@ -237,6 +249,19 @@ public class SqlDataAccessObject implements
             throw new Exception("Error setting sql connection");
         }
     }
+
+    public void clearAllUsers() throws Exception {
+        String sql = "DELETE FROM user";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
     public List<List<String>> getUsersNameAndId(String projectId) throws Exception {
         String sql = "SELECT id, username FROM user WHERE id NOT IN (SELECT user_id FROM permission WHERE project_id = ?)";
         List<List<String>> usersNameAndId = new ArrayList<>();
