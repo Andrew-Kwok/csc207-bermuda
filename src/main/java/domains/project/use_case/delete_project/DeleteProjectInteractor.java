@@ -22,7 +22,7 @@ public class DeleteProjectInteractor implements DeleteProjectInputBoundary {
             try {
                 apiDataAccess.deleteProject(input.getProjectId());
 
-                sqlDataAccess.deletePermission();
+                sqlDataAccess.deletePermissionByProjectId(input.getProjectId());
 
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());

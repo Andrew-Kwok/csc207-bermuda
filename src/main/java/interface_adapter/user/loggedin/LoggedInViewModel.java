@@ -14,7 +14,7 @@ public class LoggedInViewModel extends ViewModel {
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     public static final String CHECK_PROJECT_BUTTON_LABEL = "Check Project";
-    public static final String CHECK_PERMISSION_BUTTON_LABEL = "Check Permission";
+    public static final String CHECK_PERMISSION_BUTTON_LABEL = "Admin Panel";
     private String loggedInUser;
 
     public LoggedInViewModel() {

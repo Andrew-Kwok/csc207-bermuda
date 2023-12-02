@@ -42,4 +42,41 @@ public class User {
     public void setUserLevel(int userLevel) {
         this.userLevel = userLevel;
     }
+
+    public static userBuilder builder() {
+        return new userBuilder();
+    }
+
+    public static class userBuilder {
+        private String userID;
+        private String username;
+        private String password;
+        private int userLevel = 1;
+        userBuilder() {
+        }
+
+        public userBuilder userID(String userID) {
+            this.userID = userID;
+            return this;
+        }
+
+        public userBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public userBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public userBuilder userLevel(int userLevel) {
+            this.userLevel = userLevel;
+            return this;
+        }
+
+        public User build() {
+            return new User(userID, username, password, userLevel);
+        }
+    }
 }

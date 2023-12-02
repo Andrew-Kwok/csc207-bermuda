@@ -7,6 +7,9 @@ import domains.permission.use_case.get_permission.GetPermissionDataAccessInterfa
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
+import domains.project.use_case.delete_project.DeleteProjectSqlDataAccessInterface;
+import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
+import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
 import domains.user.entity.User;
 import domains.user.use_case.login.LoginUserDataAccessInterface;
 import domains.user.use_case.signup.SignupUserDataAccessInterface;
@@ -20,9 +23,12 @@ import java.util.List;
 
 public class SqlDataAccessObject implements
         SqlDataAccessInterface,
-        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface, UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
+        GetPermissionDataAccessInterface, CreatePermissionDataAccessInterface,
+        UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
         SignupUserDataAccessInterface, LoginUserDataAccessInterface,
-        CreateProjectSqlDataAccessInterface, GetProjectSqlDataAccessInterface {
+        CreateProjectSqlDataAccessInterface, GetProjectSqlDataAccessInterface,
+        DeleteProjectSqlDataAccessInterface, ShareProjectDataAccessInterface,
+        ShareProjectPageDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
@@ -52,7 +58,14 @@ public class SqlDataAccessObject implements
                     String permissionName = resultSet.getString("permission_name");
                     String permissionDescription = resultSet.getString("permission_description");
 
-                    Permission permission = new Permission(id, projectId, userId, permissionName, permissionDescription);
+//                    Permission permission = new Permission(id, projectId, userId, permissionName, permissionDescription);
+                    Permission permission = Permission.builder().
+                            permissionID(id).
+                            projectID(projectId).
+                            userID(userId).
+                            permissionName(permissionName).
+                            permissionDescription(permissionDescription).
+                            build();
                     permissions.add(permission);
                 }
             } catch (Exception e) {
@@ -113,6 +126,20 @@ public class SqlDataAccessObject implements
         }
     }
 
+    public void deletePermissionByProjectId(String projectId) throws Exception {
+        String sql = "DELETE FROM permission WHERE project_id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, projectId);
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
     public User getUserByUserId(String userId) throws Exception {
         String sql = "SELECT * FROM user WHERE id = ?";
 
@@ -123,11 +150,18 @@ public class SqlDataAccessObject implements
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new User(
-                            resultSet.getString("id"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getInt("user_level"));
+                    return User.builder().
+                            userID(resultSet.getString("id")).
+                            username(resultSet.getString("username")).
+                            password(resultSet.getString("password")).
+                            userLevel(resultSet.getInt("user_level")).
+                            build();
+
+//                    return new User(
+//                            resultSet.getString("id"),
+//                            resultSet.getString("username"),
+//                            resultSet.getString("password"),
+//                            resultSet.getInt("user_level"));
                 }
             } catch (Exception e) {
                 throw new Exception("Error getting user");
@@ -149,11 +183,18 @@ public class SqlDataAccessObject implements
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new User(
-                            resultSet.getString("id"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getInt("user_level"));
+                    return User.builder().
+                            userID(resultSet.getString("id")).
+                            username(resultSet.getString("username")).
+                            password(resultSet.getString("password")).
+                            userLevel(resultSet.getInt("user_level")).
+                            build();
+
+//                    return new User(
+//                            resultSet.getString("id"),
+//                            resultSet.getString("username"),
+//                            resultSet.getString("password"),
+//                            resultSet.getInt("user_level"));
                 }
             } catch (Exception e) {
                 throw new Exception("Error getting user");
@@ -212,7 +253,31 @@ public class SqlDataAccessObject implements
             throw new Exception("Error setting sql connection");
         }
     }
+    public List<List<String>> getUsersNameAndId(String projectId) throws Exception {
+        String sql = "SELECT id, username FROM user WHERE id NOT IN (SELECT user_id FROM permission WHERE project_id = ?)";
+        List<List<String>> usersNameAndId = new ArrayList<>();
 
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, projectId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    List<String> userNameAndId = new ArrayList<>();
+                    userNameAndId.add(resultSet.getString("username"));
+                    userNameAndId.add(resultSet.getString("id"));
+                    usersNameAndId.add(userNameAndId);
+                }
+            } catch (Exception e) {
+                throw new Exception("Error getting user");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+
+        return usersNameAndId;
+    }
     public boolean existsByName(String username) throws Exception {
         String sql = "SELECT * FROM user WHERE username = ?";
         try (Connection connection = sqlDataSource.getConnection();

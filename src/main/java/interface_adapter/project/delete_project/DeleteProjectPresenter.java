@@ -1,6 +1,7 @@
 package interface_adapter.project.delete_project;
 
 import domains.project.use_case.delete_project.*;
+import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
@@ -20,6 +21,11 @@ public class DeleteProjectPresenter implements DeleteProjectOutputBoundary {
     @Override
     public void prepareSuccessView(DeleteProjectOutputData project) {
         DeleteProjectState deleteProjectState = deleteProjectViewModel.getState();
+
+        GetProjectState getProjectState = getProjectViewModel.getState();
+        getProjectState.setInitial(true);
+        getProjectViewModel.setState(getProjectState);
+        getProjectViewModel.firePropertyChanged();
 
         deleteProjectState.setProjectId(project.getProjectId());
         deleteProjectViewModel.firePropertyChanged();

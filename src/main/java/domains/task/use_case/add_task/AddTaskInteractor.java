@@ -21,15 +21,13 @@ public class AddTaskInteractor implements AddTaskInputBoundary {
             addTaskPresenter.prepareFailView("missing projectID");
         } else if (addTaskInputData.getTaskName() == null || addTaskInputData.getTaskName().isEmpty()) {
             addTaskPresenter.prepareFailView("missing taskName");
-        } else if (addTaskInputData.getTaskContent() == null || addTaskInputData.getTaskContent().isEmpty()) {
-            addTaskPresenter.prepareFailView("missing content");
         } else {
             String projectID = addTaskInputData.getProjectID();
             String taskName = addTaskInputData.getTaskName();
-            String taskContent = addTaskInputData.getTaskContent();
+            String taskDescription = addTaskInputData.getTaskDescription();
 
             try {
-                Task task = new Task(null, projectID, taskName, taskContent);
+                Task task = new Task(null, projectID, taskName, taskDescription);
                 addTaskDataAccessObject.addTask(task);
                 AddTaskOutputData addTaskOutputData = new AddTaskOutputData(task.getTaskName());
                 addTaskPresenter.prepareSuccessView(addTaskOutputData);

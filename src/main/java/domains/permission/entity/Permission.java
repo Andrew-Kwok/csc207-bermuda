@@ -1,5 +1,9 @@
 package domains.permission.entity;
 
+import java.util.Map;
+
+import static constant.ViewConstant.*;
+
 public class Permission {
     private final String permissionID;
     private final String projectID;
@@ -50,6 +54,50 @@ public class Permission {
         this.permissionDescription = permissionDescription;
     }
 
+    public static permissionBuilder builder() {
+        return new permissionBuilder();
+    }
+
+    public static class permissionBuilder {
+        private String permissionID;
+        private String projectID;
+        private String userID;
+        private String permissionName;
+        private String permissionDescription = "";
+
+        permissionBuilder() {
+        }
+
+        public permissionBuilder permissionID(String permissionID) {
+            this.permissionID = permissionID;
+            return this;
+        }
+
+        public permissionBuilder projectID(String projectID) {
+            this.projectID = projectID;
+            return this;
+        }
+
+        public permissionBuilder userID(String userID) {
+            this.userID = userID;
+            return this;
+        }
+
+        public permissionBuilder permissionName(String permissionName) {
+            this.permissionName = permissionName;
+            return this;
+        }
+
+        public permissionBuilder permissionDescription(String permissionDescription) {
+            this.permissionDescription = permissionDescription;
+            return this;
+        }
+
+        public Permission build() {
+            return new Permission(permissionID, projectID, userID, permissionName, permissionDescription);
+        }
+    }
+
     @Override
     public String toString() {
         return ("""
@@ -60,5 +108,15 @@ public class Permission {
                 \t Permission Description: %s
                 """).
                 formatted(permissionID, projectID, userID, permissionName, permissionDescription);
+    }
+
+    public Map<String, String> toMap() {
+        return Map.of(
+                PERMISSION_ID, permissionID,
+                PROJECT_ID, projectID,
+                USER_ID, userID,
+                PERMISSION_NAME, permissionName,
+                PERMISSION_DESCRIPTION, permissionDescription
+        );
     }
 }

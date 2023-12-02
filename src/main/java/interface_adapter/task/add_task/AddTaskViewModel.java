@@ -12,8 +12,7 @@ public class AddTaskViewModel extends ViewModel {
     public static final String ADD_TASK_BUTTON_LABEL = "Add task";
     public static final String TITLE_LABEL = "Add Task";
     public static final String TASK_NAME_LABEL = "Enter task name";
-    public static final String TASK_CONTENT_LABEL = "Enter contents of task";
-    public static final String DESCRIPTION_LABEL = "Enter description";
+    public static final String TASK_DESCRIPTION_LABEL = "Enter description";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private AddTaskState state = new AddTaskState();
