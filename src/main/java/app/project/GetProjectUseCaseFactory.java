@@ -1,6 +1,7 @@
 package app.project;
 
 import domains.project.use_case.create_project.*;
+import domains.project.use_case.delete_project.*;
 import domains.project.use_case.get_project.*;
 import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
 import domains.project.use_case.share_project_page.ShareProjectPageInputBoundary;
@@ -9,6 +10,10 @@ import domains.project.use_case.share_project_page.ShareProjectPageOutputBoundar
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectPresenter;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.delete_project.DeleteProjectController;
+import interface_adapter.project.delete_project.DeleteProjectPresenter;
+import interface_adapter.project.delete_project.DeleteProjectViewModel;
+import interface_adapter.project.edit_project.EditProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectPresenter;
 import interface_adapter.project.get_project.GetProjectViewModel;
@@ -27,12 +32,16 @@ public class GetProjectUseCaseFactory {
                                         LoggedInViewModel loggedInViewModel,
                                         CreateProjectViewModel createProjectViewModel,
                                         GetProjectViewModel getProjectViewModel,
+                                        DeleteProjectViewModel deleteProjectViewModel,
                                         ShareProjectPageViewModel shareProjectPageViewModel,
+                                        EditProjectViewModel editProjectViewModel,
                                         GetTaskViewModel getTaskViewModel,
                                         CreateProjectApiDataAccessInterface createProjectApiDAI,
                                         CreateProjectSqlDataAccessInterface createProjectSqlDAI,
                                         GetProjectApiDataAccessInterface getProjectApiDAI,
                                         GetProjectSqlDataAccessInterface getProjectSqlDAI,
+                                        DeleteProjectApiDataAccessInterface deleteProjectApiDAI,
+                                        DeleteProjectSqlDataAccessInterface deleteProjectSqlDAI,
                                         ShareProjectPageDataAccessInterface shareProjectPageDAI
     ) {
         CreateProjectController createProjectController = createProjectUseCase(
@@ -48,6 +57,13 @@ public class GetProjectUseCaseFactory {
                 getProjectSqlDAI,
                 getProjectApiDAI
         );
+        DeleteProjectController deleteProjectController = deleteProjectUseCase(
+                viewManagerModel,
+                getProjectViewModel,
+                deleteProjectViewModel,
+                deleteProjectApiDAI,
+                deleteProjectSqlDAI
+        );
         ShareProjectPageController shareProjectPageController = shareProjectPageUseCase(
                 viewManagerModel,
                 shareProjectPageViewModel,
@@ -61,8 +77,11 @@ public class GetProjectUseCaseFactory {
                 getProjectController,
                 createProjectViewModel,
                 createProjectController,
+                deleteProjectViewModel,
+                deleteProjectController,
                 shareProjectPageViewModel,
                 shareProjectPageController,
+                editProjectViewModel,
                 getTaskViewModel
         );
     }
@@ -104,6 +123,26 @@ public class GetProjectUseCaseFactory {
         );
 
         return new GetProjectController(getProjectInteractor);
+    }
+
+    private static DeleteProjectController deleteProjectUseCase(ViewManagerModel viewManagerModel,
+                                                                   GetProjectViewModel getProjectViewModel,
+                                                                   DeleteProjectViewModel deleteProjectViewModel,
+                                                                   DeleteProjectApiDataAccessInterface deleteProjectApiDAI,
+                                                                   DeleteProjectSqlDataAccessInterface deleteProjectSqlDAI) {
+        DeleteProjectOutputBoundary deleteProjectOutputBoundary = new DeleteProjectPresenter(
+                viewManagerModel,
+                getProjectViewModel,
+                deleteProjectViewModel
+        );
+
+        DeleteProjectInputBoundary deleteProjectInteractor = new DeleteProjectInteractor(
+                deleteProjectOutputBoundary,
+                deleteProjectApiDAI,
+                deleteProjectSqlDAI
+        );
+
+        return new DeleteProjectController(deleteProjectInteractor);
     }
 
     private static ShareProjectPageController shareProjectPageUseCase(ViewManagerModel viewManagerModel,

@@ -3,6 +3,11 @@ package view.project;
 import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectState;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.delete_project.DeleteProjectController;
+import interface_adapter.project.delete_project.DeleteProjectState;
+import interface_adapter.project.delete_project.DeleteProjectViewModel;
+import interface_adapter.project.edit_project.EditProjectState;
+import interface_adapter.project.edit_project.EditProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
@@ -33,13 +38,18 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     private final CreateProjectController createProjectController;
     private final ShareProjectPageViewModel shareProjectPageViewModel;
     private final ShareProjectPageController shareProjectPageController;
+    private final DeleteProjectController deleteProjectController;
+    private final DeleteProjectViewModel deleteProjectViewModel;
+    private final EditProjectViewModel editProjectViewModel;
     private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
 
     JLabel title;
     final JButton createProject;
     final JButton checkTask;
+    final JButton editProject;
     final JButton shareProject;
+    final JButton deleteProject;
     final JButton goBack;
     DefaultListModel<Map<String, String>> projectListModel = new DefaultListModel<>();
     JList<Map<String, String>> projectList = new JList<>(projectListModel);
@@ -50,8 +60,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                           GetProjectController getProjectContoller,
                           CreateProjectViewModel createProjectViewModel,
                           CreateProjectController createProjectController,
+                          DeleteProjectViewModel deleteProjectViewModel,
+                          DeleteProjectController deleteProjectController,
                           ShareProjectPageViewModel shareProjectPageViewModel,
                           ShareProjectPageController shareProjectPageController,
+                          EditProjectViewModel editProjectViewModel,
                           GetTaskViewModel getTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInUserViewModel = loggedInUserViewModel;
@@ -59,10 +72,16 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         this.getProjectController = getProjectContoller;
         this.createProjectViewModel = createProjectViewModel;
         this.createProjectController = createProjectController;
+        this.deleteProjectController = deleteProjectController;
+        this.deleteProjectViewModel = deleteProjectViewModel;
         this.shareProjectPageViewModel = shareProjectPageViewModel;
         this.shareProjectPageController = shareProjectPageController;
+        this.editProjectViewModel = editProjectViewModel;
         this.getTaskViewModel = getTaskViewModel;
+
         this.getProjectViewModel.addPropertyChangeListener(this);
+        this.deleteProjectViewModel.addPropertyChangeListener(this);
+
 
         title = new JLabel(getProjectViewModel.TITLE_LABEL);
 
@@ -74,8 +93,14 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         checkTask = new JButton(GetProjectViewModel.CHECK_TASK_BUTTON_LABEL);
         buttons.add(checkTask);
 
+        editProject = new JButton(GetProjectViewModel.EDIT_PROJECT_BUTTON_LABEL);
+        buttons.add(editProject);
+
         shareProject = new JButton(GetProjectViewModel.SHARE_PROJECT_BUTTON_LABEL);
         buttons.add(shareProject);
+
+        deleteProject = new JButton(GetProjectViewModel.DELETE_PROJECT_BUTTON_LABEL);
+        buttons.add(deleteProject);
 
         goBack = new JButton(GetProjectViewModel.GO_BACK_BUTTON_LABEL);
         buttons.add(goBack);
@@ -95,6 +120,31 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                     }
                 }
             }
+        );
+
+        editProject.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        if (e.getSource().equals(editProject)){
+                            Map<String, String> selectedProject = projectList.getSelectedValue();
+                            if (selectedProject == null) {
+                                JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project to edit.");
+                            } else {
+                                EditProjectState editProjectState = editProjectViewModel.getState();
+                                editProjectState.setProjectID(selectedProject.get(PROJECT_ID));
+                                editProjectState.setProjectName(selectedProject.get(PROJECT_NAME));
+                                editProjectState.setInitial(true);
+
+                                editProjectViewModel.setState(editProjectState);
+                                editProjectViewModel.firePropertyChanged();
+
+                                viewManagerModel.setActiveView(editProjectViewModel.getViewName());
+                                viewManagerModel.firePropertyChanged();
+                            }
+                        }
+                    }
+                }
         );
 
         checkTask.addActionListener(
@@ -148,6 +198,26 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 }
             }
         );
+
+        deleteProject.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(deleteProject)) {
+                            Map<String, String> selectedProject = projectList.getSelectedValue();
+                            if (selectedProject == null) {
+                                JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project to delete.");
+                            } else {
+                                int result = JOptionPane.showConfirmDialog(GetProjectView.this, String.format("Are you sure you want to delete project \"%s\"?", selectedProject.get(PROJECT_NAME)));
+                                if (result == JOptionPane.YES_OPTION) {
+                                    deleteProjectController.execute(selectedProject.get(PROJECT_ID));
+                                }
+                            }
+                        }
+                    }
+                }
+        );
+
         goBack.addActionListener(
                 new ActionListener() {
                     @Override
@@ -186,6 +256,17 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                 for (Map<String, String> project : state.getProjects()) {
                     projectListModel.addElement(project);
                 }
+            }
+        }
+
+        if (evt.getPropertyName().equals("deleteProjectState")) {
+            GetProjectState getProjectState = getProjectViewModel.getState();
+            DeleteProjectState deleteProjectState = (DeleteProjectState) evt.getNewValue();
+            if (deleteProjectState.getDeleteProjectError() != null) {
+                JOptionPane.showMessageDialog(this, deleteProjectState.getDeleteProjectError());
+            } else {
+                JOptionPane.showMessageDialog(this, String.format("Project with id \"%s\" deleted.", deleteProjectState.getProjectId()));
+                this.getProjectController.execute(getProjectState.getUserId());
             }
         }
     }
