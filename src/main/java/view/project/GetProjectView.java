@@ -6,17 +6,21 @@ import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.delete_project.DeleteProjectController;
 import interface_adapter.project.delete_project.DeleteProjectState;
 import interface_adapter.project.delete_project.DeleteProjectViewModel;
+import interface_adapter.project.edit_project.EditProjectState;
+import interface_adapter.project.edit_project.EditProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.project.share_project_page.ShareProjectPageController;
 import interface_adapter.project.share_project_page.ShareProjectPageViewModel;
+import interface_adapter.task.edit_task.EditTaskState;
 import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin.LoggedInState;
 import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.permission.GetPermissionView;
+import view.task.GetTaskView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,12 +43,14 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
     private final ShareProjectPageController shareProjectPageController;
     private final DeleteProjectController deleteProjectController;
     private final DeleteProjectViewModel deleteProjectViewModel;
+    private final EditProjectViewModel editProjectViewModel;
     private final GetTaskViewModel getTaskViewModel;
     private final ViewManagerModel viewManagerModel;
 
     JLabel title;
     final JButton createProject;
     final JButton checkTask;
+    final JButton editProject;
     final JButton shareProject;
     final JButton deleteProject;
     final JButton goBack;
@@ -61,6 +67,7 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                           DeleteProjectController deleteProjectController,
                           ShareProjectPageViewModel shareProjectPageViewModel,
                           ShareProjectPageController shareProjectPageController,
+                          EditProjectViewModel editProjectViewModel,
                           GetTaskViewModel getTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInUserViewModel = loggedInUserViewModel;
@@ -72,9 +79,11 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         this.deleteProjectViewModel = deleteProjectViewModel;
         this.shareProjectPageViewModel = shareProjectPageViewModel;
         this.shareProjectPageController = shareProjectPageController;
+        this.editProjectViewModel = editProjectViewModel;
         this.getTaskViewModel = getTaskViewModel;
 
         this.getProjectViewModel.addPropertyChangeListener(this);
+        this.deleteProjectViewModel.addPropertyChangeListener(this);
 
 
         title = new JLabel(getProjectViewModel.TITLE_LABEL);
@@ -86,6 +95,9 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
 
         checkTask = new JButton(GetProjectViewModel.CHECK_TASK_BUTTON_LABEL);
         buttons.add(checkTask);
+
+        editProject = new JButton(GetProjectViewModel.EDIT_PROJECT_BUTTON_LABEL);
+        buttons.add(editProject);
 
         shareProject = new JButton(GetProjectViewModel.SHARE_PROJECT_BUTTON_LABEL);
         buttons.add(shareProject);
@@ -111,6 +123,31 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                     }
                 }
             }
+        );
+
+        editProject.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        if (e.getSource().equals(editProject)){
+                            Map<String, String> selectedProject = projectList.getSelectedValue();
+                            if (selectedProject == null) {
+                                JOptionPane.showMessageDialog(GetProjectView.this, "Please select a project to edit.");
+                            } else {
+                                EditProjectState editProjectState = editProjectViewModel.getState();
+                                editProjectState.setProjectID(selectedProject.get(PROJECT_ID));
+                                editProjectState.setProjectName(selectedProject.get(PROJECT_NAME));
+                                editProjectState.setInitial(true);
+
+                                editProjectViewModel.setState(editProjectState);
+                                editProjectViewModel.firePropertyChanged();
+
+                                viewManagerModel.setActiveView(editProjectViewModel.getViewName());
+                                viewManagerModel.firePropertyChanged();
+                            }
+                        }
+                    }
+                }
         );
 
         checkTask.addActionListener(

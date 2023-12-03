@@ -4,6 +4,7 @@ import app.permission.CreatePermissionUseCaseFactory;
 import app.permission.GetPermissionUseCaseFactory;
 import app.permission.UpdatePermissionUseCaseFactory;
 import app.project.CreateProjectUseCaseFactory;
+import app.project.EditProjectUseCaseFactory;
 import app.project.GetProjectUseCaseFactory;
 import app.project.ShareProjectPageUseCaseFactory;
 import app.task.AddTaskUseCaseFactory;
@@ -24,6 +25,7 @@ import domains.project.use_case.create_project.CreateProjectApiDataAccessInterfa
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
 import domains.project.use_case.delete_project.DeleteProjectApiDataAccessInterface;
 import domains.project.use_case.delete_project.DeleteProjectSqlDataAccessInterface;
+import domains.project.use_case.edit_project.EditProjectDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
@@ -39,6 +41,7 @@ import interface_adapter.permission.delete_permission.DeletePermissionViewModel;
 import interface_adapter.permission.get_permission.GetPermissionViewModel;
 import interface_adapter.permission.update_permission.UpdatePermissionViewModel;
 import interface_adapter.project.create_project.CreateProjectViewModel;
+import interface_adapter.project.edit_project.EditProjectViewModel;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.project.share_project.ShareProjectViewModel;
 import interface_adapter.project.share_project_page.ShareProjectPageViewModel;
@@ -56,6 +59,7 @@ import view.permission.CreatePermissionView;
 import view.permission.GetPermissionView;
 import view.permission.UpdatePermissionView;
 import view.project.CreateProjectView;
+import view.project.EditProjectView;
 import view.project.GetProjectView;
 import view.project.ShareProjectPageView;
 import view.task.AddTaskView;
@@ -101,6 +105,7 @@ public class Bermuda {
         CreateProjectViewModel createProjectViewModel = new CreateProjectViewModel();
         GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
         DeleteProjectViewModel deleteProjectViewModel = new DeleteProjectViewModel();
+        EditProjectViewModel editProjectViewModel = new EditProjectViewModel();
         ShareProjectViewModel shareProjectViewModel = new ShareProjectViewModel();
         ShareProjectPageViewModel shareProjectPageViewModel = new ShareProjectPageViewModel();
 
@@ -129,6 +134,7 @@ public class Bermuda {
         CreateProjectApiDataAccessInterface createProjectApiDataAccessInterface = apiDataAccessObject;
         DeleteProjectApiDataAccessInterface deleteProjectApiDataAccessInterface = apiDataAccessObject;
         DeleteProjectSqlDataAccessInterface deleteProjectSqlDataAccessInterface = sqlDataAccessObject;
+        EditProjectDataAccessInterface editProjectDataAccessInterface = apiDataAccessObject;
         GetProjectSqlDataAccessInterface getProjectSqlDataAccessInterface = sqlDataAccessObject;
         GetProjectApiDataAccessInterface getProjectApiDataAccessInterface = apiDataAccessObject;
 
@@ -185,6 +191,7 @@ public class Bermuda {
                 getProjectViewModel,
                 deleteProjectViewModel,
                 shareProjectPageViewModel,
+                editProjectViewModel,
                 getTaskViewModel,
                 createProjectApiDataAccessInterface,
                 createProjectSqlDataAccessInterface,
@@ -194,6 +201,15 @@ public class Bermuda {
                 deleteProjectSqlDataAccessInterface,
                 shareProjectPageDataAccessInterface);
         views.add(getProjectView, getProjectView.viewName);
+
+        EditProjectView editProject = EditProjectUseCaseFactory.create(
+                viewManagerModel,
+                 editProjectViewModel,
+                 getProjectViewModel,
+                 editProjectDataAccessInterface,
+                 getProjectApiDataAccessInterface,
+                 getProjectSqlDataAccessInterface);
+        views.add(editProject, editProject.viewName);
 
         ShareProjectPageView shareProjectPageView = ShareProjectPageUseCaseFactory.create(
                 viewManagerModel, getProjectViewModel, shareProjectPageViewModel, shareProjectViewModel,

@@ -12,6 +12,7 @@ import interface_adapter.project.create_project.CreateProjectController;
 import interface_adapter.project.create_project.CreateProjectPresenter;
 import interface_adapter.project.create_project.CreateProjectViewModel;
 import interface_adapter.project.delete_project.DeleteProjectViewModel;
+import interface_adapter.project.edit_project.EditProjectViewModel;
 import interface_adapter.project.get_project.GetProjectController;
 import interface_adapter.project.get_project.GetProjectPresenter;
 import interface_adapter.project.get_project.GetProjectViewModel;
@@ -32,6 +33,7 @@ public class GetProjectUseCaseFactory {
                                         GetProjectViewModel getProjectViewModel,
                                         DeleteProjectViewModel deleteProjectViewModel,
                                         ShareProjectPageViewModel shareProjectPageViewModel,
+                                        EditProjectViewModel editProjectViewModel,
                                         GetTaskViewModel getTaskViewModel,
                                         CreateProjectApiDataAccessInterface createProjectApiDAI,
                                         CreateProjectSqlDataAccessInterface createProjectSqlDAI,
@@ -78,6 +80,7 @@ public class GetProjectUseCaseFactory {
                 deleteProjectController,
                 shareProjectPageViewModel,
                 shareProjectPageController,
+                editProjectViewModel,
                 getTaskViewModel
         );
     }
