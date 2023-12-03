@@ -76,7 +76,7 @@ import java.awt.*;
 /**
  * Created by CSC207 project team
  * Initiate the environment and key elements to run Bermuda
- * Set up Views and Java Swring as UI
+ * Set up Views and Java Swing as UI
  */
 public class Bermuda {
     public static void main(String[] args) {
