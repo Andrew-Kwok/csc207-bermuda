@@ -1,6 +1,7 @@
 package interface_adapter.project.delete_project;
 
-import domains.project.use_case.delete_project.*;
+import domains.project.use_case.delete_project.DeleteProjectOutputBoundary;
+import domains.project.use_case.delete_project.DeleteProjectOutputData;
 import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;

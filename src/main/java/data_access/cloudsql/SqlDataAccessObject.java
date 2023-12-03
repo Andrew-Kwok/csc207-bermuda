@@ -6,8 +6,8 @@ import domains.permission.use_case.delete_permission.DeletePermissionDataAccessI
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
-import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.project.use_case.delete_project.DeleteProjectSqlDataAccessInterface;
+import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
 import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
 import domains.user.entity.User;

@@ -2,9 +2,8 @@ package interface_adapter.project.edit_project;
 
 import domains.project.use_case.edit_project.EditProjectOutputBoundary;
 import domains.project.use_case.edit_project.EditProjectOutputData;
-import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.project.get_project.GetProjectState;
-
+import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 
 public class EditProjectPresenter implements EditProjectOutputBoundary {

@@ -1,6 +1,5 @@
 package data_access.todoist;
 
-import config.Config;
 import domains.project.entity.Project;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
 import domains.project.use_case.delete_project.DeleteProjectApiDataAccessInterface;
@@ -97,31 +96,6 @@ public class ApiDataAccessObject implements
     }
 
     @Override
-    public void deleteProject(String projectId) throws Exception {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        RequestBody body = new FormBody.Builder()
-                .build();
-        Request request = new Request.Builder()
-                .url(String.format("%s/projects/%s/delete", apiUrl, projectId))
-                .addHeader("Authorization", String.format("Bearer %s", apiToken))
-                .addHeader("Content-Type", "application/json")
-                .post(body)
-                .build();
-
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.code() == 200) {
-
-            } else {
-                throw new Exception("error deleting project: " + response.code());
-            }
-        } catch (Exception e) {
-            throw new Exception("error connectıng to todoist: " + e.getMessage());
-        }
-    }
-
-    @Override
     public void editProject(Project project) throws Exception {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -148,6 +122,28 @@ public class ApiDataAccessObject implements
         }
     }
 
+    @Override
+    public void deleteProject(String projectId) throws Exception {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("%s/projects/%s", apiUrl, projectId))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
+                .addHeader("Content-Type", "application/json")
+                .delete()
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 204) {
+
+            } else {
+                throw new Exception("error deleting project: " + response.code());
+            }
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoist: " + e.getMessage());
+        }
+    }
 
     @Override
     public void addTask(Task task) throws Exception {

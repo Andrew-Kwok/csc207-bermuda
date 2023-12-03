@@ -1,7 +1,10 @@
 package view.project;
 
-import interface_adapter.project.edit_project.*;
-import interface_adapter.project.get_project.*;
+import interface_adapter.project.edit_project.EditProjectController;
+import interface_adapter.project.edit_project.EditProjectState;
+import interface_adapter.project.edit_project.EditProjectViewModel;
+import interface_adapter.project.get_project.GetProjectController;
+import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.view_model.ViewManagerModel;
 import view.common.LabelTextPanel;
 

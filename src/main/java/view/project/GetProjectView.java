@@ -13,14 +13,11 @@ import interface_adapter.project.get_project.GetProjectState;
 import interface_adapter.project.get_project.GetProjectViewModel;
 import interface_adapter.project.share_project_page.ShareProjectPageController;
 import interface_adapter.project.share_project_page.ShareProjectPageViewModel;
-import interface_adapter.task.edit_task.EditTaskState;
 import interface_adapter.task.get_task.GetTaskState;
 import interface_adapter.task.get_task.GetTaskViewModel;
 import interface_adapter.user.loggedin.LoggedInState;
 import interface_adapter.user.loggedin.LoggedInViewModel;
 import interface_adapter.view_model.ViewManagerModel;
-import view.permission.GetPermissionView;
-import view.task.GetTaskView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -217,7 +214,6 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
                                 }
                             }
                         }
-
                     }
                 }
         );
@@ -264,12 +260,13 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
         }
 
         if (evt.getPropertyName().equals("deleteProjectState")) {
-            DeleteProjectState state = (DeleteProjectState) evt.getNewValue();
-            if (state.getDeleteProjectError() != null) {
-                JOptionPane.showMessageDialog(this, state.getDeleteProjectError());
+            GetProjectState getProjectState = getProjectViewModel.getState();
+            DeleteProjectState deleteProjectState = (DeleteProjectState) evt.getNewValue();
+            if (deleteProjectState.getDeleteProjectError() != null) {
+                JOptionPane.showMessageDialog(this, deleteProjectState.getDeleteProjectError());
             } else {
-                JOptionPane.showMessageDialog(this, String.format("Project with id \"%s\" deleted.", state.getProjectId()));
-                this.getProjectController.execute(null);
+                JOptionPane.showMessageDialog(this, String.format("Project with id \"%s\" deleted.", deleteProjectState.getProjectId()));
+                this.getProjectController.execute(getProjectState.getUserId());
             }
         }
     }
