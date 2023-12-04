@@ -1,5 +1,6 @@
 package data_access.in_memory;
 
+import domains.permission.entity.NewPermissionFactory;
 import domains.permission.entity.Permission;
 import domains.permission.use_case.create_permission.CreatePermissionDataAccessInterface;
 import domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface;
@@ -15,7 +16,8 @@ import domains.user.use_case.signup.SignupUserDataAccessInterface;
 
 import java.util.*;
 public class InMemorySQLDataAccessObject implements
-        ShareProjectDataAccessInterface, ShareProjectPageDataAccessInterface {
+        ShareProjectDataAccessInterface, ShareProjectPageDataAccessInterface,
+        GetProjectSqlDataAccessInterface {
     /** permissions index in order from 0 to 4:
      * - permissionID
      * - userID
@@ -63,6 +65,24 @@ public class InMemorySQLDataAccessObject implements
             if (!hasPermission) {
                 res.add(List.of(user.get(1), user.get(0)));
             }
+        }
+        return res;
+    }
+
+    @Override
+    public List<Permission> getPermissions(String userId) throws Exception {
+        if (userId.equals("test dao failure")) {
+            throw new Exception("failed successfully");
+        }
+        List<Permission> res = new ArrayList<>();
+        for (List<String> permission : permissions) {
+           res.add(NewPermissionFactory.create(
+                   permission.get(1),
+                   permission.get(2),
+                   permission.get(3),
+                   permission.get(4)
+                   )
+           );
         }
         return res;
     }
