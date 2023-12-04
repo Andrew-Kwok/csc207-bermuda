@@ -6,6 +6,7 @@ import domains.permission.use_case.delete_permission.DeletePermissionDataAccessI
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.project.use_case.delete_project.DeleteProjectSqlDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
 import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
@@ -26,7 +27,8 @@ public class SqlDataAccessObject implements
         UpdatePermissionDataAccessInterface, DeletePermissionDataAccessInterface,
         SignupUserDataAccessInterface, LoginUserDataAccessInterface,
         CreateProjectSqlDataAccessInterface, GetProjectSqlDataAccessInterface,
-        ShareProjectDataAccessInterface, ShareProjectPageDataAccessInterface {
+        DeleteProjectSqlDataAccessInterface, ShareProjectDataAccessInterface,
+        ShareProjectPageDataAccessInterface {
 
     private final DataSource sqlDataSource;
 
@@ -118,6 +120,32 @@ public class SqlDataAccessObject implements
         ) {
             statement.setString(1, permissionID);
 
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public void deletePermissionByProjectId(String projectId) throws Exception {
+        String sql = "DELETE FROM permission WHERE project_id = ?";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, projectId);
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
+    public void clearAllPermissions() throws Exception {
+        String sql = "DELETE FROM permission";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
             statement.executeUpdate();
         } catch (Exception e) {
             throw new Exception("Error setting sql connection");
@@ -237,6 +265,19 @@ public class SqlDataAccessObject implements
             throw new Exception("Error setting sql connection");
         }
     }
+
+    public void clearAllUsers() throws Exception {
+        String sql = "DELETE FROM user";
+
+        try (Connection connection = sqlDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error setting sql connection");
+        }
+    }
+
     public List<List<String>> getUsersNameAndId(String projectId) throws Exception {
         String sql = "SELECT id, username FROM user WHERE id NOT IN (SELECT user_id FROM permission WHERE project_id = ?)";
         List<List<String>> usersNameAndId = new ArrayList<>();

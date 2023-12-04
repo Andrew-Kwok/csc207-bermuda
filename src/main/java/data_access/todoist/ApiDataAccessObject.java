@@ -1,8 +1,9 @@
 package data_access.todoist;
 
-import config.Config;
 import domains.project.entity.Project;
 import domains.project.use_case.create_project.CreateProjectApiDataAccessInterface;
+import domains.project.use_case.delete_project.DeleteProjectApiDataAccessInterface;
+import domains.project.use_case.edit_project.EditProjectDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectApiDataAccessInterface;
 import domains.task.entity.Task;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
@@ -17,9 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApiDataAccessObject implements
-        CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface,
+        CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface, DeleteProjectApiDataAccessInterface, EditProjectDataAccessInterface,
         AddTaskDataAccessInterface, GetTaskDataAccessInterface, EditTaskDataAccessInterface, CloseTaskDataAccessInterface {
 
+    private String apiUrl;
+    private String apiToken;
+
+
+    public ApiDataAccessObject(String apiUrl, String apiToken) {
+        this.apiUrl = apiUrl;
+        this.apiToken = apiToken;
+    }
+    
     @Override
     public String createProject(String projectName) throws Exception {
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -28,8 +38,8 @@ public class ApiDataAccessObject implements
                 .add("name", projectName)
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/projects", apiUrl))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -52,8 +62,8 @@ public class ApiDataAccessObject implements
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/projects", Config.getEnv("TODOIST_API_URL")))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/projects", apiUrl))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .build();
 
@@ -86,6 +96,56 @@ public class ApiDataAccessObject implements
     }
 
     @Override
+    public void editProject(Project project) throws Exception {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        RequestBody body = new FormBody.Builder()
+                .add("id", project.getProjectID())
+                .add("name", project.getProjectName())
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("%s/projects/%s", apiUrl, project.getProjectID()))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 200) {
+
+            } else {
+                throw new Exception("error editing projects: " + response.code());
+            }
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoist: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteProject(String projectId) throws Exception {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("%s/projects/%s", apiUrl, projectId))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
+                .addHeader("Content-Type", "application/json")
+                .delete()
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 204) {
+
+            } else {
+                throw new Exception("error deleting project: " + response.code());
+            }
+        } catch (Exception e) {
+            throw new Exception("error connectıng to todoist: " + e.getMessage());
+        }
+    }
+
+    @Override
     public void addTask(Task task) throws Exception {
 
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -96,8 +156,8 @@ public class ApiDataAccessObject implements
                 .add("description", task.getTaskDescription())
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks", Config.getEnv("TODOIST_API_URL")))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks", apiUrl))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -119,8 +179,8 @@ public class ApiDataAccessObject implements
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks?project_id=%s", Config.getEnv("TODOIST_API_URL"), projectID))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks?project_id=%s", apiUrl, projectID))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .build();
 
@@ -165,8 +225,8 @@ public class ApiDataAccessObject implements
                 .add("description", task.getTaskDescription())
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks/%s", Config.getEnv("TODOIST_API_URL"), task.getTaskID()))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks/%s", apiUrl, task.getTaskID()))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -190,8 +250,8 @@ public class ApiDataAccessObject implements
         RequestBody body = new FormBody.Builder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("%s/tasks/%s/close", Config.getEnv("TODOIST_API_URL"), taskID))
-                .addHeader("Authorization", String.format("Bearer %s", Config.getEnv("TODOIST_API_TOKEN")))
+                .url(String.format("%s/tasks/%s/close", apiUrl, taskID))
+                .addHeader("Authorization", String.format("Bearer %s", apiToken))
                 .addHeader("Content-Type", "application/json")
                 .post(body)
                 .build();
@@ -207,4 +267,5 @@ public class ApiDataAccessObject implements
             throw new Exception("error connectıng to todoıst: " + e.getMessage());
         }
     }
+
 }
