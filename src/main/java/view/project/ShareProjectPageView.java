@@ -109,6 +109,10 @@ public class ShareProjectPageView extends JPanel implements
                                otherUserId,
                                otherUname
                        );
+                   } else if (List.of(
+                           JOptionPane.CANCEL_OPTION, JOptionPane.NO_OPTION,
+                           JOptionPane.CLOSED_OPTION, JOptionPane.DEFAULT_OPTION).contains(res)) {
+                       return;
                    }
                    if (shareProjectViewModel.getState().getErrorMessage() != null) {
                        JOptionPane.showMessageDialog(
