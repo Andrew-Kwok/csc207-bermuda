@@ -1,36 +1,37 @@
-package domains.task.use_case.add_task;
+package domains.task.use_case.close_task;
 
-import domains.permission.entity.Permission;
 import domains.project.entity.Project;
 import domains.task.entity.Task;
+import domains.task.use_case.add_task.*;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class AddTaskInteractorTest {
+public class CloseTaskInteractorTest {
     private InMemoryDAO inMemoryDAO;
+    private String taskID;
     private Task task;
-    AddTaskInputBoundary addTaskInteractor;
+    CloseTaskInputBoundary closeTaskInteractor;
 
     @org.junit.Before
     public void setUp() throws Exception {
 
         inMemoryDAO = new InMemoryDAO();
 
-        AddTaskDataAccessInterface taskRepository = inMemoryDAO;
+        CloseTaskDataAccessInterface taskRepository = inMemoryDAO;
 
         task = new Task(null, "2324643105", "task0", "desc0");
         inMemoryDAO.addTask(task);
-        AddTaskInputData inputData = new AddTaskInputData(task.getProjectID(), task.getTaskName(), task.getTaskDescription());
 
         // Make a presenter here that asserts things
         // This instantiates an anonymous SignupOutputBoundary implementing class
-        AddTaskOutputBoundary successPresenter = new AddTaskOutputBoundary() {
+        CloseTaskOutputBoundary successPresenter = new CloseTaskOutputBoundary() {
             @Override
-            public void prepareSuccessView(AddTaskOutputData addTaskOutputData) {
-                assertEquals(addTaskOutputData.getTaskName(), task.getTaskName());
+            public void prepareSuccessView(CloseTaskOutputData closeTaskOutputData) {
+                assertEquals(closeTaskOutputData.getTaskID(), task.getTaskID());
             }
             @Override
             public void prepareFailView(String error) {
@@ -41,8 +42,8 @@ public class AddTaskInteractorTest {
         };
 
 
-        addTaskInteractor = new AddTaskInteractor(successPresenter, taskRepository);
-        addTaskInteractor.execute(inputData); // This will eventually send Output Data to the successPresenter
+        closeTaskInteractor = new CloseTaskInteractor(successPresenter, taskRepository);
+        closeTaskInteractor.execute(inputData); // This will eventually send Output Data to the successPresenter
     }
 
     @org.junit.After
