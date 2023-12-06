@@ -1,65 +1,70 @@
 package domains.task.use_case.add_task;
 
-import app.task.AddTaskUseCaseFactory;
-import config.Config;
-import data_access.todoist.ApiDataAccessObject;
-import domains.task.entity.NewTaskFactory;
+import domains.project.entity.Project;
 import domains.task.entity.Task;
-import interface_adapter.task.add_task.AddTaskPresenter;
-import interface_adapter.task.add_task.AddTaskViewModel;
-import interface_adapter.task.get_task.GetTaskViewModel;
-import interface_adapter.view_model.ViewManagerModel;
+import org.junit.Test;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class AddTaskInteractorTest {
+    //private ApiDataAccessObject apiDataAccessObject;
+    private InMemoryDAO inMemoryDAO;
+    private Project project;
+    private Task task;
+    AddTaskInputBoundary addTaskInteractor;
 
     @org.junit.Before
     public void setUp() throws Exception {
 
-        ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject(
-                Config.getEnv("TODOIST_API_URL"),
-                Config.getEnv("TODOIST_API_TEST_TOKEN")
-        );
+        inMemoryDAO = new InMemoryDAO();
 
-        AddTaskDataAccessInterface taskRepository = apiDataAccessObject;
+        AddTaskDataAccessInterface taskRepository = inMemoryDAO;
 
-        NewTaskFactory taskFactory = new NewTaskFactory();
-        Task task = taskFactory.create("0", "project0", "name0", "desc0");
+        task = new Task(null, "2324643105", "task0", "desc0");
+        inMemoryDAO.addTask(task);
         AddTaskInputData inputData = new AddTaskInputData(task.getProjectID(), task.getTaskName(), task.getTaskDescription());
 
         // Make a presenter here that asserts things
         // This instantiates an anonymous SignupOutputBoundary implementing class
         AddTaskOutputBoundary successPresenter = new AddTaskOutputBoundary() {
             @Override
-            public void prepareSuccessView(AddTaskOutputData user) {
-                assertEquals("0", task.getTaskID());
-                assertEquals("project0", task.getProjectID());
-                assertEquals("name0", task.getTaskName());
+            public void prepareSuccessView(AddTaskOutputData addTaskOutputData) {
+                (task.getTaskID()).isEmpty();
+                assertEquals("2324643105", task.getProjectID());
+                assertEquals("task0", task.getTaskName());
                 assertEquals("desc0", task.getTaskDescription());
-                //assertTrue(userRepository.existsByName("Paul"));
             }
             @Override
             public void prepareFailView(String error) {
+                System.out.println("AddTaskInteractorTest.TestAddTaskPresenter.prepareFailView");
+                System.out.println(error);
                 fail("Use case failure is unexpected.");
             }
         };
 
 
-        AddTaskInputBoundary interactor = new AddTaskInteractor(successPresenter, taskRepository);
-        interactor.execute(inputData); // This will eventually send Output Data to the successPresenter
+        addTaskInteractor = new AddTaskInteractor(successPresenter, taskRepository);
+        addTaskInteractor.execute(inputData); // This will eventually send Output Data to the successPresenter
     }
 
     @org.junit.After
     public void tearDown() throws Exception {
-      /*  try {
-            sqlDAO.clearAllPermissions();
-            sqlDAO.clearAllUsers();
+        try {
+            List<Task> tasks = inMemoryDAO.getTasks("2324643105");
+            for (Task task : tasks) {
+                inMemoryDAO.closeTask(task.getTaskID());
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }*/
+        }
+    }
+
+    @Test
+    public void testAddTask() {
+        AddTaskInputData addTaskInputData = new AddTaskInputData(null, task.getTaskName(), task.getTaskDescription());
+
+        addTaskInteractor.execute(addTaskInputData);
     }
 }

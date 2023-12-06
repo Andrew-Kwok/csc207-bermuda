@@ -1,4 +1,4 @@
-package data_access;
+package domains.task.use_case.add_task;
 
 import domains.task.entity.Task;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
@@ -6,6 +6,7 @@ import domains.task.use_case.close_task.CloseTaskDataAccessInterface;
 import domains.task.use_case.edit_task.EditTaskDataAccessInterface;
 import domains.task.use_case.get_task.GetTaskDataAccessInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class InMemoryDAO implements AddTaskDataAccessInterface, GetTaskDataAcces
 
     @Override
     public void closeTask(String taskID) throws Exception {
-
+        tasks.remove(taskID);
     }
 
     @Override
@@ -30,6 +31,8 @@ public class InMemoryDAO implements AddTaskDataAccessInterface, GetTaskDataAcces
 
     @Override
     public List<Task> getTasks(String projectID) throws Exception {
-        return null;
+        List<Task> list = new ArrayList<Task>(tasks.values());
+
+        return list;
     }
 }
