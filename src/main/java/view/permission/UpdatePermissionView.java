@@ -31,6 +31,9 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
     private final JTextField permissionDescriptionInputField = new JTextField(50);
     private final UpdatePermissionController updatePermissionController;
     private final GetPermissionController getPermissionController;
+    final JLabel permissionIdLabel;
+    final JLabel userIdLabel;
+    final JLabel projectIdLabel;
     private final JButton updatePermissionButton;
     private final JButton cancel;
 
@@ -174,12 +177,22 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
                     }
                 }
         );
+        this.permissionIdLabel = new JLabel(
+                UpdatePermissionViewModel.PERMISSION_ID_LABEL + " :");
+        this.userIdLabel = new JLabel(
+                UpdatePermissionViewModel.USER_ID_LABEL + " :");
+        this.projectIdLabel = new JLabel(
+                UpdatePermissionViewModel.PROJECT_ID_LABEL + " :");
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(userIdPanel);
-        this.add(projectIdPanel);
+        this.add(permissionIdLabel);
+        this.add(userIdLabel);
+        this.add(projectIdLabel);
+//        this.add(userIdPanel);
+//        this.add(projectIdPanel);
         this.add(permissionNamePanel);
         this.add(permissionDescriptionPanel);
         this.add(buttons);
@@ -207,6 +220,27 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
 
     public void setInitialInputFields() {
         UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
+        this.permissionIdLabel.setText(
+                String.format("%s : %s",
+                        UpdatePermissionViewModel.PERMISSION_ID_LABEL,
+                        updatePermissionState.getPermissionId()
+                )
+        );
+
+        this.userIdLabel.setText(
+                String.format("%s : %s",
+                        UpdatePermissionViewModel.USER_ID_LABEL,
+                        updatePermissionState.getUserId()
+                )
+        );
+
+        this.projectIdLabel.setText(
+                String.format("%s : %s",
+                        UpdatePermissionViewModel.PROJECT_ID_LABEL,
+                        updatePermissionState.getProjectId()
+                )
+        );
+
         userIdInputField.setText(updatePermissionState.getUserId());
         projectIdInputField.setText(updatePermissionState.getProjectId());
         permissionNameInputField.setText(updatePermissionState.getPermissionName());
