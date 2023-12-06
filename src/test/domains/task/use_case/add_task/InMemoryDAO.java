@@ -12,11 +12,17 @@ import java.util.List;
 
 public class InMemoryDAO implements AddTaskDataAccessInterface, GetTaskDataAccessInterface, EditTaskDataAccessInterface, CloseTaskDataAccessInterface {
     private HashMap<String, Task> tasks =  new HashMap<>();
-    private int taskID = 1000000000;
+    private static int counter = 0;
+    private static int idLength = 10;
     @Override
     public void addTask(Task task) throws Exception {
-        tasks.put(Integer.toString(taskID), task);
-        taskID++;
+        String taskID;
+        String counterStr = Integer.toString(counter);
+        int numDigits = counterStr.length();
+
+        taskID = "0".repeat(idLength - numDigits) + counterStr;
+
+        tasks.put(taskID, task);
     }
 
     @Override

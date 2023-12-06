@@ -1,5 +1,6 @@
 package domains.task.use_case.add_task;
 
+import domains.permission.entity.Permission;
 import domains.project.entity.Project;
 import domains.task.entity.Task;
 import org.junit.Test;
@@ -31,16 +32,13 @@ public class AddTaskInteractorTest {
         AddTaskOutputBoundary successPresenter = new AddTaskOutputBoundary() {
             @Override
             public void prepareSuccessView(AddTaskOutputData addTaskOutputData) {
-                (task.getTaskID()).isEmpty();
-                assertEquals("2324643105", task.getProjectID());
-                assertEquals("task0", task.getTaskName());
-                assertEquals("desc0", task.getTaskDescription());
+                assertEquals(addTaskOutputData.getTaskName(), task.getTaskName());
             }
             @Override
             public void prepareFailView(String error) {
                 System.out.println("AddTaskInteractorTest.TestAddTaskPresenter.prepareFailView");
                 System.out.println(error);
-                fail("Use case failure is unexpected.");
+                fail();
             }
         };
 
@@ -63,7 +61,7 @@ public class AddTaskInteractorTest {
 
     @Test
     public void testAddTask() {
-        AddTaskInputData addTaskInputData = new AddTaskInputData(null, task.getTaskName(), task.getTaskDescription());
+        AddTaskInputData addTaskInputData = new AddTaskInputData(task.getProjectID(), task.getTaskName(), task.getTaskDescription());
 
         addTaskInteractor.execute(addTaskInputData);
     }
