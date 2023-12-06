@@ -24,6 +24,7 @@ public class DeleteProjectInteractor implements DeleteProjectInputBoundary {
                 sqlDataAccess.deletePermissionByProjectId(input.getProjectId());
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());
+                return;
             }
             presenter.prepareSuccessView(new DeleteProjectOutputData(input.getProjectId()));
         }
