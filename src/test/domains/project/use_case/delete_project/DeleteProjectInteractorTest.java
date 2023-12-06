@@ -1,18 +1,14 @@
 package domains.project.use_case.delete_project;
 
-import data_access.in_memory.*;
+import data_access.in_memory.InMemoryAPIDataAccessObject;
+import data_access.in_memory.InMemorySQLDataAccessObject;
 import domains.project.entity.Project;
-import static constant.ViewConstant.*;
-
-import domains.project.use_case.delete_project.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 class DeleteProjectInteractorTest {
     public static DeleteProjectApiDataAccessInterface apidao;
     public static DeleteProjectSqlDataAccessInterface sqldao;

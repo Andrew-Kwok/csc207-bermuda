@@ -1,19 +1,18 @@
 package domains.project.use_case.get_project;
 
-import data_access.in_memory.*;
-
-import static constant.ViewConstant.*;
-
-import domains.project.entity.Project;
-import domains.project.use_case.get_project.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import data_access.in_memory.InMemoryAPIDataAccessObject;
+import data_access.in_memory.InMemorySQLDataAccessObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static constant.ViewConstant.PROJECT_ID;
+import static constant.ViewConstant.PROJECT_NAME;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GetProjectInteractorTest {
     public static GetProjectSqlDataAccessInterface sqldao;

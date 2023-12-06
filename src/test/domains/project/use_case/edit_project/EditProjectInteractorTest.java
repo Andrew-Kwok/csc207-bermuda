@@ -1,18 +1,11 @@
 package domains.project.use_case.edit_project;
 
-import data_access.in_memory.*;
+import data_access.in_memory.InMemoryAPIDataAccessObject;
 import domains.project.entity.Project;
-import static constant.ViewConstant.*;
-
-import domains.project.use_case.get_project.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import static org.junit.jupiter.api.Assertions.*;
 class EditProjectInteractorTest {
     public static EditProjectDataAccessInterface dao;
 

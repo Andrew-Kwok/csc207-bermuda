@@ -1,7 +1,6 @@
 package domains.project.use_case.share_project;
 
 import data_access.in_memory.InMemorySQLDataAccessObject;
-import domains.project.use_case.share_project.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

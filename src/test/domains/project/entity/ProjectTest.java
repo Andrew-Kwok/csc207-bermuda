@@ -1,7 +1,8 @@
-package domains.project.entity;
+package domains.project.project.entity;
 
-import org.junit.jupiter.api.Test;
 import constant.ViewConstant;
+import domains.project.entity.Project;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,14 +1,12 @@
 package domains.project.use_case.share_project_page;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
-import domains.project.use_case.share_project_page.*;
-import interface_adapter.project.share_project_page.*;
-import data_access.in_memory.*;
+import data_access.in_memory.InMemorySQLDataAccessObject;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ShareProjectPageInteractorTest {
     public static ShareProjectPageDataAccessInterface dao;
