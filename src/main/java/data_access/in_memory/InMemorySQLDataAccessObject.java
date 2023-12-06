@@ -7,6 +7,7 @@ import domains.permission.use_case.delete_permission.DeletePermissionDataAccessI
 import domains.permission.use_case.get_permission.GetPermissionDataAccessInterface;
 import domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface;
 import domains.project.use_case.create_project.CreateProjectSqlDataAccessInterface;
+import domains.project.use_case.delete_project.DeleteProjectSqlDataAccessInterface;
 import domains.project.use_case.get_project.GetProjectSqlDataAccessInterface;
 import domains.project.use_case.share_project.ShareProjectDataAccessInterface;
 import domains.project.use_case.share_project_page.ShareProjectPageDataAccessInterface;
@@ -17,7 +18,7 @@ import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import java.util.*;
 public class InMemorySQLDataAccessObject implements
         ShareProjectDataAccessInterface, ShareProjectPageDataAccessInterface,
-        GetProjectSqlDataAccessInterface {
+        GetProjectSqlDataAccessInterface, DeleteProjectSqlDataAccessInterface {
     /** permissions index in order from 0 to 4:
      * - permissionID
      * - userID
@@ -76,15 +77,30 @@ public class InMemorySQLDataAccessObject implements
         }
         List<Permission> res = new ArrayList<>();
         for (List<String> permission : permissions) {
-           res.add(NewPermissionFactory.create(
-                   permission.get(1),
-                   permission.get(2),
-                   permission.get(3),
-                   permission.get(4)
-                   )
-           );
+            if (permission.get(1).equals(userId)) {
+                res.add(NewPermissionFactory.create(
+                        permission.get(2),
+                        permission.get(1),
+                        permission.get(3),
+                        permission.get(4)
+                        )
+                );
+            }
         }
         return res;
+    }
+
+    @Override
+    public void deletePermissionByProjectId(String projectId) throws Exception {
+        if (projectId.equals("test dao failure")) {
+            throw new Exception("failed successfully");
+        }
+        for (int i = 0; i < permissions.size(); i++) {
+            if (permissions.get(i).get(2).equals(projectId)) {
+                permissions.remove(i);
+                i--;
+            }
+        }
     }
 }
 

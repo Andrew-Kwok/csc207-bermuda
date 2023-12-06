@@ -1,30 +1,95 @@
 package domains.project.use_case.get_project;
 
 import data_access.in_memory.*;
+
+import static constant.ViewConstant.*;
+
+import domains.project.entity.Project;
 import domains.project.use_case.get_project.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-class GetProjectInteractorTest {
-   public static GetProjectSqlDataAccessInterface sqldao;
-   public static GetProjectApiDataAccessInterface apidao;
+import java.util.stream.Collectors;
 
-   @BeforeAll
+class GetProjectInteractorTest {
+    public static GetProjectSqlDataAccessInterface sqldao;
+    public static GetProjectApiDataAccessInterface apidao;
+
+    @BeforeAll
     public static void initiateDAOs() {
-       InMemorySQLDataAccessObject sqldao = new InMemorySQLDataAccessObject();
-       InMemoryAPIDataAccessObject apidao = new InMemoryAPIDataAccessObject();
-      sqldao.permissions.add(List.of("1", "1", "1", "owner", ""));
-      sqldao.permissions.add(List.of("2", "2", "2", "owner", ""));
-      sqldao.permissions.add(List.of("3", "3", "3", "owner", ""));
-      sqldao.permissions.add(List.of("4", "4", "4", "owner", ""));
-      sqldao.permissions.add(List.of("5", "5", "5", "owner", ""));
-      sqldao.permissions.add(List.of("6", "2", "1", "editor", ""));
-      sqldao.users.add(List.of("1", "test1", "pass1", "0"));
-      sqldao.users.add(List.of("2", "test2", "pass2", "0"));
-      sqldao.users.add(List.of("3", "test3", "pass3", "0"));
-      sqldao.users.add(List.of("4", "test4", "pass4", "0"));
-      sqldao.users.add(List.of("5", "test5", "pass5", "0"));
-      sqldao = sqldao;
-   }
+        InMemoryAPIDataAccessObject imapidao = new InMemoryAPIDataAccessObject();
+        InMemorySQLDataAccessObject imsqldao = new InMemorySQLDataAccessObject();
+        for (int i = 1; i < 5; i++) {
+            String str_i = String.valueOf(i);
+            imsqldao.permissions.add(List.of(str_i, str_i, str_i, "owner", ""));
+            imsqldao.users.add(List.of(str_i, "test" + str_i, "pass" + str_i, "0"));
+        }
+        imsqldao.permissions.add(List.of("6", "2", "1", "editor", ""));
+        sqldao = imsqldao;
+
+        for (int i = 1; i < 5; i++) {
+            try {
+                imapidao.createProject("proj" + String.valueOf(i));
+            } catch (Exception e) {
+                System.out.println("error in initiation, how this happen?");
+            }
+
+            apidao = imapidao;
+        }
+    }
+
+    @Test
+    public void successTest() {
+        final String USER_ID = "2";
+
+        GetProjectOutputBoundary presenter = new GetProjectOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GetProjectOutputData output) {
+                Set<String> outputIds = output.getProjects()
+                        .stream()
+                        .map((Map<String, String> e) -> e.get(PROJECT_ID))
+                        .collect(Collectors.toSet());
+                Set<String> outputNames = output.getProjects()
+                        .stream()
+                        .map((Map<String, String> e) -> e.get(PROJECT_NAME))
+                        .collect(Collectors.toSet());
+
+                assertEquals(outputIds, Set.of("1", "2"));
+                assertEquals(outputNames, Set.of("proj1", "proj2"));
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("fail view not expected");
+            }
+        };
+
+        GetProjectInputData input = new GetProjectInputData(USER_ID);
+        GetProjectInteractor interactor = new GetProjectInteractor(presenter, sqldao, apidao);
+        interactor.execute(input);
+    }
+
+    @Test
+    public void DAOExceptionTest() {
+        final String USER_ID = "test dao failure";
+        GetProjectOutputBoundary presenter = new GetProjectOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GetProjectOutputData output) {
+                fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertNotNull(error);
+            }
+        };
+
+        GetProjectInputData input = new GetProjectInputData(USER_ID);
+        GetProjectInteractor interactor = new GetProjectInteractor(presenter, sqldao, apidao);
+        interactor.execute(input);
+    }
 }
