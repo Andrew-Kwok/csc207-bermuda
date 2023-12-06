@@ -17,10 +17,14 @@ public class InMemoryAPIDataAccessObject implements
         CreateProjectApiDataAccessInterface, GetProjectApiDataAccessInterface,
         EditProjectDataAccessInterface, DeleteProjectApiDataAccessInterface {
     private int numProject = 1;
+    /** projects map projectID to projectName for all initiated objects.
+     */
     private final Map<String, String> projects = new HashMap<>();
 
     @Override
     public String createProject(String projectName) throws Exception {
+        if (projectName.equals("test dao failure"))
+            throw new Exception("failed successfully");
         projects.put(String.valueOf(numProject), projectName);
         return String.valueOf(numProject++);
     }

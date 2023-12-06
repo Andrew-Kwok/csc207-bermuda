@@ -18,7 +18,8 @@ import domains.user.use_case.signup.SignupUserDataAccessInterface;
 import java.util.*;
 public class InMemorySQLDataAccessObject implements
         ShareProjectDataAccessInterface, ShareProjectPageDataAccessInterface,
-        GetProjectSqlDataAccessInterface, DeleteProjectSqlDataAccessInterface {
+        GetProjectSqlDataAccessInterface, DeleteProjectSqlDataAccessInterface,
+        CreateProjectSqlDataAccessInterface {
     /** permissions index in order from 0 to 4:
      * - permissionID
      * - userID
