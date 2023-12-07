@@ -18,6 +18,8 @@
 ## How to run
 On `src/main/resources/config`, make a copy of `.env.example` and fill in your credentials.
 
+On `src/main/java/migrations`, run the SQL scripts to your SQL Database.
+
 To obtain `TODOIST_API_TOKEN`, refer to this ![blog](https://todoist.com/help/articles/find-your-api-token-Jpzx9IIlB) 
 
 ## APIs / External Services
