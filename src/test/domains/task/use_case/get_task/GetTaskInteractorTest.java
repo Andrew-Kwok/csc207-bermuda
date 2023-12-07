@@ -1,43 +1,30 @@
-/*
 package domains.task.use_case.get_task;
 
 import domains.task.entity.Task;
 import domains.task.use_case.InMemoryDAO;
-import domains.task.use_case.close_task.*;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
-import java.util.List;
+import java.util.Map;
 
+import static constant.ViewConstant.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class GetTaskInteractorTest {
-    private InMemoryDAO inMemoryDAO;
-    private Task task;
-    GetTaskInputBoundary getTaskInteractor;
-    GetTaskInputData inputData;
-    GetTaskDataAccessInterface taskRepository;
+    private final Task task = new Task("0000000000", "2324643105", "task0", "desc0");;
 
-    @org.junit.Before
-    public void setUp() throws Exception {
-
-        inMemoryDAO = new InMemoryDAO();
-
-        taskRepository = inMemoryDAO;
-
-        task = new Task("0000000000", "2324643105", "task0", "desc0");
-        inMemoryDAO.addTask(task);
-        inputData = new GetTaskInputData(task.getProjectID());
-
-        // Make a presenter here that asserts things
-        // This instantiates an anonymous SignupOutputBoundary implementing class
+    @Test
+    public void successTest() {
         GetTaskOutputBoundary successPresenter = new GetTaskOutputBoundary() {
             @Override
             public void prepareSuccessView(GetTaskOutputData getTaskOutputData) {
-                assertEquals(getTaskOutputData.getTasks(), task.getTaskID());
-
+                assertEquals(1, getTaskOutputData.getTasks().size());
+                for (Map<String, String> item : getTaskOutputData.getTasks()) {
+                    assertEquals(item.get(TASK_ID), task.getTaskID());
+                    assertEquals(item.get(PROJECT_ID), task.getProjectID());
+                    assertEquals(item.get(TASK_NAME), task.getTaskName());
+                    assertEquals(item.get(TASK_DESCRIPTION), task.getTaskDescription());
+                }
             }
             @Override
             public void prepareFailView(String error) {
@@ -47,44 +34,71 @@ public class GetTaskInteractorTest {
             }
         };
 
-
-        closeTaskInteractor = new CloseTaskInteractor(successPresenter, taskRepository);
-        closeTaskInteractor.execute(inputData); // This will eventually send Output Data to the successPresenter
-    }
-
-    @org.junit.After
-    public void tearDown() throws Exception {
+        InMemoryDAO inMemoryDAO = new InMemoryDAO();
         try {
-            List<Task> tasks = inMemoryDAO.getTasks("2324643105");
-            for (Task task : tasks) {
-                inMemoryDAO.closeTask(task.getTaskID());
-            }
+            inMemoryDAO.addTask(task);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            fail();
         }
-    }
 
-    @Test
-    public void successTest() {
-        closeTaskInteractor.execute(inputData);
+        GetTaskInteractor getTaskInteractor = new GetTaskInteractor(successPresenter, inMemoryDAO);
+        getTaskInteractor.execute(new GetTaskInputData(task.getProjectID()));
     }
 
     @Test
     public void nullInputTest() {
-        final CloseTaskOutputBoundary presenter = new CloseTaskOutputBoundary() {
+        GetTaskOutputBoundary failPresenter = new GetTaskOutputBoundary() {
             @Override
-            public void prepareSuccessView(CloseTaskOutputData output) {
-                Assertions.fail("success view not expected");
+            public void prepareSuccessView(GetTaskOutputData getTaskOutputData) {
+                fail();
             }
-
             @Override
-            public void prepareFailView(String errMessage) {
-                assertNotNull(errMessage);
+            public void prepareFailView(String error) {
+                assertEquals("Input data is null", error);
             }
         };
-        final CloseTaskInputBoundary interactor = new CloseTaskInteractor(presenter, taskRepository);
-        interactor.execute(null);
+
+        InMemoryDAO inMemoryDAO = new InMemoryDAO();
+
+        GetTaskInteractor getTaskInteractor = new GetTaskInteractor(failPresenter, inMemoryDAO);
+        getTaskInteractor.execute(null);
     }
 
+    @Test
+    public void nullProjectIdTest() {
+        GetTaskOutputBoundary failPresenter = new GetTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GetTaskOutputData getTaskOutputData) {
+                fail();
+            }
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Project ID is missing", error);
+            }
+        };
+
+        InMemoryDAO inMemoryDAO = new InMemoryDAO();
+
+        GetTaskInteractor getTaskInteractor = new GetTaskInteractor(failPresenter, inMemoryDAO);
+        getTaskInteractor.execute(new GetTaskInputData(null));
+    }
+
+    @Test
+    public void nullDAOTest() {
+        GetTaskOutputBoundary failPresenter = new GetTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GetTaskOutputData getTaskOutputData) {
+                fail();
+            }
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Cannot invoke \"domains.task.use_case.get_task.GetTaskDataAccessInterface.getTasks(String)\" because \"this.getTaskDataAccess\" is null", error);
+            }
+        };
+
+        GetTaskInteractor getTaskInteractor = new GetTaskInteractor(failPresenter, null);
+        getTaskInteractor.execute(new GetTaskInputData(task.getProjectID()));
+
+    }
 }
-*/

@@ -145,4 +145,23 @@ public class EditTaskInteractorTest {
         final EditTaskInputBoundary interactor = new EditTaskInteractor(presenter, taskRepository);
         interactor.execute(input);
     }
+
+    @Test
+    public void DAOExceptionTest() {
+        final EditTaskOutputBoundary presenter = new EditTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(EditTaskOutputData output) {
+                Assertions.fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String errMessage) {
+                assertNotNull(errMessage);
+            }
+        };
+
+        EditTaskInputData input = new EditTaskInputData(task.getTaskID(),task.getProjectID(), task.getTaskName(), task.getTaskDescription());
+        final EditTaskInputBoundary interactor = new EditTaskInteractor(presenter, null);
+        interactor.execute(input);
+    }
 }

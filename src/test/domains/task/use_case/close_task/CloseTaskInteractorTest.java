@@ -3,8 +3,6 @@ package domains.task.use_case.close_task;
 import domains.project.entity.Project;
 import domains.task.entity.Task;
 import domains.task.use_case.InMemoryDAO;
-import domains.task.use_case.add_task.AddTaskInputBoundary;
-import domains.task.use_case.add_task.AddTaskInteractor;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -86,5 +84,22 @@ public class CloseTaskInteractorTest {
         };
         final CloseTaskInputBoundary interactor = new CloseTaskInteractor(presenter, taskRepository);
         interactor.execute(null);
+    }
+
+    @Test
+    public void DAOExceptionTest() {
+        final CloseTaskOutputBoundary presenter = new CloseTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CloseTaskOutputData output) {
+                fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String errMessage) {
+                assertNotNull(errMessage);
+            }
+        };
+        final CloseTaskInputBoundary interactor = new CloseTaskInteractor(presenter, null);
+        interactor.execute(inputData);
     }
 }
