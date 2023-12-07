@@ -1,5 +1,6 @@
 package view.user;
 
+import com.google.api.client.googleapis.testing.json.GoogleJsonResponseExceptionFactoryTesting;
 import interface_adapter.user.login.LoginController;
 import interface_adapter.user.login.LoginState;
 import interface_adapter.user.login.LoginViewModel;
@@ -72,6 +73,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
+                            currentState.setUsername(usernameInputField.getText());
+                            currentState.setPassword(passwordInputField.getText());
+                            currentState.setRepeatPassword(repeatPasswordInputField.getText());
+                            signupViewModel.setState(currentState);
                             signupController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword(),
@@ -207,5 +212,25 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private void clearRepeatedPasswordField() {
         repeatPasswordInputField.setText("");
+    }
+
+    public JButton getSignUpButton() {
+        return signUp;
+    }
+
+    public JButton getCancelButton() {
+        return cancel;
+    }
+
+    public JTextField getUsernameInputField() {
+        return usernameInputField;
+    }
+
+    public JPasswordField getPasswordInputField() {
+        return passwordInputField;
+    }
+
+    public JPasswordField getRepeatPasswordInputField() {
+        return repeatPasswordInputField;
     }
 }

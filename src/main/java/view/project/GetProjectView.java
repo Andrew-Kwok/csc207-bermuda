@@ -270,4 +270,32 @@ public class GetProjectView extends JPanel implements ActionListener, PropertyCh
             }
         }
     }
+
+    public JButton getCreateProjectButton() {
+        return createProject;
+    }
+
+    public JButton getCheckTaskButton() {
+        return checkTask;
+    }
+
+    public JButton getEditProjectButton() {
+        return editProject;
+    }
+
+    public JButton getShareProjectButton() {
+        return shareProject;
+    }
+
+    public JButton getDeleteProjectButton() {
+        return deleteProject;
+    }
+
+    public JButton getGoBackButton() {
+        return goBack;
+    }
+
+    public JList<Map<String, String>> getProjectList() {
+        return projectList;
+    }
 }

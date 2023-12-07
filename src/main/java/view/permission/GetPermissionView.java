@@ -183,4 +183,24 @@ public class GetPermissionView extends JPanel implements ActionListener, Propert
             }
         }
     }
+
+    public JButton getCreatePermissionButton() {
+        return createPermission;
+    }
+
+    public JButton getUpdatePermissionButton() {
+        return updatePermission;
+    }
+
+    public JButton getDeletePermissionButton() {
+        return deletePermission;
+    }
+
+    public JButton getGoBackButton() {
+        return goBack;
+    }
+
+    public JList<Map<String, String>> getPermissionList() {
+        return permissionList;
+    }
 }

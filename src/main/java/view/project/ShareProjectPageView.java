@@ -44,7 +44,7 @@ public class ShareProjectPageView extends JPanel implements
     DefaultListModel<UserFormat> userListModel = new DefaultListModel<>();
     JList<UserFormat> userList = new JList<>(userListModel);
 
-    private class UserFormat {
+    public class UserFormat {
         private final String username;
         private final String userId;
         public UserFormat(String username, String userId) {
@@ -199,4 +199,16 @@ public class ShareProjectPageView extends JPanel implements
             userListModel.addElement(formatterUser);
         }
     }
+    public JButton getShareButton() { return this.shareButton; }
+
+    public JButton getBackButton() { return this.backButton; }
+
+    public JList<UserFormat> getUserList() {
+        return userList;
+    }
+
+    public JButton getShareProjectButton() {
+        return shareButton;
+    }
+
 }

@@ -59,6 +59,10 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(addTaskButton)) {
                             AddTaskState addTaskState = addTaskViewModel.getState();
+                            addTaskState.setTaskName(taskNameInputField.getText());
+                            addTaskState.setTaskDescription(taskDescriptionInputField.getText());
+                            addTaskViewModel.setState(addTaskState);
+
                             addTaskController.execute(
                                     addTaskState.getProjectID(),
                                     addTaskState.getTaskName(),
@@ -158,5 +162,21 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
         AddTaskState addTaskState = addTaskViewModel.getState();
         addTaskState.setTaskName("");
         addTaskState.setTaskDescription("");
+    }
+
+    public JButton getAddTaskButton() {
+        return addTaskButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JTextField getTaskNameInputField() {
+        return taskNameInputField;
+    }
+
+    public JTextField getTaskDescriptionInputField() {
+        return taskDescriptionInputField;
     }
 }

@@ -70,10 +70,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
+                            currentState.setUsername(usernameInputField.getText());
+                            currentState.setPassword(passwordInputField.getText());
+                            loginViewModel.setState(currentState);
                             loginController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword()
                             );
+                            loginViewModel.setState(new LoginState());
                         }
                     }
                 }
@@ -84,13 +88,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(signUp)) {
-                            // TODO show signupView
                             viewManagerModel.setActiveView(SIGNUP_VIEW_NAME);
                             viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
         );
+
+//        comment the following line to when doing testing, so it won't exit the program
         exit.addActionListener(e -> {
                     System.exit(0);
                 }
@@ -193,5 +198,27 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         passwordInputField.setText("");
     }
 
+    public JTextField getUsernameInputField() {
+        return usernameInputField;
+    }
 
+    public JPasswordField getPasswordInputField() {
+        return passwordInputField;
+    }
+
+    public JButton getLogInButton() {
+        return logIn;
+    }
+
+    public JButton getSignUpButton() {
+        return signUp;
+    }
+
+    public JButton getLoginButton() {
+        return logIn;
+    }
+
+    public JButton getExitButton() {
+        return exit;
+    }
 }

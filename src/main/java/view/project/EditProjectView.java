@@ -63,6 +63,8 @@ public class EditProjectView extends JPanel implements ActionListener, PropertyC
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(editProjectButton)) {
                             EditProjectState editProjectState = editProjectViewModel.getState();
+                            editProjectState.setProjectName(projectNameInputField.getText());
+                            editProjectViewModel.setState(editProjectState);
                             editProjectController.execute(
                                     editProjectState.getProjectID(),
                                     editProjectState.getProjectName()
@@ -140,6 +142,14 @@ public class EditProjectView extends JPanel implements ActionListener, PropertyC
 
         EditProjectState editProjectState = editProjectViewModel.getState();
         editProjectState.setProjectName("");
+    }
+
+    public JTextField getProjectNameInputField() {
+        return projectNameInputField;
+    }
+
+    public JButton getEditProjectButton() {
+        return editProjectButton;
     }
 }
 

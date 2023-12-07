@@ -125,4 +125,16 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             JOptionPane.showMessageDialog(this, "%s logged out!".formatted(state.getUser().getUsername()));
         }
     }
+
+    public JButton getCheckProjectButton() {
+        return checkProject;
+    }
+
+    public JButton getCheckPermissionButton() {
+        return checkPermission;
+    }
+
+    public JButton getLogOutButton() {
+        return logOut;
+    }
 }

@@ -189,8 +189,28 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 JOptionPane.showMessageDialog(this, state.getCloseTaskError());
             } else {
                 JOptionPane.showMessageDialog(this, String.format("Task with id \"%s\" closed.", state.getTaskID()));
-                this.getTaskController.execute(null);
+                this.getTaskController.execute(getTaskViewModel.getState().getProjectID());
             }
         }
+    }
+
+    public JButton getAddTaskButton() {
+        return addTask;
+    }
+
+    public JButton getEditTaskButton() {
+        return editTask;
+    }
+
+    public JButton getCloseTaskButton() {
+        return closeTask;
+    }
+
+    public JButton getGoBackButton() {
+        return goBack;
+    }
+
+    public JList<Map<String, String>> getTaskList() {
+        return taskList;
     }
 }

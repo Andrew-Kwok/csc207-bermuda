@@ -70,6 +70,11 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(createPermissionButton)) {
                             CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                            createPermissionState.setUserId(userIdInputField.getText());
+                            createPermissionState.setProjectId(projectIdInputField.getText());
+                            createPermissionState.setPermissionName(permissionNameInputField.getText());
+                            createPermissionState.setPermissionDescription(permissionDescriptionInputField.getText());
+                            createPermissionViewModel.setState(createPermissionState);
                             createPermissionController.execute(
                                     createPermissionState.getUserId(),
                                     createPermissionState.getProjectId(),
@@ -208,5 +213,29 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
         projectIdInputField.setText("");
         permissionNameInputField.setText("");
         permissionDescriptionInputField.setText("");
+    }
+
+    public JButton getCreatePermissionButton() {
+        return createPermissionButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancel;
+    }
+
+    public JTextField getUserIdInputField() {
+        return userIdInputField;
+    }
+
+    public JTextField getProjectIdInputField() {
+        return projectIdInputField;
+    }
+
+    public JTextField getPermissionNameInputField() {
+        return permissionNameInputField;
+    }
+
+    public JTextField getPermissionDescriptionInputField() {
+        return permissionDescriptionInputField;
     }
 }
