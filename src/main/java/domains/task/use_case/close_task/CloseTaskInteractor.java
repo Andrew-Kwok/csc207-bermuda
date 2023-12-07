@@ -15,11 +15,10 @@ public class CloseTaskInteractor implements CloseTaskInputBoundary{
         } else {
             try {
                 dataAccess.closeTask(input.getTaskID());
+                presenter.prepareSuccessView(new CloseTaskOutputData(input.getTaskID()));
             } catch (Exception e) {
                 presenter.prepareFailView(e.getMessage());
             }
-
-            presenter.prepareSuccessView(new CloseTaskOutputData(input.getTaskID()));
         }
     }
 }
