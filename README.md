@@ -5,7 +5,7 @@
 - Andrew Andrew
 - Louis Ryan Tan
 - Aral Ergene
-- Laura Zhan
+- Laura (KunYuan) Zhan
 - Hanwen (Henry) Shao
 
 ## App Specification
@@ -25,3 +25,4 @@ To obtain `TODOIST_API_TOKEN`, refer to this ![blog](https://todoist.com/help/ar
 - ![Google Cloud SQL](https://cloud.google.com/sql)
 
 ## Testing
+<img width="577" alt="image" src="https://github.com/Andrew-Kwok/csc207-bermuda/assets/52167672/10243a26-1e3a-4dbd-b989-fee964620845">
