@@ -92,6 +92,8 @@ public class DeletePermissionInteractorTest {
                     throw new RuntimeException(e);
                 }
 
+                assertEquals(deletePermissionOutputData.getPermissionId(), "10000000-0000-0000-0000-000000000000");
+
                 assertEquals(1, permissions.size());
                 for (int i = 0; i < 1; ++i) {
                     assertEquals(testPermissions.get(i).getPermissionID(), permissions.get(i).getPermissionID());
@@ -113,6 +115,44 @@ public class DeletePermissionInteractorTest {
         testPermissions.remove(0);
 
         deletePermissionInteractor = new DeletePermissionInteractor(deletePermissionPresenter, sqlDAO);
+        deletePermissionInteractor.execute(new DeletePermissionInputData(
+                "10000000-0000-0000-0000-000000000000"
+        ));
+    }
+
+    @Test
+    public void testDeletePermissionInteractorWithNullInput() {
+        deletePermissionPresenter = new DeletePermissionOutputBoundary() {
+            @Override
+            public void prepareSuccessView(DeletePermissionOutputData deletePermissionOutputData) {
+                fail();
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Permission id is required", error);
+            }
+        };
+
+        deletePermissionInteractor = new DeletePermissionInteractor(deletePermissionPresenter, sqlDAO);
+        deletePermissionInteractor.execute(null);
+    }
+
+    @Test
+    public void testDeletePermissionWithNullDAO() {
+        deletePermissionPresenter = new DeletePermissionOutputBoundary() {
+            @Override
+            public void prepareSuccessView(DeletePermissionOutputData deletePermissionOutputData) {
+                fail();
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Cannot invoke \"domains.permission.use_case.delete_permission.DeletePermissionDataAccessInterface.deletePermission(String)\" because \"this.dataAccess\" is null", error);
+            }
+        };
+
+        deletePermissionInteractor = new DeletePermissionInteractor(deletePermissionPresenter, null);
         deletePermissionInteractor.execute(new DeletePermissionInputData(
                 "10000000-0000-0000-0000-000000000000"
         ));

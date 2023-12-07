@@ -146,4 +146,24 @@ public class GetPermissionInteractorTest {
         getPermissionInteractor = new GetPermissionInteractor(getPermissionPresenter, sqlDAO);
         getPermissionInteractor.execute(new GetPermissionInputData(testUsers.get(0).getUserID()));
     }
+
+    @Test
+    public void testGetPermissionInteractorWithNullInput() {
+        getPermissionPresenter = new GetPermissionOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GetPermissionOutputData getPermissionOutputData) {
+                System.out.println("GetPermissionInteractorTest.TestGetPermissionPresenter.prepareSuccessView");
+                System.out.println(getPermissionOutputData.getPermissions());
+                fail();
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Cannot invoke \"domains.permission.use_case.get_permission.GetPermissionDataAccessInterface.getPermissions(String)\" because \"this.dataAccess\" is null", error);
+            }
+        };
+
+        getPermissionInteractor = new GetPermissionInteractor(getPermissionPresenter, null);
+        getPermissionInteractor.execute(new GetPermissionInputData(null));
+    }
 }

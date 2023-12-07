@@ -19,13 +19,6 @@ public class Permission {
         this.permissionDescription = permissionDescription;
     }
 
-    public Permission(String permissionID, String projectID, String userID, String permissionName) {
-        this.permissionID = permissionID;
-        this.projectID = projectID;
-        this.userID = userID;
-        this.permissionName = permissionName;
-    }
-
     public String getPermissionID() {
         return permissionID;
     }
