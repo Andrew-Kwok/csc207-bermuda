@@ -199,13 +199,6 @@ public class ApiDataAccessObject implements
                             .taskDescription(task.getString("description"))
                             .build();
                     tasks.add(taskObj);
-
-//                    tasks.add(new Task(
-//                            task.getString("id"),
-//                            task.getString("project_id"),
-//                            task.getString("content"),
-//                            task.getString("description")
-//                    ));
                 }
                 return tasks;
             } else {
