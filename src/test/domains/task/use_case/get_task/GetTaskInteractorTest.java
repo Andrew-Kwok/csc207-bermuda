@@ -1,10 +1,8 @@
-package domains.task.use_case.close_task;
+package domains.task.use_case.get_task;
 
-import domains.project.entity.Project;
 import domains.task.entity.Task;
 import domains.task.use_case.InMemoryDAO;
-import domains.task.use_case.add_task.AddTaskInputBoundary;
-import domains.task.use_case.add_task.AddTaskInteractor;
+import domains.task.use_case.close_task.*;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -14,13 +12,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class CloseTaskInteractorTest {
+public class GetTaskInteractorTest {
     private InMemoryDAO inMemoryDAO;
-    private String taskID;
     private Task task;
-    CloseTaskInputBoundary closeTaskInteractor;
-    CloseTaskInputData inputData;
-    CloseTaskDataAccessInterface taskRepository;
+    GetTaskInputBoundary getTaskInteractor;
+    GetTaskInputData inputData;
+    GetTaskDataAccessInterface taskRepository;
 
     @org.junit.Before
     public void setUp() throws Exception {
@@ -31,14 +28,14 @@ public class CloseTaskInteractorTest {
 
         task = new Task("0000000000", "2324643105", "task0", "desc0");
         inMemoryDAO.addTask(task);
-        inputData = new CloseTaskInputData(task.getTaskID());
+        inputData = new GetTaskInputData(task.getProjectID());
 
         // Make a presenter here that asserts things
         // This instantiates an anonymous SignupOutputBoundary implementing class
-        CloseTaskOutputBoundary successPresenter = new CloseTaskOutputBoundary() {
+        GetTaskOutputBoundary successPresenter = new GetTaskOutputBoundary() {
             @Override
-            public void prepareSuccessView(CloseTaskOutputData closeTaskOutputData) {
-                assertEquals(closeTaskOutputData.getTaskID(), task.getTaskID());
+            public void prepareSuccessView(GetTaskOutputData getTaskOutputData) {
+                assertEquals(getTaskOutputData.getTasks(), task.getTaskID());
 
             }
             @Override
@@ -87,4 +84,5 @@ public class CloseTaskInteractorTest {
         final CloseTaskInputBoundary interactor = new CloseTaskInteractor(presenter, taskRepository);
         interactor.execute(null);
     }
+
 }

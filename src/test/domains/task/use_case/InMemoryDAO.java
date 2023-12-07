@@ -1,4 +1,4 @@
-package domains.task.use_case.add_task;
+package domains.task.use_case;
 
 import domains.task.entity.Task;
 import domains.task.use_case.add_task.AddTaskDataAccessInterface;
