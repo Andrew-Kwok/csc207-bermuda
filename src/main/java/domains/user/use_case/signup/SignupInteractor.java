@@ -32,6 +32,7 @@ public class SignupInteractor implements SignupInputBoundary {
                 userExists = userDataAccessObject.existsByName(signupInputData.getUsername());
             } catch (Exception e) {
                 userPresenter.prepareFailView(e.getMessage());
+                return;
             }
 
             if (userExists) {
