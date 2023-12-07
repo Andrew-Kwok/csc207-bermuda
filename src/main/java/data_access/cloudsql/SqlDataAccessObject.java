@@ -166,14 +166,12 @@ public class SqlDataAccessObject implements
                             userID(resultSet.getString("id")).
                             username(resultSet.getString("username")).
                             password(resultSet.getString("password")).
-                            userLevel(resultSet.getInt("user_level")).
                             build();
 
 //                    return new User(
 //                            resultSet.getString("id"),
 //                            resultSet.getString("username"),
 //                            resultSet.getString("password"),
-//                            resultSet.getInt("user_level"));
                 }
             } catch (Exception e) {
                 throw new Exception("Error getting user");
@@ -199,14 +197,12 @@ public class SqlDataAccessObject implements
                             userID(resultSet.getString("id")).
                             username(resultSet.getString("username")).
                             password(resultSet.getString("password")).
-                            userLevel(resultSet.getInt("user_level")).
                             build();
 
 //                    return new User(
 //                            resultSet.getString("id"),
 //                            resultSet.getString("username"),
 //                            resultSet.getString("password"),
-//                            resultSet.getInt("user_level"));
                 }
             } catch (Exception e) {
                 throw new Exception("Error getting user");
@@ -219,7 +215,7 @@ public class SqlDataAccessObject implements
     }
 
     public void createUser(User user) throws Exception {
-        String sql = "INSERT INTO user (id, username, password, user_level) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO user (id, username, password) VALUES (?, ?, ?)";
 
         try (Connection connection = sqlDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -227,7 +223,6 @@ public class SqlDataAccessObject implements
             statement.setString(1, user.getUserID());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
-            statement.setInt(4, user.getUserLevel());
 
             statement.executeUpdate();
         } catch (Exception e) {
@@ -236,14 +231,13 @@ public class SqlDataAccessObject implements
     }
 
     public void updateUser(User user) throws Exception {
-        String sql = "UPDATE user SET username = ?, password = ?, user_level = ? WHERE id = ?";
+        String sql = "UPDATE user SET username = ?, password = ? WHERE id = ?";
 
         try (Connection connection = sqlDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
-            statement.setInt(3, user.getUserLevel());
             statement.setString(4, user.getUserID());
 
             statement.executeUpdate();
