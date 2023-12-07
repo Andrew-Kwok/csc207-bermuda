@@ -24,32 +24,27 @@ public class LoginInteractor implements LoginInputBoundary {
         } catch (Exception e) {
             LoginOutputData loginOutputData = new LoginOutputData(emptyUser, 3);
             loginPresenter.prepareFailView(loginOutputData);
+            return;
         }
 
         if (!userExists) {
             LoginOutputData loginOutputData = new LoginOutputData(emptyUser, 1);
             loginPresenter.prepareFailView(loginOutputData);
         } else {
-            String pwd = null;
+            User user = null;
             try {
-                pwd = userDataAccessObject.getUserByUsername(username).getPassword();
+                user = userDataAccessObject.getUserByUsername(loginInputData.getUsername());
             } catch (Exception e) {
                 LoginOutputData loginOutputData = new LoginOutputData(emptyUser, 3);
                 loginPresenter.prepareFailView(loginOutputData);
+                return;
             }
 
-            if (!password.equals(pwd)) {
+            if (!password.equals(user.getPassword())) {
                 LoginOutputData loginOutputData = new LoginOutputData(emptyUser, 2);
                 loginPresenter.prepareFailView(loginOutputData);
             } else {
-                try {
-                    User user = userDataAccessObject.getUserByUsername(loginInputData.getUsername());
-                    LoginOutputData loginOutputData = new LoginOutputData(user, 0);
-                    loginPresenter.prepareSuccessView(loginOutputData);
-                } catch (Exception e) {
-                    LoginOutputData loginOutputData = new LoginOutputData(emptyUser, 3);
-                    loginPresenter.prepareFailView(loginOutputData);
-                }
+                loginPresenter.prepareSuccessView(new LoginOutputData(user, 0));
             }
         }
     }
