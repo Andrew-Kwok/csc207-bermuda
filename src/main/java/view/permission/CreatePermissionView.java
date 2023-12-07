@@ -70,6 +70,11 @@ public class CreatePermissionView extends JPanel implements ActionListener, Prop
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(createPermissionButton)) {
                             CreatePermissionState createPermissionState = createPermissionViewModel.getState();
+                            createPermissionState.setUserId(userIdInputField.getText());
+                            createPermissionState.setProjectId(projectIdInputField.getText());
+                            createPermissionState.setPermissionName(permissionNameInputField.getText());
+                            createPermissionState.setPermissionDescription(permissionDescriptionInputField.getText());
+                            createPermissionViewModel.setState(createPermissionState);
                             createPermissionController.execute(
                                     createPermissionState.getUserId(),
                                     createPermissionState.getProjectId(),

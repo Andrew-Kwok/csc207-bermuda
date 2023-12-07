@@ -65,6 +65,8 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(editTaskButton)) {
                             EditTaskState editTaskState = editTaskViewModel.getState();
+                            editTaskState.setTaskName(taskNameInputField.getText());
+                            editTaskState.setTaskDescription(taskDescriptionInputField.getText());
                             editTaskController.execute(
                                     editTaskState.getTaskID(),
                                     editTaskState.getProjectID(),
@@ -168,5 +170,21 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
         EditTaskState editTaskState = editTaskViewModel.getState();
         editTaskState.setTaskName("");
         editTaskState.setTaskDescription("");
+    }
+
+    public JButton getEditTaskButton() {
+        return editTaskButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancel;
+    }
+
+    public JTextField getTaskNameInputField() {
+        return taskNameInputField;
+    }
+
+    public JTextField getTaskDescriptionInputField() {
+        return taskDescriptionInputField;
     }
 }

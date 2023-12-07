@@ -59,6 +59,10 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(addTaskButton)) {
                             AddTaskState addTaskState = addTaskViewModel.getState();
+                            addTaskState.setTaskName(taskNameInputField.getText());
+                            addTaskState.setTaskDescription(taskDescriptionInputField.getText());
+                            addTaskViewModel.setState(addTaskState);
+
                             addTaskController.execute(
                                     addTaskState.getProjectID(),
                                     addTaskState.getTaskName(),

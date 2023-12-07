@@ -72,6 +72,12 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(updatePermissionButton)) {
                             UpdatePermissionState updatePermissionState = updatePermissionViewModel.getState();
+                            updatePermissionState.setUserId(userIdInputField.getText());
+                            updatePermissionState.setProjectId(projectIdInputField.getText());
+                            updatePermissionState.setPermissionName(permissionNameInputField.getText());
+                            updatePermissionState.setPermissionDescription(permissionDescriptionInputField.getText());
+                            updatePermissionViewModel.setState(updatePermissionState);
+
                             updatePermissionController.execute(
                                     updatePermissionState.getPermissionId(),
                                     updatePermissionState.getUserId(),

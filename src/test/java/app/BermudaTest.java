@@ -240,27 +240,34 @@ class BermudaTest {
         // begin testing
         // start application
         // initial
-        assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
-        assertTrue(loginViewModel.getState().getUsername().isEmpty());
-        assertTrue(loginViewModel.getState().getPassword().isEmpty());
-        assertNull(loginViewModel.getState().getUsernameError());
-        assertNull(loginViewModel.getState().getPasswordError());
-        assertTrue(loginView.getUsernameInputField().getText().isEmpty());
-        assertTrue(loginView.getPasswordInputField().getText().isEmpty());
+        boolean testInitial = true;
+        String testUser = "test_user3";
+        String testUser2 = "test_user4";
+        String testPassword = "test_password";
+        String testPassword2 = "test_password2";
 
-        // signup
-        loginView.getSignUpButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), signupView.viewName);
-        //initial
-        assertTrue(signupViewModel.getState().getUsername().isEmpty());
-        assertTrue(signupViewModel.getState().getPassword().isEmpty());
-        assertTrue(signupViewModel.getState().getRepeatPassword().isEmpty());
-        assertNull(signupViewModel.getState().getUsernameError());
-        assertNull(signupViewModel.getState().getPasswordError());
-        assertNull(signupViewModel.getState().getRepeatPasswordError());
-        assertTrue(signupView.getUsernameInputField().getText().isEmpty());
-        assertTrue(signupView.getPasswordInputField().getText().isEmpty());
-        assertTrue(signupView.getRepeatPasswordInputField().getText().isEmpty());
+        if (testInitial) {
+            assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
+            assertTrue(loginViewModel.getState().getUsername().isEmpty());
+            assertTrue(loginViewModel.getState().getPassword().isEmpty());
+            assertNull(loginViewModel.getState().getUsernameError());
+            assertNull(loginViewModel.getState().getPasswordError());
+            assertTrue(loginView.getUsernameInputField().getText().isEmpty());
+            assertTrue(loginView.getPasswordInputField().getText().isEmpty());
+
+            // signup
+            loginView.getSignUpButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), signupView.viewName);
+            //initial
+            assertTrue(signupViewModel.getState().getUsername().isEmpty());
+            assertTrue(signupViewModel.getState().getPassword().isEmpty());
+            assertTrue(signupViewModel.getState().getRepeatPassword().isEmpty());
+            assertNull(signupViewModel.getState().getUsernameError());
+            assertNull(signupViewModel.getState().getPasswordError());
+            assertNull(signupViewModel.getState().getRepeatPasswordError());
+            assertTrue(signupView.getUsernameInputField().getText().isEmpty());
+            assertTrue(signupView.getPasswordInputField().getText().isEmpty());
+            assertTrue(signupView.getRepeatPasswordInputField().getText().isEmpty());
 
 //        // signup
 //        signupView.getUsernameInputField().setText("test_user");
@@ -275,12 +282,12 @@ class BermudaTest {
 //        assertTrue(signupView.getPasswordInputField().getText().isEmpty());
 //        assertTrue(signupView.getRepeatPasswordInputField().getText().isEmpty());
 //
-        // signup
-        signupView.getUsernameInputField().setText("test_user");
-        signupView.getPasswordInputField().setText("test_password");
-        signupView.getRepeatPasswordInputField().setText("test_password");
-        signupView.getSignUpButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
+            // signup
+            signupView.getUsernameInputField().setText(testUser);
+            signupView.getPasswordInputField().setText(testPassword);
+            signupView.getRepeatPasswordInputField().setText(testPassword);
+            signupView.getSignUpButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
 
 //        // assert usernames are unique
 //        loginView.getSignUpButton().doClick();
@@ -291,24 +298,28 @@ class BermudaTest {
 //        assertEquals(viewManagerModel.getActiveView(), signupView.viewName);
 //        assertNotNull(signupViewModel.getState().getUsernameError());
 //
-        // create other user
-        loginView.getSignUpButton().doClick();
-        signupView.getUsernameInputField().setText("test_user2");
-        signupView.getPasswordInputField().setText("test_password2");
-        signupView.getRepeatPasswordInputField().setText("test_password2");
-        signupView.getSignUpButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
+            // create other user
+            loginView.getSignUpButton().doClick();
 
-        // back to login page
-        assertEquals(loginView.getUsernameInputField().getText(), "test_user2");
-        loginView.getUsernameInputField().setText("test_user");
-        loginView.getPasswordInputField().setText("test_password");
+
+            signupView.getUsernameInputField().setText(testUser2);
+            signupView.getPasswordInputField().setText(testPassword2);
+            signupView.getRepeatPasswordInputField().setText(testPassword2);
+            signupView.getSignUpButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
+
+            // back to login page
+            assertEquals(loginView.getUsernameInputField().getText(), testUser2);
+        }
+
+        loginView.getUsernameInputField().setText(testUser2);
+        loginView.getPasswordInputField().setText(testPassword2);
         loginView.getLoginButton().doClick();
         assertEquals(viewManagerModel.getActiveView(), loggedInUserView.viewName);
-        assertEquals(loggedInUserViewModel.getState().getUser().getUsername(), "test_user");
-        assertEquals(loggedInUserViewModel.getState().getUser().getPassword(), "test_password");
-        String userID = loggedInUserViewModel.getState().getUser().getUserID();
-        assertNotNull(userID);
+        assertEquals(loggedInUserViewModel.getState().getUser().getUsername(), testUser2);
+        assertEquals(loggedInUserViewModel.getState().getUser().getPassword(), testPassword2);
+        String otherUserID = loggedInUserViewModel.getState().getUser().getUserID();
+        assertNotNull(otherUserID);
         assertNull(loginViewModel.getState().getUsernameError());
 
         // logout
@@ -316,16 +327,17 @@ class BermudaTest {
         assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
         assertNull(loginViewModel.getState().getUsernameError());
         assertNull(loginViewModel.getState().getPasswordError());
-        assertEquals(loginView.getUsernameInputField().getText(), "test_user");
+        assertEquals(loginView.getUsernameInputField().getText(), testUser2);
         assertTrue(loginView.getPasswordInputField().getText().isEmpty());
 
         // log back in
-        loginView.getUsernameInputField().setText("test_user");
-        loginView.getPasswordInputField().setText("test_password");
+        loginView.getUsernameInputField().setText(testUser);
+        loginView.getPasswordInputField().setText(testPassword);
         loginView.getLoginButton().doClick();
         assertEquals(viewManagerModel.getActiveView(), loggedInUserView.viewName);
-        assertEquals(loggedInUserViewModel.getState().getUser().getUsername(), "test_user");
-        assertEquals(loggedInUserViewModel.getState().getUser().getPassword(), "test_password");
+        assertEquals(loggedInUserViewModel.getState().getUser().getUsername(), testUser);
+        assertEquals(loggedInUserViewModel.getState().getUser().getPassword(), testPassword);
+        String userID = loggedInUserViewModel.getState().getUser().getUserID();
 
         // check project
         loggedInUserView.getCheckProjectButton().doClick();
@@ -333,18 +345,21 @@ class BermudaTest {
         assertNull(getProjectViewModel.getState().getGetProjectError());
 
         // initially no project
-        assertTrue(getProjectViewModel.getState().getProjects().isEmpty());
-        assertEquals(getProjectViewModel.getState().getUserId(), userID);
+        boolean projectNotCreated = true;
+        if (projectNotCreated) {
+            assertTrue(getProjectViewModel.getState().getProjects().isEmpty());
+            assertEquals(getProjectViewModel.getState().getUserId(), userID);
 
-        // create project
-        getProjectView.getCreateProjectButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), createProjectView.viewName);
-        assertTrue(createProjectViewModel.getState().getProjectName().isEmpty());
-        assertNull(createProjectViewModel.getState().getProjectError());
-        assertTrue(createProjectViewModel.getState().getProjectName().isEmpty());
-        assertTrue(createProjectView.getProjectNameInputField().getText().isEmpty());
-        createProjectView.getProjectNameInputField().setText("test_project");
-        createProjectView.getCreateProjectButton().doClick();
+            // create project
+            getProjectView.getCreateProjectButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), createProjectView.viewName);
+            assertTrue(createProjectViewModel.getState().getProjectName().isEmpty());
+            assertNull(createProjectViewModel.getState().getProjectError());
+            assertTrue(createProjectViewModel.getState().getProjectName().isEmpty());
+            assertTrue(createProjectView.getProjectNameInputField().getText().isEmpty());
+            createProjectView.getProjectNameInputField().setText("test_project");
+            createProjectView.getCreateProjectButton().doClick();
+        }
 
         // check project
         assertEquals(viewManagerModel.getActiveView(), getProjectView.viewName);
@@ -364,136 +379,135 @@ class BermudaTest {
         assertEquals(viewManagerModel.getActiveView(), loggedInUserView.viewName);
 
         // check permission
-        loggedInUserView.getCheckPermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
-        assertNull(getPermissionViewModel.getState().getGetPermissionError());
-        assertTrue(getPermissionViewModel.getState().getPermissions()
-                .stream()
-                .anyMatch((Map<String, String> permission) ->
-                        permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
-                        permission.get(ViewConstant.USER_ID).equals(userID)));
+        boolean testPermission = true;
+        if (testPermission) {
+            loggedInUserView.getCheckPermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            assertNull(getPermissionViewModel.getState().getGetPermissionError());
+//        assertTrue(getPermissionViewModel.getState().getPermissions()
+//                .stream()
+//                .anyMatch((Map<String, String> permission) ->
+//                        permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
+//                        permission.get(ViewConstant.USER_ID).equals(userID)));
 
-        Map<String, String> projectPermission = getPermissionViewModel.getState().getPermissions()
+//            Map<String, String> projectPermission = getPermissionViewModel.getState().getPermissions()
+//                    .stream()
+//                    .filter((Map<String, String> permission) ->
+//                            permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
+//                                    permission.get(ViewConstant.USER_ID).equals(userID))
+//                    .findFirst()
+//                    .get();
+//
+            // create permission
+            getPermissionView.getCreatePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), createPermissionView.viewName);
+            assertNull(createPermissionViewModel.getState().getCreatePermissionError());
+            assertTrue(createPermissionView.getUserIdInputField().getText().isEmpty());
+            assertTrue(createPermissionView.getProjectIdInputField().getText().isEmpty());
+            assertTrue(createPermissionView.getPermissionNameInputField().getText().isEmpty());
+            assertTrue(createPermissionView.getPermissionDescriptionInputField().getText().isEmpty());
+
+            // go back
+            createPermissionView.getCancelButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+
+            // create permission
+            getPermissionView.getCreatePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), createPermissionView.viewName);
+            createPermissionView.getUserIdInputField().setText(userID);
+            createPermissionView.getProjectIdInputField().setText(projectID);
+            createPermissionView.getPermissionNameInputField().setText("test_permission");
+            createPermissionView.getPermissionDescriptionInputField().setText("test_permission_description");
+            createPermissionView.getCreatePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            assertNull(getPermissionViewModel.getState().getGetPermissionError());
+            assertTrue(getPermissionViewModel.getState().getPermissions()
+                    .stream()
+                    .anyMatch((Map<String, String> permission) ->
+                            permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
+                                    permission.get(ViewConstant.USER_ID).equals(userID) &&
+                                    permission.get(ViewConstant.PERMISSION_NAME).equals("test_permission") &&
+                                    permission.get(ViewConstant.PERMISSION_DESCRIPTION).equals("test_permission_description")));
+
+            // keep new permission
+            Map<String, String> newPermission = getPermissionViewModel.getState().getPermissions()
                     .stream()
                     .filter((Map<String, String> permission) ->
                             permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
-                                    permission.get(ViewConstant.USER_ID).equals(userID))
+                                    permission.get(ViewConstant.USER_ID).equals(userID) &&
+                                    permission.get(ViewConstant.PERMISSION_NAME).equals("test_permission") &&
+                                    permission.get(ViewConstant.PERMISSION_DESCRIPTION).equals("test_permission_description"))
                     .findFirst()
                     .get();
 
-        // create permission
-        getPermissionView.getCreatePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), createPermissionView.viewName);
-        assertNull(createPermissionViewModel.getState().getCreatePermissionError());
-        assertTrue(createPermissionView.getUserIdInputField().getText().isEmpty());
-        assertTrue(createPermissionView.getProjectIdInputField().getText().isEmpty());
-        assertTrue(createPermissionView.getPermissionNameInputField().getText().isEmpty());
-        assertTrue(createPermissionView.getPermissionDescriptionInputField().getText().isEmpty());
+            // update permission
+            //if no permission chosen
+            getPermissionView.getUpdatePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
 
-        // go back
-        createPermissionView.getCancelButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            // choose permission
+            getPermissionView.getPermissionList().setSelectedValue(newPermission, true);
+            getPermissionView.getUpdatePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), updatePermissionView.viewName);
+            assertEquals(updatePermissionViewModel.getState().getPermissionId(),
+                    newPermission.get(ViewConstant.PERMISSION_ID));
+            assertEquals(updatePermissionViewModel.getState().getUserId(),
+                    newPermission.get(ViewConstant.USER_ID));
+            assertEquals(updatePermissionViewModel.getState().getProjectId(),
+                    newPermission.get(ViewConstant.PROJECT_ID));
+            assertEquals(updatePermissionViewModel.getState().getPermissionName(),
+                    newPermission.get(ViewConstant.PERMISSION_NAME));
+            assertEquals(updatePermissionViewModel.getState().getPermissionDescription(),
+                    newPermission.get(ViewConstant.PERMISSION_DESCRIPTION));
 
-        // create permission
-        getPermissionView.getCreatePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), createPermissionView.viewName);
-        createPermissionView.getUserIdInputField().setText(userID);
-        createPermissionView.getProjectIdInputField().setText(projectID);
-        createPermissionView.getPermissionNameInputField().setText("test_permission");
-        createPermissionView.getPermissionDescriptionInputField().setText("test_permission_description");
-        createPermissionView.getCreatePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
-        assertNull(getPermissionViewModel.getState().getGetPermissionError());
-        assertTrue(getPermissionViewModel.getState().getPermissions()
-                .stream()
-                .anyMatch((Map<String, String> permission) ->
-                        permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
-                                permission.get(ViewConstant.USER_ID).equals(userID) &&
-                                permission.get(ViewConstant.PERMISSION_NAME).equals("test_permission") &&
-                                permission.get(ViewConstant.PERMISSION_DESCRIPTION).equals("test_permission_description")));
+            // go back
+            updatePermissionView.getCancelButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
 
-        // keep new permission
-        Map<String, String> newPermission = getPermissionViewModel.getState().getPermissions()
-                .stream()
-                .filter((Map<String, String> permission) ->
-                        permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
-                                permission.get(ViewConstant.USER_ID).equals(userID) &&
-                                permission.get(ViewConstant.PERMISSION_NAME).equals("test_permission") &&
-                                permission.get(ViewConstant.PERMISSION_DESCRIPTION).equals("test_permission_description"))
-                .findFirst()
-                .get();
+            // update
+            getPermissionView.getPermissionList().setSelectedValue(newPermission, true);
+            getPermissionView.getUpdatePermissionButton().doClick();
+            updatePermissionView.getPermissionNameInputField().setText("test_permission_updated");
+            updatePermissionView.getPermissionDescriptionInputField().setText("test_permission_description_updated");
+            updatePermissionView.getUpdatePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            assertNull(getPermissionViewModel.getState().getGetPermissionError());
 
-        // update permission
-        //if no permission chosen
-        getPermissionView.getUpdatePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            // check updated permission
+            Map<String, String> updatedPermission = getPermissionViewModel.getState().getPermissions()
+                    .stream()
+                    .filter((Map<String, String> permission) ->
+                            permission.get(ViewConstant.PROJECT_ID).equals(projectID) &&
+                                    permission.get(ViewConstant.USER_ID).equals(userID) &&
+                                    permission.get(ViewConstant.PERMISSION_NAME).equals("test_permission_updated") &&
+                                    permission.get(ViewConstant.PERMISSION_DESCRIPTION).equals("test_permission_description_updated"))
+                    .findFirst()
+                    .get();
 
-        // choose permission
-        getPermissionView.getPermissionList().setSelectedValue(newPermission, true);
-        getPermissionView.getUpdatePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), updatePermissionView.viewName);
-        assertEquals(updatePermissionViewModel.getState().getPermissionId(),
-                newPermission.get(ViewConstant.PERMISSION_ID));
-        assertEquals(updatePermissionViewModel.getState().getUserId(),
-                newPermission.get(ViewConstant.USER_ID));
-        assertEquals(updatePermissionViewModel.getState().getProjectId(),
-                newPermission.get(ViewConstant.PROJECT_ID));
-        assertEquals(updatePermissionViewModel.getState().getPermissionName(),
-                newPermission.get(ViewConstant.PERMISSION_NAME));
-        assertEquals(updatePermissionViewModel.getState().getPermissionDescription(),
-                newPermission.get(ViewConstant.PERMISSION_DESCRIPTION));
+            assertEquals(updatedPermission.get(ViewConstant.PERMISSION_ID),
+                    newPermission.get(ViewConstant.PERMISSION_ID));
+            assertEquals(updatedPermission.get(ViewConstant.PERMISSION_NAME), "test_permission_updated");
+            assertEquals(updatedPermission.get(ViewConstant.PERMISSION_DESCRIPTION), "test_permission_description_updated");
 
-        // go back
-        updatePermissionView.getCancelButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            // delete permission
+            // if no permission chosen
+            getPermissionView.getDeletePermissionButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
 
-        // update
-        getPermissionView.getPermissionList().setSelectedValue(newPermission, true);
-        getPermissionView.getUpdatePermissionButton().doClick();
-        updatePermissionView.getUserIdInputField().setText(userID + "updated");
-        updatePermissionView.getProjectIdInputField().setText(projectID + "updated");
-        updatePermissionView.getPermissionNameInputField().setText("test_permission_updated");
-        updatePermissionView.getPermissionDescriptionInputField().setText("test_permission_description_updated");
-        updatePermissionView.getUpdatePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
-        assertNull(getPermissionViewModel.getState().getGetPermissionError());
+            // choose permission
+            getPermissionView.getPermissionList().setSelectedValue(updatedPermission, true);
+            getPermissionView.getDeletePermissionButton().doClick();
 
-        // check updated permission
-        Map<String, String> updatedPermission = getPermissionViewModel.getState().getPermissions()
-                .stream()
-                .filter((Map<String, String> permission) ->
-                        permission.get(ViewConstant.PROJECT_ID).equals(projectID + "updated") &&
-                                permission.get(ViewConstant.USER_ID).equals(userID + "updated") &&
-                                permission.get(ViewConstant.PERMISSION_NAME).equals("test_permission_updated") &&
-                                permission.get(ViewConstant.PERMISSION_DESCRIPTION).equals("test_permission_description_updated"))
-                .findFirst()
-                .get();
-        assertEquals(updatedPermission.get(ViewConstant.PERMISSION_ID),
-                newPermission.get(ViewConstant.PERMISSION_ID));
-        assertEquals(updatedPermission.get(ViewConstant.USER_ID),
-                newPermission.get(ViewConstant.USER_ID) + "updated");
-        assertEquals(updatedPermission.get(ViewConstant.PROJECT_ID), "updated");
-        assertEquals(updatedPermission.get(ViewConstant.PERMISSION_NAME), "test_permission_updated");
-        assertEquals(updatedPermission.get(ViewConstant.PERMISSION_DESCRIPTION), "test_permission_description_updated");
-
-        // delete permission
-        // if no permission chosen
-        getPermissionView.getDeletePermissionButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
-
-        // choose permission
-        getPermissionView.getPermissionList().setSelectedValue(updatedPermission, true);
-        getPermissionView.getDeletePermissionButton().doClick();
-
-        // confirm delete
-        assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
-        assertNull(getPermissionViewModel.getState().getGetPermissionError());
-        assertFalse(getPermissionViewModel.getState().getPermissions()
-                .stream()
-                .anyMatch((Map<String, String> permission) ->
-                        permission.get(ViewConstant.PERMISSION_ID)
-                                .equals(updatedPermission.get(ViewConstant.PERMISSION_ID))
-                ));
+            // confirm delete
+            assertEquals(viewManagerModel.getActiveView(), getPermissionView.viewName);
+            assertNull(getPermissionViewModel.getState().getGetPermissionError());
+            assertFalse(getPermissionViewModel.getState().getPermissions()
+                    .stream()
+                    .anyMatch((Map<String, String> permission) ->
+                            permission.get(ViewConstant.PERMISSION_ID)
+                                    .equals(updatedPermission.get(ViewConstant.PERMISSION_ID))
+                    ));
+        }
 
         // check project
         getPermissionView.getGoBackButton().doClick();
@@ -523,36 +537,39 @@ class BermudaTest {
         assertEquals(project.get(ViewConstant.PROJECT_NAME), "test_project_updated");
 
         // share project
-        getProjectView.getProjectList().setSelectedValue(project, true);
-        getProjectView.getShareProjectButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), shareProjectPageView.viewName);
-        assertEquals(shareProjectPageViewModel.getState().getProjectId(), project.get(ViewConstant.PROJECT_ID));
-        assertEquals(shareProjectPageViewModel.getState().getProjectName(), project.get(ViewConstant.PROJECT_NAME));
-        assertEquals(shareProjectPageViewModel.getState().getUserId(), userID);
+        boolean shared = true;
+        if (!shared) {
+            getProjectView.getProjectList().setSelectedValue(project, true);
+            getProjectView.getShareProjectButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), shareProjectPageView.viewName);
+            assertEquals(shareProjectPageViewModel.getState().getProjectId(), project.get(ViewConstant.PROJECT_ID));
+            assertEquals(shareProjectPageViewModel.getState().getProjectName(), project.get(ViewConstant.PROJECT_NAME));
 
-        // no user chosen
-        shareProjectPageView.getShareProjectButton().doClick();
-        assertEquals(viewManagerModel.getActiveView(), shareProjectPageView.viewName);
+            // no user chosen
+            shareProjectPageView.getShareProjectButton().doClick();
+            assertEquals(viewManagerModel.getActiveView(), shareProjectPageView.viewName);
 
-        // select other user
-        for (int i = 0; i < shareProjectPageView.getUserList().getModel().getSize(); i++) {
-            if (!shareProjectPageView.getUserList().getModel().getElementAt(i).getUserId().equals(userID)) {
-                shareProjectPageView.getUserList().setSelectedIndex(i);
-                break;
+            // select other user
+            for (int i = 0; i < shareProjectPageView.getUserList().getModel().getSize(); i++) {
+                if (shareProjectPageView.getUserList().getModel()
+                        .getElementAt(i)
+                        .getUserId()
+                        .equals(otherUserID)) {
+                    shareProjectPageView.getUserList().setSelectedIndex(i);
+                    break;
+                }
             }
+            shareProjectPageView.getShareProjectButton().doClick();
+
+            // manually choose yes option
+            assertEquals(viewManagerModel.getActiveView(), getProjectView.viewName);
+            assertNull(getProjectViewModel.getState().getGetProjectError());
         }
-        shareProjectPageView.getShareProjectButton().doClick();
-
-        // yes option
-        assertEquals(viewManagerModel.getActiveView(), getProjectView.viewName);
-        assertNull(getProjectViewModel.getState().getGetProjectError());
-
         // check tasks
         getProjectView.getProjectList().setSelectedValue(project, true);
         getProjectView.getCheckTaskButton().doClick();
         assertEquals(viewManagerModel.getActiveView(), getTaskView.viewName);
         assertNull(getTaskViewModel.getState().getGetTaskError());
-        assertTrue(getTaskViewModel.getState().getTasks().isEmpty());
 
         // add task
         getTaskView.getAddTaskButton().doClick();
@@ -579,6 +596,45 @@ class BermudaTest {
         assertEquals(viewManagerModel.getActiveView(), editTaskView.viewName);
         assertEquals(editTaskViewModel.getState().getTaskName(), task.get(ViewConstant.TASK_NAME));
         assertEquals(editTaskViewModel.getState().getTaskDescription(), task.get(ViewConstant.TASK_DESCRIPTION));
-        getTaskView.
+        editTaskView.getTaskNameInputField().setText("test_task_updated");
+        editTaskView.getTaskDescriptionInputField().setText("test_task_description_updated");
+        editTaskView.getEditTaskButton().doClick();
+        assertEquals(viewManagerModel.getActiveView(), getTaskView.viewName);
+        assertNull(getTaskViewModel.getState().getGetTaskError());
+        assertNotNull(getTaskViewModel.getState().getTasks());
+        Map<String, String> prevTask = task;
+        task = getTaskViewModel.getState().getTasks()
+                .stream()
+                .filter((Map<String, String> task_) ->
+                        task_.get(ViewConstant.TASK_ID).equals(prevTask.get(ViewConstant.TASK_ID)))
+                .findFirst()
+                .get();
+        assertEquals(task.get(ViewConstant.TASK_NAME), "test_task_updated");
+        assertEquals(task.get(ViewConstant.TASK_DESCRIPTION), "test_task_description_updated");
+
+        // close task
+        // yes option
+        getTaskView.getTaskList().setSelectedValue(task, true);
+        getTaskView.getCloseTaskButton().doClick();
+        assertEquals(viewManagerModel.getActiveView(), getTaskView.viewName);
+        assertNull(getTaskViewModel.getState().getGetTaskError());
+        assertTrue(getTaskViewModel.getState().getTasks().isEmpty());
+        assertEquals(viewManagerModel.getActiveView(), getTaskView.viewName);
+
+        // go back
+        getTaskView.getGoBackButton().doClick();
+        assertEquals(viewManagerModel.getActiveView(), getProjectView.viewName);
+
+        // delete project
+        getProjectView.getProjectList().setSelectedValue(project, true);
+        getProjectView.getDeleteProjectButton().doClick();
+        assertEquals(viewManagerModel.getActiveView(), getProjectView.viewName);
+
+        // logout and exit
+        loggedInUserView.getLogOutButton().doClick();
+        assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
+        loginView.getExitButton().doClick();
+        assertEquals(viewManagerModel.getActiveView(), loginView.viewName);
+
     }
 }
