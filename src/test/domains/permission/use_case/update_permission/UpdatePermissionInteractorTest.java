@@ -3,11 +3,6 @@ package domains.permission.use_case.update_permission;
 import data_access.cloudsql.SqlConfig;
 import data_access.cloudsql.SqlDataAccessObject;
 import domains.permission.entity.Permission;
-import domains.permission.use_case.create_permission.CreatePermissionInteractor;
-import domains.permission.use_case.get_permission.GetPermissionInputData;
-import domains.permission.use_case.get_permission.GetPermissionInteractor;
-import domains.permission.use_case.get_permission.GetPermissionOutputBoundary;
-import domains.permission.use_case.get_permission.GetPermissionOutputData;
 import domains.user.entity.User;
 import org.junit.After;
 import org.junit.Before;
@@ -16,8 +11,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static constant.ViewConstant.*;
-import static constant.ViewConstant.PERMISSION_DESCRIPTION;
 import static org.junit.Assert.*;
 
 public class UpdatePermissionInteractorTest {
