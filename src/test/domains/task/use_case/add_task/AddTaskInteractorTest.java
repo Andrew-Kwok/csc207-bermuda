@@ -127,14 +127,11 @@ public class AddTaskInteractorTest {
         interactor.execute(input);
     }
 
-    /*@Test
+    @Test
     public void DAOExceptionTest() {
-        final String PROJECT_NAME = "test dao failure";
-        final String USER_ID = "1";
-
-        final CreateProjectOutputBoundary presenter = new CreateProjectOutputBoundary() {
+        final AddTaskOutputBoundary presenter = new AddTaskOutputBoundary() {
             @Override
-            public void prepareSuccessView(CreateProjectOutputData output) {
+            public void prepareSuccessView(AddTaskOutputData output) {
                 fail("success view not expected");
             }
 
@@ -144,8 +141,8 @@ public class AddTaskInteractorTest {
             }
         };
 
-        CreateProjectInputData input = new CreateProjectInputData(PROJECT_NAME, USER_ID);
-        final CreateProjectInputBoundary interactor = new CreateProjectInteractor(presenter, apidao, sqldao);
+        AddTaskInputData input = new AddTaskInputData(task.getProjectID(), task.getTaskName(), task.getTaskDescription());
+        final AddTaskInputBoundary interactor = new AddTaskInteractor(presenter, null);
         interactor.execute(input);
-    }*/
+    }
 }
