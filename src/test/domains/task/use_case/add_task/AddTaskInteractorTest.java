@@ -2,28 +2,33 @@ package domains.task.use_case.add_task;
 
 import domains.permission.entity.Permission;
 import domains.project.entity.Project;
+import domains.project.use_case.create_project.*;
 import domains.task.entity.Task;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class AddTaskInteractorTest {
     private InMemoryDAO inMemoryDAO;
     private Task task;
     AddTaskInputBoundary addTaskInteractor;
+    AddTaskDataAccessInterface taskRepository;
 
     @org.junit.Before
     public void setUp() throws Exception {
 
         inMemoryDAO = new InMemoryDAO();
 
-        AddTaskDataAccessInterface taskRepository = inMemoryDAO;
+        taskRepository = inMemoryDAO;
 
         task = new Task(null, "2324643105", "task0", "desc0");
         inMemoryDAO.addTask(task);
         AddTaskInputData inputData = new AddTaskInputData(task.getProjectID(), task.getTaskName(), task.getTaskDescription());
+
 
         // Make a presenter here that asserts things
         // This instantiates an anonymous SignupOutputBoundary implementing class
@@ -43,6 +48,7 @@ public class AddTaskInteractorTest {
 
         addTaskInteractor = new AddTaskInteractor(successPresenter, taskRepository);
         addTaskInteractor.execute(inputData); // This will eventually send Output Data to the successPresenter
+        //addTaskInteractor.execute(noProjectIdInput);
     }
 
     @org.junit.After
@@ -58,9 +64,89 @@ public class AddTaskInteractorTest {
     }
 
     @Test
-    public void testAddTask() {
+    public void successTest() {
         AddTaskInputData addTaskInputData = new AddTaskInputData(task.getProjectID(), task.getTaskName(), task.getTaskDescription());
 
         addTaskInteractor.execute(addTaskInputData);
+    }
+
+    @Test
+    public void nullProjIDTest() {
+        //AddTaskInputData noProjectIdInput = new AddTaskInputData(null, task.getTaskName(), task.getTaskDescription());
+
+        final AddTaskOutputBoundary presenter = new AddTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(AddTaskOutputData output) {
+                fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String errMessage) {
+                assertNotNull(errMessage);
+            }
+        };
+
+        AddTaskInputData input = new AddTaskInputData(null, task.getTaskName(), task.getTaskDescription());
+        final AddTaskInputBoundary interactor = new AddTaskInteractor(presenter, taskRepository);
+        interactor.execute(input);
+    }
+
+    @Test
+    public void nullInputTest() {
+        final AddTaskOutputBoundary presenter = new AddTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(AddTaskOutputData output) {
+                fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String errMessage) {
+                assertNotNull(errMessage);
+            }
+        };
+
+        final AddTaskInputBoundary interactor = new AddTaskInteractor(presenter, taskRepository);
+        interactor.execute(null);
+    }
+
+    @Test
+    public void nullNameTest() {
+        final AddTaskOutputBoundary presenter = new AddTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(AddTaskOutputData output) {
+                fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String errMessage) {
+                assertNotNull(errMessage);
+            }
+        };
+
+        AddTaskInputData input = new AddTaskInputData(task.getProjectID(), null, task.getTaskDescription());
+        final AddTaskInputBoundary interactor = new AddTaskInteractor(presenter, taskRepository);
+        interactor.execute(input);
+    }
+
+    @Test
+    public void DAOExceptionTest() {
+        final String PROJECT_NAME = "test dao failure";
+        final String USER_ID = "1";
+
+        final CreateProjectOutputBoundary presenter = new CreateProjectOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateProjectOutputData output) {
+                fail("success view not expected");
+            }
+
+            @Override
+            public void prepareFailView(String errMessage) {
+                assertNotNull(errMessage);
+            }
+        };
+
+        CreateProjectInputData input = new CreateProjectInputData(PROJECT_NAME, USER_ID);
+        final CreateProjectInputBoundary interactor = new CreateProjectInteractor(presenter, apidao, sqldao);
+        interactor.execute(input);
     }
 }

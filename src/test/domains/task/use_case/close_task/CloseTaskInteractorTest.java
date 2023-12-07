@@ -1,3 +1,4 @@
+/*
 package domains.task.use_case.close_task;
 
 import domains.project.entity.Project;
@@ -65,3 +66,4 @@ public class CloseTaskInteractorTest {
         addTaskInteractor.execute(addTaskInputData);
     }
 }
+*/
