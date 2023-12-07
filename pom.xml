@@ -49,7 +49,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.8.1</version>
-<!--            <scope>compile</scope>&lt;!&ndash;&ndash;&gt;-->
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
