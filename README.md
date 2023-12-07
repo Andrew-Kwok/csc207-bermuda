@@ -5,7 +5,7 @@
 - Andrew Andrew
 - Louis Ryan Tan
 - Aral Ergene
-- Laura (KunYuan) Zhan
+- Laura Zhan
 - Hanwen (Henry) Shao
 
 ## App Specification
@@ -23,8 +23,8 @@ On `src/main/java/migrations`, run the SQL scripts to your SQL Database.
 To obtain `TODOIST_API_TOKEN`, refer to this ![blog](https://todoist.com/help/articles/find-your-api-token-Jpzx9IIlB) 
 
 ## APIs / External Services
-- ![Todoist](https://app.todoist.com/app/today)
-- ![Google Cloud SQL](https://cloud.google.com/sql)
+- [Todoist](https://app.todoist.com/app/today)
+- [Google Cloud SQL](https://cloud.google.com/sql)
 
 ## Testing
 <img width="577" alt="image" src="https://github.com/Andrew-Kwok/csc207-bermuda/assets/52167672/10243a26-1e3a-4dbd-b989-fee964620845">
