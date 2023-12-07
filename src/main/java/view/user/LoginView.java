@@ -94,6 +94,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
+
+//        comment the following line to when doing testing, so it won't exit the program
         exit.addActionListener(e -> {
                     System.exit(0);
                 }

@@ -34,7 +34,7 @@ public class AddTaskInteractorTest {
             @Override
             public void prepareSuccessView(AddTaskOutputData addTaskOutputData) {
                 assertEquals(addTaskOutputData.getTaskName(), task.getTaskName());
-                System.out.println(task.getTaskID());
+//                System.out.println(task.getTaskID());
             }
             @Override
             public void prepareFailView(String error) {

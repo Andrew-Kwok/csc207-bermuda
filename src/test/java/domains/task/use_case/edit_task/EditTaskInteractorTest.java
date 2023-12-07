@@ -35,7 +35,7 @@ public class EditTaskInteractorTest {
             @Override
             public void prepareSuccessView(EditTaskOutputData editTaskOutputData) {
                 assertEquals(editTaskOutputData.getTaskID(), task.getTaskID());
-                System.out.println(task.getTaskID());
+//                System.out.println(task.getTaskID());
             }
             @Override
             public void prepareFailView(String error) {
