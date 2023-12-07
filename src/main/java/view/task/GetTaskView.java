@@ -193,4 +193,24 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             }
         }
     }
+
+    public JButton getAddTaskButton() {
+        return addTask;
+    }
+
+    public JButton getEditTaskButton() {
+        return editTask;
+    }
+
+    public JButton getCloseTaskButton() {
+        return closeTask;
+    }
+
+    public JButton getGoBackButton() {
+        return goBack;
+    }
+
+    public JList<Map<String, String>> getTaskList() {
+        return taskList;
+    }
 }

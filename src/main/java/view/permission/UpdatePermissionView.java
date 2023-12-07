@@ -219,4 +219,28 @@ public class UpdatePermissionView extends JPanel implements ActionListener, Prop
         permissionNameInputField.setText("");
         permissionDescriptionInputField.setText("");
     }
+
+    public JButton getUpdatePermissionButton() {
+        return updatePermissionButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancel;
+    }
+
+    public JTextField getUserIdInputField() {
+        return userIdInputField;
+    }
+
+    public JTextField getProjectIdInputField() {
+        return projectIdInputField;
+    }
+
+    public JTextField getPermissionNameInputField() {
+        return permissionNameInputField;
+    }
+
+    public JTextField getPermissionDescriptionInputField() {
+        return permissionDescriptionInputField;
+    }
 }

@@ -57,6 +57,8 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         if (evt.getSource().equals(createProjectButton)) {
                             CreateProjectState createProjectState = createProjectViewModel.getState();
+                            createProjectState.setProjectName(projectNameInputField.getText());
+                            createProjectViewModel.setState(createProjectState);
                             createProjectController.execute(createProjectState.getProjectName(), createProjectState.getUserId());
                             clearInputFields();
                         }
@@ -125,5 +127,17 @@ public class CreateProjectView extends JPanel implements ActionListener, Propert
 
     private void clearInputFields() {
         projectNameInputField.setText("");
+    }
+
+    public JButton getCreateProjectButton() {
+        return createProjectButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JTextField getProjectNameInputField() {
+        return projectNameInputField;
     }
 }

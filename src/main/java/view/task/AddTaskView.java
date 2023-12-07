@@ -159,4 +159,20 @@ public class AddTaskView extends JPanel implements ActionListener, PropertyChang
         addTaskState.setTaskName("");
         addTaskState.setTaskDescription("");
     }
+
+    public JButton getAddTaskButton() {
+        return addTaskButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JTextField getTaskNameInputField() {
+        return taskNameInputField;
+    }
+
+    public JTextField getTaskDescriptionInputField() {
+        return taskDescriptionInputField;
+    }
 }
