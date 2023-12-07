@@ -92,6 +92,8 @@ public class UpdatePermissionInteractorTest {
                     throw new RuntimeException(e);
                 }
 
+                assertEquals(updatePermissionOutputData.getPermissionId(), testPermissions.get(0).getPermissionID());
+
                 assertEquals(2, permissions.size());
                 for (int i = 0; i < 2; ++i) {
                     assertEquals(testPermissions.get(i).getPermissionID(), permissions.get(i).getPermissionID());
@@ -119,6 +121,192 @@ public class UpdatePermissionInteractorTest {
         ));
 
         updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, sqlDAO);
+        updatePermissionInteractor.execute(new UpdatePermissionInputData(
+                "10000000-0000-0000-0000-000000000000",
+                "00000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+    }
+
+    @Test
+    public void testUpdatePermissionWithNullPermission() {
+            updatePermissionPresenter = new UpdatePermissionOutputBoundary() {
+                @Override
+                public void prepareSuccessView(UpdatePermissionOutputData updatePermissionOutputData) {
+                    fail();
+                }
+
+                @Override
+                public void prepareFailView(String error) {
+                    assertEquals("permission is required", error);
+                }
+            };
+
+            testPermissions.set(0, new Permission(
+                    "10000000-0000-0000-0000-000000000000",
+                    "0123456789",
+                    "00000000-0000-0000-0000-000000000000",
+                    "updated permission-1 user-1",
+                    "updated permission-description"
+            ));
+
+            updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, sqlDAO);
+            updatePermissionInteractor.execute(null);
+    }
+
+    @Test
+    public void testUpdatePermissionInteractorWithNullPermissionId() {
+         updatePermissionPresenter = new UpdatePermissionOutputBoundary() {
+             @Override
+             public void prepareSuccessView(UpdatePermissionOutputData updatePermissionOutputData) {
+                 fail();
+             }
+
+             @Override
+             public void prepareFailView(String error) {
+                 assertEquals("permission id is required", error);
+             }
+         };
+
+        testPermissions.set(0, new Permission(
+                "10000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "00000000-0000-0000-0000-000000000000",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+
+        updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, sqlDAO);
+        updatePermissionInteractor.execute(new UpdatePermissionInputData(
+                null,
+                "00000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+    }
+
+    @Test
+    public void testUpdatePermissionInteractorWithNullUserId() {
+         updatePermissionPresenter = new UpdatePermissionOutputBoundary() {
+             @Override
+             public void prepareSuccessView(UpdatePermissionOutputData updatePermissionOutputData) {
+                 fail();
+             }
+
+             @Override
+             public void prepareFailView(String error) {
+                 assertEquals("User ID is null or empty", error);
+             }
+        };
+
+        testPermissions.set(0, new Permission(
+                "10000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "00000000-0000-0000-0000-000000000000",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+
+        updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, sqlDAO);
+        updatePermissionInteractor.execute(new UpdatePermissionInputData(
+                "10000000-0000-0000-0000-000000000000",
+                null,
+                "0123456789",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+    }
+
+    @Test
+    public void testUpdatePermissionInteractorWithNullProjectId() {
+         updatePermissionPresenter = new UpdatePermissionOutputBoundary() {
+             @Override
+             public void prepareSuccessView(UpdatePermissionOutputData updatePermissionOutputData) {
+                 fail();
+             }
+
+             @Override
+             public void prepareFailView(String error) {
+                 assertEquals("Project ID is null or empty", error);
+             }
+        };
+
+        testPermissions.set(0, new Permission(
+                "10000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "00000000-0000-0000-0000-000000000000",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+
+        updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, sqlDAO);
+        updatePermissionInteractor.execute(new UpdatePermissionInputData(
+                "10000000-0000-0000-0000-000000000000",
+                "00000000-0000-0000-0000-000000000000",
+                null,
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+    }
+
+    @Test
+    public void testUpdatePermissionInteractorWithNullPermissionName() {
+         updatePermissionPresenter = new UpdatePermissionOutputBoundary() {
+            @Override
+            public void prepareSuccessView(UpdatePermissionOutputData updatePermissionOutputData) {
+                fail();
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Permission name is null or empty", error);
+            }
+        };
+
+        testPermissions.set(0, new Permission(
+                "10000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "00000000-0000-0000-0000-000000000000",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+
+        updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, sqlDAO);
+        updatePermissionInteractor.execute(new UpdatePermissionInputData(
+                "10000000-0000-0000-0000-000000000000",
+                "00000000-0000-0000-0000-000000000000",
+                "0123456789",
+                null,
+                "updated permission-description"
+        ));
+    }
+
+    @Test
+    public void testUpdatePermissionWithNullDAO() {
+        updatePermissionPresenter = new UpdatePermissionOutputBoundary() {
+            @Override
+            public void prepareSuccessView(UpdatePermissionOutputData updatePermissionOutputData) {
+                fail();
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Cannot invoke \"domains.permission.use_case.update_permission.UpdatePermissionDataAccessInterface.updatePermission(domains.permission.entity.Permission)\" because \"this.dataAccess\" is null", error);
+            }
+        };
+
+        testPermissions.set(0, new Permission(
+                "10000000-0000-0000-0000-000000000000",
+                "0123456789",
+                "00000000-0000-0000-0000-000000000000",
+                "updated permission-1 user-1",
+                "updated permission-description"
+        ));
+
+        updatePermissionInteractor = new UpdatePermissionInteractor(updatePermissionPresenter, null);
         updatePermissionInteractor.execute(new UpdatePermissionInputData(
                 "10000000-0000-0000-0000-000000000000",
                 "00000000-0000-0000-0000-000000000000",
