@@ -5,7 +5,7 @@
 - Andrew Andrew
 - Louis Ryan Tan
 - Aral Ergene
-- Laura (Kunyuan) Zhan
+- Laura Zhan
 - Hanwen (Henry) Shao
 
 ## App Specification
